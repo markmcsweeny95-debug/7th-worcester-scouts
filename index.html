@@ -1,8 +1,11 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>7th Worcester Scouts</title>  <style>
+  <title>7th Worcester Scouts</title>
+
+  <style>
     * {
       margin: 0;
       padding: 0;
@@ -117,89 +120,111 @@
         font-size: 1.6rem;
       }
     }
-  </style></head><body>  <header>
+  </style>
+</head>
+
+<body>
+
+  <header>
     <h1>7th Worcester Scout Group</h1>
     <p>Adventure Starts Here</p>
-  </header>  <nav>
+  </header>
+
+  <nav>
     <a href="#">Home</a>
     <a href="#">Events</a>
     <a href="#">Sections</a>
     <a href="#">Parents</a>
     <a href="#">Contact</a>
-  </nav>  <div class="container"><a href="#" style="text-decoration: none; color: inherit;">
-  <div class="card">
-    <h2>50th Anniversary Celebration</h2>
+  </nav>
 
-    <p>
-      Celebrate 50 years of 7th Worcester Scouts with an afternoon of
-      activities, food and community.
-    </p>
+  <div class="container">
 
-    <div class="countdown" id="countdown">
-      Loading countdown...
+    <a href="events/50th-anniversary.html" style="text-decoration: none; color: inherit;">
+      <div class="card">
+        <h2>50th Anniversary Celebration</h2>
+
+        <p>
+          Celebrate 50 years of 7th Worcester Scouts with an afternoon of
+          activities, food and community.
+        </p>
+
+        <div class="countdown" id="countdown">
+          Loading countdown...
+        </div>
+
+        <a class="button" href="events/50th-anniversary.html">
+          View Event Details
+        </a>
+      </div>
+    </a>
+
+    <div class="card">
+      <h2>Upcoming Events</h2>
+
+      <p>
+        <strong>30 May — Cardboard Canoe Challenge</strong><br>
+        Build and race handmade cardboard canoes.
+      </p>
+
+      <br>
+
+      <p>
+        <strong>14 June — District Camp</strong><br>
+        A weekend of camping, activities and scouting challenges.
+      </p>
+
+      <a class="button" href="news/index.html" style="margin-top: 22px; display: inline-block;">
+        See More News
+      </a>
     </div>
 
-    <a class="button" href="#">View Event Details</a>
+    <a href="discounts/index.html" style="text-decoration: none; color: inherit;">
+      <div class="card">
+        <h2>Scout Discounts</h2>
+
+        <p>
+          Scouts members can receive <strong>10% off</strong> purchases
+          at selected outdoor retailers.
+        </p>
+
+        <p style="margin-top: 14px; opacity: 0.8;">
+          Simply show your Beavers, Cubs or Scouts necker in-store
+          to receive 10% off your purchase.
+        </p>
+
+        <a class="button" href="discounts/index.html">
+          View Discounts
+        </a>
+      </div>
+    </a>
+
+    <div class="card">
+      <h2>Follow Us on Facebook</h2>
+
+      <p style="margin-bottom: 18px;">
+        Stay updated with recent events, camp photos and announcements.
+      </p>
+
+      <iframe
+        src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2F17io6A9gR5%2F&show_text=true"
+        width="100%"
+        height="500"
+        style="border:none; overflow:hidden; border-radius:16px;"
+        scrolling="no"
+        frameborder="0"
+        allowfullscreen="true"
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+      </iframe>
+    </div>
+
   </div>
-</a>
 
-<div class="card">
-  <h2>Upcoming Events</h2>
-
-  <p>
-    <strong>30 May — Cardboard Canoe Challenge</strong><br>
-    Build and race handmade cardboard canoes.
-  </p>
-
-  <br>
-
-  <p>
-    <strong>14 June — District Camp</strong><br>
-    A weekend of camping, activities and scouting challenges.
-  </p>
-
-  <a class="button" href="#" style="margin-top: 22px; display: inline-block;">
-    See More News
-  </a>
-</div>
-
-<a href="#" style="text-decoration: none; color: inherit;">
-  <div class="card">
-    <h2>Scout Discounts</h2>
-    <p>
-      Scouts members can receive <strong>10% off</strong> purchases
-      at selected outdoor retailers.
-    </p>
-
-    <p style="margin-top: 14px; opacity: 0.8;">
-      Simply show your Beavers, Cubs or Scouts necker in-store
-      to receive 10% off your purchase.
-    </p>
-
-    <a class="button" href="#">View Discounts</a>
-  </div>
-</a>
-
-  <div class="card">
-      <h2>Follow Us on Facebook</h2><p style="margin-bottom: 18px;">
-    Stay updated with recent events, camp photos and announcements.
-  </p>
-
-  <iframe
-    src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2F17io6A9gR5%2F&show_text=true"
-    width="100%"
-    height="500"
-    style="border:none; overflow:hidden; border-radius:16px;"
-    scrolling="no"
-    frameborder="0"
-    allowfullscreen="true"
-    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-  </iframe>
-</div>
-
-  </div>  <footer>
+  <footer>
     © 2026 7th Worcester Scout Group
-  </footer>  <script>
+  </footer>
+
+  <script>
     const targetDate = new Date('July 5, 2026 14:00:00 GMT').getTime();
 
     function updateCountdown() {
@@ -216,5 +241,7 @@
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
-  </script></body>
+  </script>
+
+</body>
 </html>
