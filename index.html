@@ -48,11 +48,6 @@ nav a {
   margin-bottom: 25px;
   border-radius: 18px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  transition: 0.2s;
-}
-
-.card:hover {
-  transform: translateY(-4px);
 }
 
 .card-link {
@@ -75,7 +70,6 @@ nav a {
   font-size: 2rem;
   font-weight: bold;
   color: #7b4bb3;
-  margin-top: 10px;
 }
 
 .button {
@@ -97,6 +91,14 @@ nav a {
 <div class="main-header">
   <h1>7th Worcester Scout Group</h1>
   <p>Adventure Starts Here</p>
+
+  <p>
+    <a style="color:white; font-weight:bold; text-decoration:underline;"
+       href="mailto:gsl@7thworcesterscouts.org?subject=Joining%207th%20Worcester%20Scouts&body=Hi%2C%0A%0AI%20would%20like%20to%20join%207th%20Worcester%20Scouts.%0A%0AThanks%2C">
+      Join Us Today →
+    </a>
+  </p>
+
 </div>
 
 <nav>
@@ -109,80 +111,52 @@ nav a {
 
 <div class="container">
 
+<div class="card">
+  <div class="pinned-badge">📌 Featured Event</div>
+
+  <h2>50th Anniversary Celebration</h2>
+
+  <p>Family Fun Day at The Scout Zone, Powick</p>
+
+  <div class="countdown" id="countdown"></div>
+
+  <a class="button" href="events/50th-anniversary.html">View Event</a>
+</div>
+
+<div class="card">
+  <h2>Upcoming Events</h2>
+
+  <p><b>30 May</b> — Cardboard Canoe Challenge</p>
+  <p><b>14 June</b> — District Camp</p>
+
+  <a class="button" href="events/index.html">See All Events</a>
+</div>
+
+<a class="card-link" href="discounts/index.html">
   <div class="card">
+    <h2>Scout Discounts</h2>
+    <p>Up to 10%–20% off selected outdoor retailers.</p>
+    <span class="button">See More →</span>
+  </div>
+</a>
 
-    <div class="pinned-badge">
-      📌 Featured Event
-    </div>
+<a class="card-link" href="sections/index.html">
+  <div class="card">
+    <h2>Sections</h2>
+    <p>Beavers, Cubs and Scouts groups information.</p>
+    <span class="button">See More →</span>
+  </div>
+</a>
 
-    <h2>50th Anniversary Celebration</h2>
+<a class="card-link" href="mailto:gsl@7thworcesterscouts.org?subject=Joining%207th%20Worcester%20Scouts&body=Hi%2C%0A%0AI%20would%20like%20to%20join%207th%20Worcester%20Scouts.%0A%0AThanks%2C">
 
-    <p>
-      Family Fun Day at The Scout Zone, Powick
-    </p>
-
-    <div class="countdown" id="countdown"></div>
-
-    <a class="button" href="events/50th-anniversary.html">
-      View Event
-    </a>
-
+  <div class="card">
+    <h2>Join Us</h2>
+    <p>Send us an enquiry to join your local Scout Group.</p>
+    <span class="button">Send Email 📩</span>
   </div>
 
-  <div class="card">
-
-    <h2>Upcoming Events</h2>
-
-    <p>
-      <strong>30 May</strong> — Cardboard Canoe Challenge
-    </p>
-
-    <p>
-      <strong>14 June</strong> — District Camp
-    </p>
-
-    <a class="button" href="events/index.html">
-      See All Events
-    </a>
-
-  </div>
-
-  <a class="card-link" href="discounts/index.html">
-
-    <div class="card">
-
-      <h2>Scout Discounts</h2>
-
-      <p>
-        Up to 10% off selected outdoor retailers
-        for members and parents.
-      </p>
-
-      <span class="button">
-        See More →
-      </span>
-
-    </div>
-
-  </a>
-
-  <a class="card-link" href="sections/index.html">
-
-    <div class="card">
-
-      <h2>Sections</h2>
-
-      <p>
-        Beavers, Cubs and Scouts groups information.
-      </p>
-
-      <span class="button">
-        See More →
-      </span>
-
-    </div>
-
-  </a>
+</a>
 
 </div>
 
@@ -191,31 +165,19 @@ nav a {
 const target = new Date("2026-07-05T13:00:00Z").getTime();
 
 function update() {
-
   const now = new Date().getTime();
-
   const diff = target - now;
 
-  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-  const h = Math.floor(
-    (diff % (1000 * 60 * 60 * 24)) /
-    (1000 * 60 * 60)
-  );
-
-  const m = Math.floor(
-    (diff % (1000 * 60 * 60)) /
-    (1000 * 60)
-  );
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
+  const m = Math.floor((diff % (1000*60*60))/(1000*60));
 
   document.getElementById("countdown").innerText =
     `${d} Days : ${h} Hours : ${m} Mins`;
-
 }
 
 update();
-
-setInterval(update, 1000);
+setInterval(update,1000);
 
 </script>
 
