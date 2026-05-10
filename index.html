@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>7th Worcester Scout Group</title>
 
   <style>
@@ -20,19 +19,19 @@
       line-height: 1.6;
     }
 
-    header {
+    .main-header {
       background: linear-gradient(135deg, #5b2c83, #7b4bb3);
       color: white;
-      padding: 90px 20px 120px;
+      padding: 80px 20px;
       text-align: center;
     }
 
-    header h1 {
+    .main-header h1 {
       font-size: 3.2rem;
       margin-bottom: 12px;
     }
 
-    header p {
+    .main-header p {
       font-size: 1.2rem;
       opacity: 0.9;
     }
@@ -51,11 +50,6 @@
       text-decoration: none;
       margin: 0 14px;
       font-weight: bold;
-      transition: opacity 0.2s;
-    }
-
-    nav a:hover {
-      opacity: 0.7;
     }
 
     .container {
@@ -65,7 +59,7 @@
     }
 
     .events-card {
-      margin-top: -70px;
+      margin-top: -35px;
       position: relative;
       z-index: 10;
     }
@@ -76,11 +70,6 @@
       margin-bottom: 25px;
       border-radius: 18px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-      transition: transform 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
     }
 
     .card h2 {
@@ -88,8 +77,19 @@
       color: #5b2c83;
     }
 
+    .pinned-badge {
+      display: inline-block;
+      background: #ffe082;
+      color: #5b2c83;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+
     .countdown {
-      font-size: 2.1rem;
+      font-size: 2rem;
       font-weight: bold;
       margin-top: 18px;
       color: #7b4bb3;
@@ -104,11 +104,6 @@
       text-decoration: none;
       border-radius: 12px;
       font-weight: bold;
-      transition: opacity 0.2s;
-    }
-
-    .button:hover {
-      opacity: 0.85;
     }
 
     footer {
@@ -118,44 +113,19 @@
       padding: 30px;
       margin-top: 50px;
     }
-
-    @media (max-width: 700px) {
-
-      header {
-        padding: 70px 20px 110px;
-      }
-
-      header h1 {
-        font-size: 2.3rem;
-      }
-
-      nav a {
-        display: inline-block;
-        margin: 8px;
-      }
-
-      .countdown {
-        font-size: 1.5rem;
-      }
-
-      .events-card {
-        margin-top: -55px;
-      }
-    }
   </style>
 </head>
 
 <body>
 
-<header>
+<header class="main-header">
   <h1>7th Worcester Scout Group</h1>
   <p>Adventure Starts Here</p>
 </header>
 
 <nav>
   <a href="index.html">Home</a>
-  <a href="news/index.html">News</a>
-  <a href="events/50th-anniversary.html">Events</a>
+  <a href="events/index.html">Events</a>
   <a href="discounts/index.html">Discounts</a>
   <a href="sections/index.html">Sections</a>
   <a href="contact/index.html">Contact</a>
@@ -163,8 +133,11 @@
 
 <div class="container">
 
-  <!-- Anniversary -->
   <div class="card events-card">
+
+    <div class="pinned-badge">
+      📌 Featured Event
+    </div>
 
     <h2>50th Anniversary Celebration</h2>
 
@@ -183,7 +156,6 @@
 
   </div>
 
-  <!-- Upcoming Events -->
   <div class="card">
 
     <h2>Upcoming Events</h2>
@@ -200,13 +172,12 @@
       A weekend of camping, activities and scouting challenges.
     </p>
 
-    <a class="button" href="news/index.html">
-      See More News
+    <a class="button" href="events/index.html">
+      View All Events
     </a>
 
   </div>
 
-  <!-- Discounts -->
   <div class="card">
 
     <h2>Scout Discounts</h2>
@@ -223,7 +194,6 @@
 
   </div>
 
-  <!-- Sections -->
   <div class="card">
 
     <h2>Scout Sections</h2>
@@ -239,7 +209,6 @@
 
   </div>
 
-  <!-- Contact -->
   <div class="card">
 
     <h2>Contact Us</h2>
@@ -262,7 +231,7 @@
 </footer>
 
 <script>
-  const targetDate = new Date('July 5, 2026 14:00:00 GMT').getTime();
+  const targetDate = new Date('July 5, 2026 13:00:00 GMT').getTime();
 
   function updateCountdown() {
     const now = new Date().getTime();
