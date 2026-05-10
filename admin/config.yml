@@ -1,0 +1,32 @@
+backend:
+  name: github
+  repo: markmcsweeny95-debug/7th-worcester-scouts
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+
+  - name: "events"
+    label: "Events"
+    folder: "events"
+    create: true
+
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "homepage"
+    label: "Homepage"
+
+    files:
+      - file: "index.html"
+
+        label: "Homepage"
+
+        name: "homepage"
+
+        fields:
+          - { label: "Homepage Content", name: "body", widget: "markdown" }
