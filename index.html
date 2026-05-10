@@ -1,11 +1,8 @@
-!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>7th Worcester Scouts</title>
-
-  <style>
+  <title>7th Worcester Scouts</title>  <style>
     * {
       margin: 0;
       padding: 0;
@@ -14,21 +11,21 @@
 
     body {
       font-family: Arial, sans-serif;
-      background: #f4f1e8;
+      background: #faf9ff;
       color: #1f2d1f;
       line-height: 1.6;
     }
 
     header {
-      background: #234b2d;
+      background: linear-gradient(135deg, #5b2c83, #7b4bb3);
       color: white;
-      padding: 70px 20px;
+      padding: 80px 20px;
       text-align: center;
     }
 
     header h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
+      font-size: 3.2rem;
+      margin-bottom: 12px;
     }
 
     header p {
@@ -37,122 +34,132 @@
     }
 
     nav {
-      background: #1b3a22;
+      background: #4a2268;
       padding: 15px;
       text-align: center;
+      position: sticky;
+      top: 0;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      margin: 0 15px;
+      margin: 0 16px;
       font-weight: bold;
+      transition: opacity 0.2s;
+    }
+
+    nav a:hover {
+      opacity: 0.7;
     }
 
     .container {
       max-width: 1000px;
       margin: auto;
-      padding: 40px 20px;
+      padding: 50px 20px;
     }
 
     .card {
       background: white;
-      padding: 25px;
+      padding: 30px;
       margin-bottom: 25px;
-      border-radius: 14px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border-radius: 18px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
     }
 
     .card h2 {
       margin-bottom: 12px;
-      color: #234b2d;
+      color: #5b2c83;
     }
 
     .countdown {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: bold;
-      margin-top: 10px;
-      color: #cc6b2c;
+      margin-top: 15px;
+      color: #7b4bb3;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 12px 22px;
+      background: #5b2c83;
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: bold;
     }
 
     footer {
-      background: #234b2d;
+      background: #5b2c83;
       color: white;
       text-align: center;
-      padding: 25px;
-      margin-top: 40px;
+      padding: 30px;
+      margin-top: 50px;
     }
 
     @media (max-width: 700px) {
       header h1 {
-        font-size: 2.2rem;
-      }
-
-      .countdown {
-        font-size: 1.5rem;
+        font-size: 2.3rem;
       }
 
       nav a {
         display: inline-block;
         margin: 8px;
       }
+
+      .countdown {
+        font-size: 1.6rem;
+      }
     }
-  </style>
-</head>
-
-<body>
-
-  <header>
+  </style></head><body>  <header>
     <h1>7th Worcester Scout Group</h1>
     <p>Adventure Starts Here</p>
-  </header>
-
-  <nav>
+  </header>  <nav>
     <a href="#">Home</a>
     <a href="#">Events</a>
     <a href="#">Sections</a>
     <a href="#">Parents</a>
     <a href="#">Contact</a>
-  </nav>
+  </nav>  <div class="container"><div class="card">
+  <h2>50th Anniversary Camp</h2>
+  <p>
+    Join us as we celebrate 50 years of adventure,
+    camping, hiking, and community spirit.
+  </p>
 
-  <div class="container">
-
-    <div class="card">
-      <h2>50th Anniversary Camp</h2>
-      <p>
-        Join us as we celebrate 50 years of adventure,
-        camping, hiking, and community spirit.
-      </p>
-
-      <div class="countdown" id="countdown">
-        Loading countdown...
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>Latest News</h2>
-      <p>
-        Summer camp bookings are now open.
-        Please return forms before June 12th.
-      </p>
-    </div>
-
-    <div class="card">
-      <h2>Scout Discounts</h2>
-      <p>
-        Members can receive discounts at GO Outdoors
-        and other outdoor retailers.
-      </p>
-    </div>
-
+  <div class="countdown" id="countdown">
+    Loading countdown...
   </div>
 
-  <footer>
-    © 2026 7th Worcester Scout Group
-  </footer>
+  <a class="button" href="#">Learn More</a>
+</div>
 
-  <script>
-    const targetDate = new Date("July 20, 2026 00:00:00").getTime();
+<div class="card">
+  <h2>Latest News</h2>
+  <p>
+    Summer camp bookings are now open.
+    Please return forms before June 12th.
+  </p>
+</div>
+
+<div class="card">
+  <h2>Scout Discounts</h2>
+  <p>
+    Members can receive discounts at GO Outdoors
+    and other outdoor retailers.
+  </p>
+</div>
+
+  </div>  <footer>
+    © 2026 7th Worcester Scout Group
+  </footer>  <script>
+    const targetDate = new Date('July 5, 2026 14:00:00 GMT').getTime();
 
     function updateCountdown() {
       const now = new Date().getTime();
@@ -160,13 +167,11 @@
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
 
-      document.getElementById("countdown").innerText =
-        days + " days to go";
+      document.getElementById('countdown').innerText =
+        days + ' days to go until 2PM on 5 July';
     }
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
-  </script>
-
-</body>
+  </script></body>
 </html> 
