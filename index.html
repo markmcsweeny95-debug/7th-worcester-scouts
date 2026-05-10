@@ -1,141 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>7th Worcester Scouts</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sections | 7th Worcester Scouts</title>
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #f4f4f4;
-}
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #faf9ff;
+      color: #222;
+    }
 
-/* NAVBAR */
-nav {
-  background: #4b2e83;
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: white;
-}
+    .main-header {
+      background: linear-gradient(135deg, #5b2c83, #7b4bb3);
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+    }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  margin: 0 10px;
-}
+    .main-header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
 
-/* HEADER */
-header {
-  background: #6b4bbd;
-  color: white;
-  padding: 30px;
-  text-align: center;
-}
+    .main-header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
 
-/* CONTENT */
-section {
-  padding: 20px;
-}
+    nav {
+      background: #4a2268;
+      padding: 14px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
 
-.card {
-  background: white;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 14px;
+      font-weight: bold;
+    }
 
-.bar {
-  background: white;
-  padding: 10px;
-  margin: 8px 0;
-  border-left: 6px solid #4b2e83;
-}
-</style>
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 20px;
+    }
 
+    .section-card {
+      display: block;
+      padding: 35px;
+      border-radius: 18px;
+      margin-bottom: 25px;
+      color: white;
+      text-decoration: none;
+      transition: transform 0.2s;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+
+    .section-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .section-card h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+
+    .section-card p {
+      font-size: 1.05rem;
+      opacity: 0.95;
+    }
+
+    .beavers {
+      background: #6ec6ff;
+    }
+
+    .cubs {
+      background: #2e7d32;
+    }
+
+    .scouts {
+      background: #16351c;
+    }
+
+    footer {
+      background: #5b2c83;
+      color: white;
+      text-align: center;
+      padding: 24px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 700px) {
+
+      .main-header h1 {
+        font-size: 2.2rem;
+      }
+
+      nav a {
+        display: inline-block;
+        margin: 8px;
+      }
+
+      .section-card h2 {
+        font-size: 1.6rem;
+      }
+
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- NAVIGATION -->
-<nav>
-  <div><strong>7th Worcester Scouts</strong></div>
-  <div>
-    <a href="#">Home</a>
-    <a href="#events">Events</a>
-    <a href="#points">Cubs Points</a>
-  </div>
-</nav>
-
-<!-- HEADER -->
-<header>
-  <h1>Welcome to 7th Worcester Scouts</h1>
-  <p>Beavers • Cubs • Scouts</p>
+<header class="main-header">
+  <h1>Scout Sections</h1>
+  <p>Explore the different sections of 7th Worcester Scouts</p>
 </header>
 
-<!-- EVENTS -->
-<section id="events">
-  <h2>Upcoming Events</h2>
-  <div id="eventsContainer"></div>
-</section>
+<nav>
+  <a href="../index.html">Home</a>
+  <a href="../events/index.html">Events</a>
+  <a href="../discounts/index.html">Discounts</a>
+  <a href="../sections/index.html">Sections</a>
+  <a href="../contact/index.html">Contact</a>
+</nav>
 
-<!-- CUBS POINTS -->
-<section id="points">
-  <h2>Cubs Points</h2>
-  <div id="pointsContainer"></div>
-</section>
+<div class="container">
 
-<!-- EVENTS SCRIPT -->
-<script>
-const EVENTS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFILlB4hbC-71RRxDWJ9B8fzsZOk-ctYnPiNnNoDO3Sw9ZBqWvoIj1D_2hxlMy_3qF7y7QPopAiV_/pub?gid=0&single=true&output=csv";
+  <a class="section-card beavers" href="beavers.html">
 
-fetch(EVENTS_URL)
-  .then(r => r.text())
-  .then(csv => {
-    const rows = csv.trim().split("\n").slice(1);
-    const container = document.getElementById("eventsContainer");
+    <h2>Beavers</h2>
 
-    rows.forEach(row => {
-      const [title, date, summary] = row.split(",");
+    <p>
+      Ages 6–8 • Wednesday evenings • Fun, games and adventure.
+    </p>
 
-      if (!title) return;
+  </a>
 
-      container.innerHTML += `
-        <div class="card">
-          <h3>${title}</h3>
-          <p><strong>${date}</strong></p>
-          <p>${summary}</p>
-        </div>
-      `;
-    });
-  });
-</script>
+  <a class="section-card cubs" href="cubs.html">
 
-<!-- CUBS POINTS SCRIPT -->
-<script>
-const POINTS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFILlB4hbC-71RRxDWJ9B8fzsZOk-ctYnPiNnNoDO3Sw9ZBqWvoIj1D_2hxlMy_3qF7y7QPopAiV_/pub?gid=1&single=true&output=csv";
+    <h2>Cubs</h2>
 
-fetch(POINTS_URL)
-  .then(r => r.text())
-  .then(csv => {
-    const rows = csv.trim().split("\n").slice(1);
-    const container = document.getElementById("pointsContainer");
+    <p>
+      Ages 8–10½ • Monday evenings • Challenges, skills and teamwork.
+    </p>
 
-    rows.forEach(row => {
-      const [pack, points] = row.split(",");
+  </a>
 
-      if (!pack) return;
+  <a class="section-card scouts" href="scouts.html">
 
-      container.innerHTML += `
-        <div class="bar">
-          <strong>${pack}</strong> — ${points} pts
-        </div>
-      `;
-    });
-  });
-</script>
+    <h2>Scouts</h2>
+
+    <p>
+      Ages 10½–14 • Thursday evenings • Adventure, leadership and outdoor skills.
+    </p>
+
+  </a>
+
+</div>
+
+<footer>
+  © 2026 7th Worcester Scout Group
+</footer>
 
 </body>
 </html>
