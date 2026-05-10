@@ -6,18 +6,36 @@
 
 <style>
 body {
-  font-family: Arial;
   margin: 0;
+  font-family: Arial;
   background: #f4f4f4;
 }
 
-header {
+/* NAVBAR */
+nav {
   background: #4b2e83;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: white;
-  padding: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+/* HEADER */
+header {
+  background: #6b4bbd;
+  color: white;
+  padding: 30px;
   text-align: center;
 }
 
+/* CONTENT */
 section {
   padding: 20px;
 }
@@ -31,7 +49,7 @@ section {
 }
 
 .bar {
-  background: #fff;
+  background: white;
   padding: 10px;
   margin: 8px 0;
   border-left: 6px solid #4b2e83;
@@ -41,21 +59,32 @@ section {
 </head>
 <body>
 
+<!-- NAVIGATION -->
+<nav>
+  <div><strong>7th Worcester Scouts</strong></div>
+  <div>
+    <a href="#">Home</a>
+    <a href="#events">Events</a>
+    <a href="#points">Cubs Points</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
 <header>
-  <h1>7th Worcester Scouts</h1>
-  <p>Welcome to our group website</p>
+  <h1>Welcome to 7th Worcester Scouts</h1>
+  <p>Beavers • Cubs • Scouts</p>
 </header>
 
 <!-- EVENTS -->
-<section>
+<section id="events">
   <h2>Upcoming Events</h2>
-  <div id="events"></div>
+  <div id="eventsContainer"></div>
 </section>
 
 <!-- CUBS POINTS -->
-<section>
+<section id="points">
   <h2>Cubs Points</h2>
-  <div id="points"></div>
+  <div id="pointsContainer"></div>
 </section>
 
 <!-- EVENTS SCRIPT -->
@@ -63,10 +92,10 @@ section {
 const EVENTS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFILlB4hbC-71RRxDWJ9B8fzsZOk-ctYnPiNnNoDO3Sw9ZBqWvoIj1D_2hxlMy_3qF7y7QPopAiV_/pub?gid=0&single=true&output=csv";
 
 fetch(EVENTS_URL)
-  .then(res => res.text())
+  .then(r => r.text())
   .then(csv => {
     const rows = csv.trim().split("\n").slice(1);
-    const container = document.getElementById("events");
+    const container = document.getElementById("eventsContainer");
 
     rows.forEach(row => {
       const [title, date, summary] = row.split(",");
@@ -89,10 +118,10 @@ fetch(EVENTS_URL)
 const POINTS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFILlB4hbC-71RRxDWJ9B8fzsZOk-ctYnPiNnNoDO3Sw9ZBqWvoIj1D_2hxlMy_3qF7y7QPopAiV_/pub?gid=1&single=true&output=csv";
 
 fetch(POINTS_URL)
-  .then(res => res.text())
+  .then(r => r.text())
   .then(csv => {
     const rows = csv.trim().split("\n").slice(1);
-    const container = document.getElementById("points");
+    const container = document.getElementById("pointsContainer");
 
     rows.forEach(row => {
       const [pack, points] = row.split(",");
