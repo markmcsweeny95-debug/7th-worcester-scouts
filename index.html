@@ -126,19 +126,30 @@
     <a href="#">Sections</a>
     <a href="#">Parents</a>
     <a href="#">Contact</a>
-  </nav>  <div class="container"><div class="card">
-  <h2>50th Anniversary Camp</h2>
-  <p>
-    Join us as we celebrate 50 years of adventure,
-    camping, hiking, and community spirit.
-  </p>
+  </nav>  <div class="container"><a href="#" style="text-decoration: none; color: inherit;">
+  <div class="card">
+    <h2>50th Anniversary Celebration</h2>
+    <p>
+      <strong>7th Worcester Scouts – 50th Anniversary Family Fun Day</strong><br><br>
+      Sunday 5th July • 2–5 PM<br>
+      The Scout Zone, Powick<br><br>
+      Join current members, leaders, alumni and families as we celebrate
+      50 years of adventure, community and scouting.
+    </p>
 
-  <div class="countdown" id="countdown">
-    Loading countdown...
+    <p style="margin-top: 14px; opacity: 0.8;">
+      Activities include rounders, archery, fire lighting,
+      pioneering, football, games, prizes, crafts and a BBQ.
+      All welcome.
+    </p>
+
+    <div class="countdown" id="countdown">
+      Loading countdown...
+    </div>
+
+    <a class="button" href="#">View Event Details</a>
   </div>
-
-  <a class="button" href="#">Learn More</a>
-</div>
+</a>
 
 <div class="card">
   <h2>Latest News</h2>
@@ -148,13 +159,22 @@
   </p>
 </div>
 
-<div class="card">
-  <h2>Scout Discounts</h2>
-  <p>
-    Members can receive discounts at GO Outdoors
-    and other outdoor retailers.
-  </p>
-</div>
+<a href="#" style="text-decoration: none; color: inherit;">
+  <div class="card">
+    <h2>Scout Discounts</h2>
+    <p>
+      Scouts members can receive <strong>10% off</strong> purchases
+      at selected outdoor retailers.
+    </p>
+
+    <p style="margin-top: 14px; opacity: 0.8;">
+      Simply show your Beavers, Cubs or Scouts necker in-store
+      to receive 10% off your purchase.
+    </p>
+
+    <a class="button" href="#">View Discounts</a>
+  </div>
+</a>
 
   </div>  <footer>
     © 2026 7th Worcester Scout Group
@@ -166,12 +186,14 @@
       const distance = targetDate - now;
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 
       document.getElementById('countdown').innerText =
-        days + ' days to go until 2PM on 5 July';
+        `${days} Days : ${hours} Hours : ${minutes} Mins`;
     }
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
   </script></body>
-</html> 
+</html>
