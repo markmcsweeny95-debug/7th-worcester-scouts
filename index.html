@@ -1,252 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>7th Worcester Scout Group</title>
+<meta charset="UTF-8">
+<title>7th Worcester Scouts</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #f4f4f4;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #faf9ff;
-      color: #222;
-      line-height: 1.6;
-    }
+header {
+  background: #4b2e83;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
 
-    .main-header {
-      background: linear-gradient(135deg, #5b2c83, #7b4bb3);
-      color: white;
-      padding: 80px 20px;
-      text-align: center;
-    }
+section {
+  padding: 20px;
+}
 
-    .main-header h1 {
-      font-size: 3.2rem;
-      margin-bottom: 12px;
-    }
+.card {
+  background: white;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 
-    .main-header p {
-      font-size: 1.2rem;
-      opacity: 0.9;
-    }
+.bar {
+  background: #fff;
+  padding: 10px;
+  margin: 8px 0;
+  border-left: 6px solid #4b2e83;
+}
+</style>
 
-    nav {
-      background: #4a2268;
-      padding: 15px;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 14px;
-      font-weight: bold;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 40px 20px;
-    }
-
-    .events-card {
-      margin-top: -35px;
-      position: relative;
-      z-index: 10;
-    }
-
-    .card {
-      background: white;
-      padding: 30px;
-      margin-bottom: 25px;
-      border-radius: 18px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    }
-
-    .card h2 {
-      margin-bottom: 12px;
-      color: #5b2c83;
-    }
-
-    .pinned-badge {
-      display: inline-block;
-      background: #ffe082;
-      color: #5b2c83;
-      font-weight: bold;
-      padding: 6px 12px;
-      border-radius: 999px;
-      margin-bottom: 16px;
-      font-size: 0.9rem;
-    }
-
-    .countdown {
-      font-size: 2rem;
-      font-weight: bold;
-      margin-top: 18px;
-      color: #7b4bb3;
-    }
-
-    .button {
-      display: inline-block;
-      margin-top: 18px;
-      padding: 12px 22px;
-      background: #5b2c83;
-      color: white;
-      text-decoration: none;
-      border-radius: 12px;
-      font-weight: bold;
-    }
-
-    footer {
-      background: #5b2c83;
-      color: white;
-      text-align: center;
-      padding: 30px;
-      margin-top: 50px;
-    }
-  </style>
 </head>
-
 <body>
 
-<header class="main-header">
-  <h1>7th Worcester Scout Group</h1>
-  <p>Adventure Starts Here</p>
+<header>
+  <h1>7th Worcester Scouts</h1>
+  <p>Welcome to our group website</p>
 </header>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="events/index.html">Events</a>
-  <a href="discounts/index.html">Discounts</a>
-  <a href="sections/index.html">Sections</a>
-  <a href="contact/index.html">Contact</a>
-</nav>
+<!-- EVENTS -->
+<section>
+  <h2>Upcoming Events</h2>
+  <div id="events"></div>
+</section>
 
-<div class="container">
+<!-- CUBS POINTS -->
+<section>
+  <h2>Cubs Points</h2>
+  <div id="points"></div>
+</section>
 
-  <div class="card events-card">
-
-    <div class="pinned-badge">
-      📌 Featured Event
-    </div>
-
-    <h2>50th Anniversary Celebration</h2>
-
-    <p>
-      Celebrate 50 years of 7th Worcester Scouts
-      with an afternoon of activities, food and community.
-    </p>
-
-    <div class="countdown" id="countdown">
-      Loading countdown...
-    </div>
-
-    <a class="button" href="events/50th-anniversary.html">
-      View Event Details
-    </a>
-
-  </div>
-
-  <div class="card">
-
-    <h2>Upcoming Events</h2>
-
-    <p>
-      <strong>30 May — Cardboard Canoe Challenge</strong><br>
-      Build and race handmade cardboard canoes.
-    </p>
-
-    <br>
-
-    <p>
-      <strong>14 June — District Camp</strong><br>
-      A weekend of camping, activities and scouting challenges.
-    </p>
-
-    <a class="button" href="events/index.html">
-      View All Events
-    </a>
-
-  </div>
-
-  <div class="card">
-
-    <h2>Scout Discounts</h2>
-
-    <p>
-      7th Worcester Scout members and parents can receive
-      up to <strong>10% off</strong> at selected outdoor
-      retailers and activity stores.
-    </p>
-
-    <a class="button" href="discounts/index.html">
-      View Discounts
-    </a>
-
-  </div>
-
-  <div class="card">
-
-    <h2>Scout Sections</h2>
-
-    <p>
-      Explore Beavers, Cubs and Scouts,
-      including meeting times and section information.
-    </p>
-
-    <a class="button" href="sections/index.html">
-      View Sections
-    </a>
-
-  </div>
-
-  <div class="card">
-
-    <h2>Contact Us</h2>
-
-    <p>
-      Get in touch with 7th Worcester Scouts
-      for joining information and general enquiries.
-    </p>
-
-    <a class="button" href="contact/index.html">
-      Contact Information
-    </a>
-
-  </div>
-
-</div>
-
-<footer>
-  © 2026 7th Worcester Scout Group
-</footer>
-
+<!-- EVENTS SCRIPT -->
 <script>
-  const targetDate = new Date('July 5, 2026 13:00:00 GMT').getTime();
+const EVENTS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFILlB4hbC-71RRxDWJ9B8fzsZOk-ctYnPiNnNoDO3Sw9ZBqWvoIj1D_2hxlMy_3qF7y7QPopAiV_/pub?gid=0&single=true&output=csv";
 
-  function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
+fetch(EVENTS_URL)
+  .then(res => res.text())
+  .then(csv => {
+    const rows = csv.trim().split("\n").slice(1);
+    const container = document.getElementById("events");
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    rows.forEach(row => {
+      const [title, date, summary] = row.split(",");
 
-    document.getElementById('countdown').innerText =
-      `${days} Days : ${hours} Hours : ${minutes} Mins`;
-  }
+      if (!title) return;
 
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+      container.innerHTML += `
+        <div class="card">
+          <h3>${title}</h3>
+          <p><strong>${date}</strong></p>
+          <p>${summary}</p>
+        </div>
+      `;
+    });
+  });
+</script>
+
+<!-- CUBS POINTS SCRIPT -->
+<script>
+const POINTS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFILlB4hbC-71RRxDWJ9B8fzsZOk-ctYnPiNnNoDO3Sw9ZBqWvoIj1D_2hxlMy_3qF7y7QPopAiV_/pub?gid=1&single=true&output=csv";
+
+fetch(POINTS_URL)
+  .then(res => res.text())
+  .then(csv => {
+    const rows = csv.trim().split("\n").slice(1);
+    const container = document.getElementById("points");
+
+    rows.forEach(row => {
+      const [pack, points] = row.split(",");
+
+      if (!pack) return;
+
+      container.innerHTML += `
+        <div class="bar">
+          <strong>${pack}</strong> — ${points} pts
+        </div>
+      `;
+    });
+  });
 </script>
 
 </body>
