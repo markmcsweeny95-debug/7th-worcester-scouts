@@ -6,6 +6,7 @@
 <title>7th Worcester Scout Group</title>
 
 <style>
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -47,6 +48,17 @@ nav a {
   margin-bottom: 25px;
   border-radius: 18px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .pinned-badge {
@@ -63,16 +75,18 @@ nav a {
   font-size: 2rem;
   font-weight: bold;
   color: #7b4bb3;
+  margin-top: 10px;
 }
 
 .button {
   display: inline-block;
-  margin-top: 15px;
-  padding: 12px 20px;
+  margin-top: 18px;
+  padding: 12px 22px;
   background: #5b2c83;
   color: white;
   text-decoration: none;
-  border-radius: 10px;
+  border-radius: 12px;
+  font-weight: bold;
 }
 
 </style>
@@ -95,54 +109,114 @@ nav a {
 
 <div class="container">
 
-<div class="card">
-  <div class="pinned-badge">📌 Featured Event</div>
-  <h2>50th Anniversary Celebration</h2>
+  <div class="card">
 
-  <p>Family Fun Day at The Scout Zone, Powick</p>
+    <div class="pinned-badge">
+      📌 Featured Event
+    </div>
 
-  <div class="countdown" id="countdown"></div>
+    <h2>50th Anniversary Celebration</h2>
 
-  <a class="button" href="events/50th-anniversary.html">View Event</a>
-</div>
+    <p>
+      Family Fun Day at The Scout Zone, Powick
+    </p>
 
-<div class="card">
-  <h2>Upcoming Events</h2>
-  <p><b>30 May</b> — Cardboard Canoe Challenge</p>
-  <p><b>14 June</b> — District Camp</p>
+    <div class="countdown" id="countdown"></div>
 
-  <a class="button" href="events/index.html">See All Events</a>
-</div>
+    <a class="button" href="events/50th-anniversary.html">
+      View Event
+    </a>
 
-<div class="card">
-  <h2>Scout Discounts</h2>
-  <p>Up to 10% off selected outdoor retailers for members and parents.</p>
-</div>
+  </div>
 
-<div class="card">
-  <h2>Sections</h2>
-  <p>Beavers, Cubs and Scouts groups information.</p>
-</div>
+  <div class="card">
+
+    <h2>Upcoming Events</h2>
+
+    <p>
+      <strong>30 May</strong> — Cardboard Canoe Challenge
+    </p>
+
+    <p>
+      <strong>14 June</strong> — District Camp
+    </p>
+
+    <a class="button" href="events/index.html">
+      See All Events
+    </a>
+
+  </div>
+
+  <a class="card-link" href="discounts/index.html">
+
+    <div class="card">
+
+      <h2>Scout Discounts</h2>
+
+      <p>
+        Up to 10% off selected outdoor retailers
+        for members and parents.
+      </p>
+
+      <span class="button">
+        See More →
+      </span>
+
+    </div>
+
+  </a>
+
+  <a class="card-link" href="sections/index.html">
+
+    <div class="card">
+
+      <h2>Sections</h2>
+
+      <p>
+        Beavers, Cubs and Scouts groups information.
+      </p>
+
+      <span class="button">
+        See More →
+      </span>
+
+    </div>
+
+  </a>
 
 </div>
 
 <script>
+
 const target = new Date("2026-07-05T13:00:00Z").getTime();
 
-function update(){
+function update() {
+
   const now = new Date().getTime();
+
   const diff = target - now;
 
-  const d = Math.floor(diff / (1000*60*60*24));
-  const h = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
-  const m = Math.floor((diff % (1000*60*60))/(1000*60));
+  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+  const h = Math.floor(
+    (diff % (1000 * 60 * 60 * 24)) /
+    (1000 * 60 * 60)
+  );
+
+  const m = Math.floor(
+    (diff % (1000 * 60 * 60)) /
+    (1000 * 60)
+  );
 
   document.getElementById("countdown").innerText =
-  `${d} Days : ${h} Hours : ${m} Mins`;
+    `${d} Days : ${h} Hours : ${m} Mins`;
+
 }
 
 update();
-setInterval(update,1000);
+
+setInterval(update, 1000);
+
 </script>
 
 </body>
