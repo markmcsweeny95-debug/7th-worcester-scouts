@@ -2,6 +2,7 @@ backend:
   name: github
   repo: markmcsweeny95-debug/7th-worcester-scouts
   branch: main
+  auth_type: implicit
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
