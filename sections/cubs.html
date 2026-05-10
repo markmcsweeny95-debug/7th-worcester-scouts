@@ -60,13 +60,17 @@ h2 {
   height: 24px;
   border-radius: 999px;
   background: #e0e0e0;
-  margin-top: 10px;
+  overflow: hidden;
+  margin-top: 8px;
+  margin-bottom: 15px;
 }
 
 .fill {
   height: 100%;
   border-radius: 999px;
   background: #2e7d32;
+  width: 0%;
+  transition: width 0.5s ease;
 }
 
 .button {
@@ -99,8 +103,8 @@ footer {
 
   <p>
     <a style="color:white; font-weight:bold; text-decoration:underline;"
-    href="mailto:gsl@7thworcesterscouts.org?subject=Joining%20Cubs&body=Hi%2C%0A%0AI%20am%20interested%20in%20Cubs.%0A%0AThanks%2C">
-    Join Us →
+       href="mailto:gsl@7thworcesterscouts.org?subject=Joining%20Cubs&body=Hi%2C%0A%0AI%20am%20interested%20in%20Cubs.%0A%0AThanks%2C">
+      Join Us →
     </a>
   </p>
 </header>
@@ -115,27 +119,26 @@ footer {
 
 <div class="container">
 
+  <!-- MEETING INFO -->
   <div class="card">
     <h2>Meeting Times</h2>
     <p>Monday Evenings<br>6:30 PM – 8:00 PM</p>
   </div>
 
+  <!-- LIVE POINTS -->
   <div class="card">
-    <h2>Cub Pack Points</h2>
+    <h2>Cub Pack Points (Live)</h2>
 
-    <p><b>Eagles</b> — 120 points</p>
-    <div class="bar"><div class="fill" style="width:80%"></div></div>
+    <p><b>Eagles</b> — <span id="eaglesPoints">Loading...</span> points</p>
+    <div class="bar"><div id="eaglesBar" class="fill"></div></div>
 
-    <br>
-
-    <p><b>Falcons</b> — 105 points</p>
-    <div class="bar"><div class="fill" style="width:70%"></div></div>
+    <p><b>Falcons</b> — <span id="falconsPoints">Loading...</span> points</p>
+    <div class="bar"><div id="falconsBar" class="fill"></div></div>
 
     <a class="button"
-    href="mailto:gsl@7thworcesterscouts.org?subject=Joining%20Cubs&body=Hi%2C%0A%0AI%20am%20interested%20in%20Cubs.%0A%0AThanks%2C">
-    Join Cubs 📩
+       href="mailto:gsl@7thworcesterscouts.org?subject=Joining%20Cubs&body=Hi%2C%0A%0AI%20am%20interested%20in%20Cubs.%0A%0AThanks%2C">
+      Join Cubs 📩
     </a>
-
   </div>
 
 </div>
@@ -143,6 +146,50 @@ footer {
 <footer>
   © 2026 7th Worcester Scout Group
 </footer>
+
+<!-- GOOGLE SHEETS LIVE DATA -->
+<script>
+
+async function loadCubs() {
+
+  try {
+    const res = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFILlB4hbC-71RRxDWJ9B8fzsZOk-ctYnPiNnNoDO3Sw9ZBqWvoIj1D_2hxlMy_3qF7y7QPopAiV_/gviz/tq?tqx=out:json");
+
+    const text = await res.text();
+
+    // Google wraps JSON weirdly → clean it
+    const json = JSON.parse(text.substring(47).slice(0, -2));
+
+    const rows = json.table.rows;
+
+    let eagles = 0;
+    let falcons = 0;
+
+    rows.forEach(r => {
+
+      const pack = r.c[0]?.v;
+      const points = r.c[1]?.v;
+
+      if (pack === "Eagles") eagles = points;
+      if (pack === "Falcons") falcons = points;
+
+    });
+
+    document.getElementById("eaglesPoints").innerText = eagles;
+    document.getElementById("falconsPoints").innerText = falcons;
+
+    // bars (max 150 scale so it doesn't break layout)
+    document.getElementById("eaglesBar").style.width = Math.min((eagles / 150) * 100, 100) + "%";
+    document.getElementById("falconsBar").style.width = Math.min((falcons / 150) * 100, 100) + "%";
+
+  } catch (err) {
+    console.error("Failed to load Cubs data", err);
+  }
+}
+
+loadCubs();
+
+</script>
 
 </body>
 </html>
