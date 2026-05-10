@@ -25,6 +25,9 @@
       background: #1b5e20;
       padding: 14px;
       text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     nav a {
@@ -48,20 +51,42 @@
       margin-bottom: 25px;
     }
 
-    table {
+    h2 {
+      color: #2e7d32;
+      margin-top: 0;
+    }
+
+    .pack {
+      margin-bottom: 28px;
+    }
+
+    .pack-name {
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 1.05rem;
+    }
+
+    .bar-background {
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
+      height: 30px;
+      background: #e0e0e0;
+      border-radius: 999px;
+      overflow: hidden;
     }
 
-    th, td {
-      padding: 14px;
-      border-bottom: 1px solid #ddd;
-      text-align: left;
+    .bar {
+      height: 100%;
+      border-radius: 999px;
     }
 
-    th {
-      background: #f4f4f4;
+    .eagles-bar {
+      width: 80%;
+      background: #2e7d32;
+    }
+
+    .falcons-bar {
+      width: 70%;
+      background: #66bb6a;
     }
 
     footer {
@@ -94,7 +119,7 @@
     <h2>Meeting Times</h2>
 
     <p>
-      Monday evenings<br>
+      Monday Evenings<br>
       6:30 PM – 8:00 PM
     </p>
 
@@ -104,26 +129,32 @@
 
     <h2>Cub Pack Points</h2>
 
-    <table>
-      <tr>
-        <th>Pack</th>
-        <th>Points</th>
-      </tr>
+    <div class="pack">
 
-      <tr>
-        <td>Eagles</td>
-        <td contenteditable="true">120</td>
-      </tr>
+      <div class="pack-name">
+        Eagles — 120 Points
+      </div>
 
-      <tr>
-        <td>Falcons</td>
-        <td contenteditable="true">105</td>
-      </tr>
+      <div class="bar-background">
+        <div class="bar eagles-bar"></div>
+      </div>
 
-    </table>
+    </div>
 
-    <p style="margin-top: 20px; opacity: 0.7;">
-      Leaders can click the points and edit them directly.
+    <div class="pack">
+
+      <div class="pack-name">
+        Falcons — 105 Points
+      </div>
+
+      <div class="bar-background">
+        <div class="bar falcons-bar"></div>
+      </div>
+
+    </div>
+
+    <p style="margin-top:20px; opacity:0.7;">
+      Leaders can easily update points directly in the code.
     </p>
 
   </div>
