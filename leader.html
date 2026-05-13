@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Leader Dashboard | 7th Worcester Scouts</title>
+
+<style>
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #faf9ff;
+  color: #222;
+}
+
+/* HEADER (same style as site) */
+header {
+  background: linear-gradient(135deg, #5b2c83, #7b4bb3);
+  color: white;
+  padding: 70px 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.6rem;
+}
+
+header p {
+  opacity: 0.9;
+}
+
+/* NAV */
+nav {
+  background: #4a2268;
+  padding: 14px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 14px;
+  font-weight: bold;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+/* CARDS */
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  margin-bottom: 25px;
+}
+
+h2 {
+  color: #5b2c83;
+  margin-top: 0;
+}
+
+/* INPUTS */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+/* BUTTON */
+button {
+  background: #5b2c83;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #4a2268;
+}
+
+/* SMALL TEXT */
+small {
+  opacity: 0.7;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Leader Dashboard</h1>
+  <p>7th Worcester Scout Group Admin Panel</p>
+</header>
+
+<nav>
+  <a href="../index.html">Home</a>
+  <a href="../events/index.html">Events</a>
+  <a href="../sections/index.html">Sections</a>
+  <a href="../discounts/index.html">Discounts</a>
+  <a href="admin.html">Logout</a>
+</nav>
+
+<div class="container">
+
+  <!-- CUBS -->
+  <div class="card">
+
+    <h2>Cubs Points</h2>
+
+    <input id="eagles" placeholder="Eagles points">
+    <input id="falcons" placeholder="Falcons points">
+
+    <button onclick="saveCubs()">Save Cubs Points</button>
+
+    <small>Updates live on Cubs page</small>
+
+  </div>
+
+  <!-- EVENTS -->
+  <div class="card">
+
+    <h2>Events (Simple Editor)</h2>
+
+    <textarea id="eventsData" rows="10" style="width:100%; padding:10px; border-radius:10px;">
+[
+  {
+    "title": "Example Event",
+    "date": "2026-06-14",
+    "description": "Camp weekend"
+  }
+]
+    </textarea>
+
+    <button onclick="saveEvents()">Save Events</button>
+
+    <small>Replace full list to update events</small>
+
+  </div>
+
+</div>
+
+<script>
+
+const API =
+"https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
+
+const PASSWORD = "scout-admin-2026";
+
+function saveCubs() {
+
+  fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      type: "cubs",
+      password: PASSWORD,
+      eagles: document.getElementById("eagles").value,
+      falcons: document.getElementById("falcons").value
+    })
+  })
+  .then(r => r.json())
+  .then(d => alert(d.success ? "Saved Cubs!" : d.error));
+
+}
+
+function saveEvents() {
+
+  let events;
+
+  try {
+    events = JSON.parse(document.getElementById("eventsData").value);
+  } catch(e) {
+    alert("Invalid JSON");
+    return;
+  }
+
+  fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      type: "events",
+      password: PASSWORD,
+      events: events
+    })
+  })
+  .then(r => r.json())
+  .then(d => alert(d.success ? "Saved Events!" : d.error));
+
+}
+
+</script>
+
+</body>
+</html>
