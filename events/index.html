@@ -15,6 +15,7 @@ body {
   color: #222;
 }
 
+/* HEADER */
 header {
   background: linear-gradient(135deg, #5b2c83, #7b4bb3);
   color: white;
@@ -22,13 +23,13 @@ header {
   text-align: center;
 }
 
+/* NAV */
 nav {
   background: #4a2268;
   padding: 14px;
   text-align: center;
   position: sticky;
   top: 0;
-  z-index: 1000;
 }
 
 nav a {
@@ -38,38 +39,46 @@ nav a {
   font-weight: bold;
 }
 
+/* CONTAINER */
 .container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto;
   padding: 40px 20px;
 }
 
-.card {
+/* EVENT CARD */
+.eventCard {
   background: white;
-  padding: 30px;
-  margin-bottom: 20px;
+  padding: 28px;
   border-radius: 18px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  margin-bottom: 22px;
 }
 
-h2 {
+.eventCard h2 {
   color: #5b2c83;
   margin-top: 0;
 }
 
 .date {
-  opacity: 0.7;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
+  opacity: 0.7;
 }
 
-.desc {
-  margin-top: 10px;
+/* FOOTER */
+footer {
+  background: #5b2c83;
+  color: white;
+  text-align: center;
+  padding: 24px;
+  margin-top: 40px;
 }
 
 .loading {
+  text-align: center;
   opacity: 0.6;
-  font-style: italic;
+  font-size: 1.1rem;
 }
 
 </style>
@@ -78,73 +87,101 @@ h2 {
 <body>
 
 <header>
-  <h1>Events</h1>
+  <h1>Upcoming Events</h1>
   <p>7th Worcester Scout Group</p>
 </header>
 
 <nav>
-  <a href="../index.html">Home</a>
-  <a href="../sections/index.html">Sections</a>
-  <a href="../discounts/index.html">Discounts</a>
-  <a href="../joining.html">Join</a>
-  <a href="../contact/index.html">Contact</a>
+  <a href="/7th-worcester-scouts/index.html">Home</a>
+  <a href="/7th-worcester-scouts/sections/index.html">Sections</a>
+  <a href="/7th-worcester-scouts/discounts/index.html">Discounts</a>
+  <a href="/7th-worcester-scouts/contact/index.html">Contact</a>
 </nav>
 
-<div class="container" id="eventsContainer">
+<div class="container">
 
-  <div class="card loading">
-    Loading events...
+  <div id="events">
+
+    <p class="loading">
+      Loading events...
+    </p>
+
   </div>
 
 </div>
 
+<footer>
+  © 2026 7th Worcester Scout Group
+</footer>
+
 <script>
 
-const API_URL =
+const API =
 "https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
 
-async function loadEvents() {
+fetch(API)
 
-  try {
+.then(r => r.json())
 
-    const res = await fetch(API_URL);
-    const data = await res.json();
+.then(data => {
 
-    const events = data.events;
+  const container =
+    document.getElementById("events");
 
-    let html = "";
+  container.innerHTML = "";
 
-    // skip header row (index 0)
-    for (let i = 1; i < events.length; i++) {
+  if (!data.events || data.events.length <= 1) {
 
-      const title = events[i][0] || "";
-      const date = events[i][1] || "";
-      const desc = events[i][2] || "";
+    container.innerHTML =
+      "<p>No events yet.</p>";
 
-      html += `
-        <div class="card">
-          <div class="date">${date}</div>
-          <h2>${title}</h2>
-          <div class="desc">${desc}</div>
-        </div>
-      `;
-
-    }
-
-    document.getElementById("eventsContainer").innerHTML = html;
-
-  } catch (err) {
-
-    console.error(err);
-
-    document.getElementById("eventsContainer").innerHTML =
-      "<div class='card'>Failed to load events.</div>";
+    return;
 
   }
 
-}
+  // Remove header row
+  let events =
+    data.events.slice(1);
 
-loadEvents();
+  // Reverse newest first
+  events.reverse();
+
+  events.forEach(event => {
+
+    const title =
+      event[0];
+
+    const date =
+      event[1];
+
+    const description =
+      event[2] || "";
+
+    const div =
+      document.createElement("div");
+
+    div.className = "eventCard";
+
+    div.innerHTML = `
+      <h2>${title}</h2>
+      <div class="date">${date}</div>
+      <p>${description}</p>
+    `;
+
+    container.appendChild(div);
+
+  });
+
+})
+
+.catch(err => {
+
+  console.error(err);
+
+  document.getElementById("events").innerHTML =
+    "<p>Failed to load events.</p>";
+
+});
 
 </script>
 
