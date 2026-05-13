@@ -4,18 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create Event | 7th Worcester Scouts</title>
+<title>Create Event | Scouts</title>
 
 <style>
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   margin: 0;
   background: #faf9ff;
-  color: #222;
 }
 
-/* HEADER */
 header {
   background: linear-gradient(135deg, #5b2c83, #7b4bb3);
   color: white;
@@ -23,39 +21,25 @@ header {
   text-align: center;
 }
 
-header h1 {
-  margin: 0;
-}
-
-header p {
-  opacity: 0.9;
-}
-
-/* NAVBAR */
 nav {
   background: #4a2268;
   padding: 14px;
   text-align: center;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
 }
 
 nav a {
   color: white;
+  margin: 0 12px;
   text-decoration: none;
-  margin: 0 14px;
   font-weight: bold;
 }
 
-/* MAIN */
 .container {
-  max-width: 750px;
+  max-width: 800px;
   margin: auto;
   padding: 40px 20px;
 }
 
-/* CARD */
 .card {
   background: white;
   padding: 30px;
@@ -63,47 +47,28 @@ nav a {
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-h2 {
-  color: #5b2c83;
-  margin-top: 0;
-}
-
-/* INPUTS */
-input,
-textarea {
+input, textarea {
   width: 100%;
-  padding: 14px;
-  margin-top: 12px;
-  margin-bottom: 20px;
+  padding: 12px;
+  margin: 10px 0;
   border-radius: 10px;
   border: 1px solid #ccc;
-  font-size: 1rem;
-  box-sizing: border-box;
 }
 
-textarea {
-  min-height: 140px;
-  resize: vertical;
-}
-
-/* BUTTON */
 button {
   background: #5b2c83;
   color: white;
   border: none;
-  padding: 14px 22px;
-  border-radius: 12px;
-  font-weight: bold;
+  padding: 12px 18px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: 0.2s;
+  font-weight: bold;
 }
 
 button:hover {
   background: #4a2268;
-  transform: translateY(-2px);
 }
 
-/* TOAST */
 #toast {
   position: fixed;
   bottom: 30px;
@@ -111,25 +76,15 @@ button:hover {
   transform: translateX(-50%);
   background: #5b2c83;
   color: white;
-  padding: 14px 22px;
+  padding: 12px 20px;
   border-radius: 12px;
   opacity: 0;
-  transition: 0.3s ease;
-  pointer-events: none;
+  transition: 0.3s;
 }
 
 #toast.show {
   opacity: 1;
   transform: translateX(-50%) translateY(-10px);
-}
-
-/* FOOTER */
-footer {
-  background: #5b2c83;
-  color: white;
-  text-align: center;
-  padding: 24px;
-  margin-top: 40px;
 }
 
 </style>
@@ -139,154 +94,74 @@ footer {
 
 <header>
   <h1>Create Event</h1>
-  <p>7th Worcester Scout Group</p>
 </header>
 
 <nav>
-  <a href="/7th-worcester-scouts/index.html">Home</a>
-  <a href="/7th-worcester-scouts/leader.html">Leader Panel</a>
-  <a href="/7th-worcester-scouts/events/index.html">Events</a>
-  <a href="/7th-worcester-scouts/sections/index.html">Sections</a>
+  <a href="leader.html">Dashboard</a>
+  <a href="../events/index.html">Public Events</a>
 </nav>
 
 <div class="container">
 
-  <div class="card">
+<div class="card">
 
-    <h2>New Event</h2>
+<input id="title" placeholder="Event Title">
 
-    <input
-      type="text"
-      id="title"
-      placeholder="Event title"
-    >
+<input id="date" type="date">
 
-    <input
-      type="date"
-      id="date"
-    >
+<textarea id="desc" placeholder="Description (optional)"></textarea>
 
-    <textarea
-      id="description"
-      placeholder="Description (optional)"
-    ></textarea>
-
-    <button onclick="createEvent()">
-      Create Event →
-    </button>
-
-  </div>
+<button onclick="saveEvent()">Create Event</button>
 
 </div>
 
-<!-- TOAST -->
-<div id="toast">
-  Saved ✓
 </div>
 
-<footer>
-  © 2026 7th Worcester Scout Group
-</footer>
+<div id="toast">Saved ✓</div>
 
 <script>
 
 const API =
 "https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
 
-function createEvent() {
+function saveEvent() {
 
-  const title =
-    document.getElementById("title").value.trim();
-
-  const date =
-    document.getElementById("date").value;
-
-  const description =
-    document.getElementById("description").value.trim();
-
-  if (!title || !date) {
-
-    showToast("Enter title and date");
-
-    return;
-
-  }
+  const event = {
+    title: document.getElementById("title").value,
+    date: document.getElementById("date").value,
+    description: document.getElementById("desc").value
+  };
 
   fetch(API, {
-
     method: "POST",
-
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8"
-    },
-
     body: JSON.stringify({
-
-      type: "event",
-
+      type: "events",
       password: "scout-admin-2026",
-
-      title: title,
-
-      date: date,
-
-      description: description
-
+      events: [event]
     })
-
   })
-
-  .then(response => response.json())
-
-  .then(data => {
-
-    console.log(data);
-
-    if (data.success) {
-
+  .then(r => r.json())
+  .then(d => {
+    if (d.success) {
+      showToast("Event created ✓");
       document.getElementById("title").value = "";
       document.getElementById("date").value = "";
-      document.getElementById("description").value = "";
-
-      showToast("Event Created ✓");
-
+      document.getElementById("desc").value = "";
+    } else {
+      showToast(d.error);
     }
-
-    else {
-
-      showToast("Failed to save");
-
-    }
-
-  })
-
-  .catch(err => {
-
-    console.error(err);
-
-    showToast("Network Error");
-
   });
 
 }
 
-/* TOAST */
-
-function showToast(message) {
-
-  const toast =
-    document.getElementById("toast");
-
-  toast.innerText = message;
-
-  toast.classList.add("show");
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.innerText = msg;
+  t.classList.add("show");
 
   setTimeout(() => {
-
-    toast.classList.remove("show");
-
-  }, 2200);
-
+    t.classList.remove("show");
+  }, 2000);
 }
 
 </script>
