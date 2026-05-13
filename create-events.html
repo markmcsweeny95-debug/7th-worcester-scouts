@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Event | Scouts</title>
+
+<style>
+
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #faf9ff;
+}
+
+header {
+  background: linear-gradient(135deg, #5b2c83, #7b4bb3);
+  color: white;
+  padding: 70px 20px;
+  text-align: center;
+}
+
+nav {
+  background: #4a2268;
+  padding: 14px;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background: #5b2c83;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #4a2268;
+}
+
+#toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #5b2c83;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Create Event</h1>
+</header>
+
+<nav>
+  <a href="leader.html">Dashboard</a>
+  <a href="../events/index.html">Public Events</a>
+</nav>
+
+<div class="container">
+
+<div class="card">
+
+<input id="title" placeholder="Event Title">
+
+<input id="date" type="date">
+
+<textarea id="desc" placeholder="Description (optional)"></textarea>
+
+<button onclick="saveEvent()">Create Event</button>
+
+</div>
+
+</div>
+
+<div id="toast">Saved ✓</div>
+
+<script>
+
+const API =
+"https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
+
+function saveEvent() {
+
+  const event = {
+    title: document.getElementById("title").value,
+    date: document.getElementById("date").value,
+    description: document.getElementById("desc").value
+  };
+
+  fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      type: "events",
+      password: "scout-admin-2026",
+      events: [event]
+    })
+  })
+  .then(r => r.json())
+  .then(d => {
+    if (d.success) {
+      showToast("Event created ✓");
+      document.getElementById("title").value = "";
+      document.getElementById("date").value = "";
+      document.getElementById("desc").value = "";
+    } else {
+      showToast(d.error);
+    }
+  });
+
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.innerText = msg;
+  t.classList.add("show");
+
+  setTimeout(() => {
+    t.classList.remove("show");
+  }, 2000);
+}
+
+</script>
+
+</body>
+</html>
