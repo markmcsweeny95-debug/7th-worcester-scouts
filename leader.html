@@ -160,7 +160,14 @@ footer {
   <a href="/7th-worcester-scouts/index.html">Home Site</a>
   <a href="/7th-worcester-scouts/events/index.html">Events</a>
   <a href="/7th-worcester-scouts/sections/index.html">Sections</a>
-  <a href="/7th-worcester-scouts/create-events.html">Create Event</a>
+
+  <a
+    href="https://docs.google.com/spreadsheets/d/1tF9MfOTB6orbx495xQ0HzJeDJBqXFdO1M_88CdXwZ-E/edit?usp=sharing"
+    target="_blank"
+  >
+    Events Sheet
+  </a>
+
   <a href="/7th-worcester-scouts/discounts/index.html">Discounts</a>
   <a href="/7th-worcester-scouts/contact/index.html">Contact</a>
 </nav>
@@ -171,6 +178,11 @@ footer {
   <div class="card">
 
     <h2>Cubs Points</h2>
+
+    <p style="opacity:0.8; line-height:1.6;">
+      Use the arrows to quickly adjust pack points during meetings and activities.
+      Press save once finished to update the public Cubs leaderboard.
+    </p>
 
     <!-- EAGLES -->
     <div class="teamBlock">
@@ -245,14 +257,20 @@ footer {
   <!-- EVENTS -->
   <div class="card">
 
-    <h2>Events</h2>
+    <h2>Events Management</h2>
 
-    <p>
-      Create and manage Scout events.
+    <p style="opacity:0.8; line-height:1.6;">
+      Events are now managed directly through Google Sheets.
+      Any events added to the sheet automatically appear on the public website.
     </p>
 
-    <button onclick="location.href='/7th-worcester-scouts/create-events.html'">
-      Create Event →
+    <button
+      onclick="window.open(
+        'https://docs.google.com/spreadsheets/d/1tF9MfOTB6orbx495xQ0HzJeDJBqXFdO1M_88CdXwZ-E/edit?usp=sharing',
+        '_blank'
+      )"
+    >
+      Open Events Sheet →
     </button>
 
   </div>
@@ -298,7 +316,6 @@ fetch(API)
     return;
   }
 
-  // Remove header row
   const rows =
     data.cubs.slice(1);
 
@@ -371,6 +388,10 @@ function saveCubs() {
   fetch(API, {
 
     method: "POST",
+
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
 
     body: JSON.stringify({
 
