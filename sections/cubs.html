@@ -105,8 +105,9 @@ footer {
 
   <p>
     <a
-      style="color:white; font-weight:bold; text-decoration:underline;"
-      href="../joining.html">
+      style="color:white; font-weight:bold;"
+      href="../joining.html"
+    >
       Join Us →
     </a>
   </p>
@@ -124,7 +125,6 @@ footer {
 
 <div class="container">
 
-  <!-- MEETING INFO -->
   <div class="card">
 
     <h2>Meeting Times</h2>
@@ -136,14 +136,14 @@ footer {
 
   </div>
 
-  <!-- LIVE POINTS -->
   <div class="card">
 
-    <h2>Cub Pack Points</h2>
+    <h2>Live Cub Pack Points</h2>
 
     <p>
       <b>Eagles</b> —
-      <span id="eaglesPoints">120</span> points
+      <span id="eaglesPoints">Loading...</span>
+      points
     </p>
 
     <div class="bar">
@@ -152,16 +152,13 @@ footer {
 
     <p>
       <b>Falcons</b> —
-      <span id="falconsPoints">105</span> points
+      <span id="falconsPoints">Loading...</span>
+      points
     </p>
 
     <div class="bar">
       <div id="falconsBar" class="fill"></div>
     </div>
-
-    <a class="button" href="../joining.html">
-      Join Cubs →
-    </a>
 
   </div>
 
@@ -173,29 +170,57 @@ footer {
 
 <script>
 
-document.addEventListener("DOMContentLoaded", () => {
+const API_URL =
+"https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
 
-  const eagles =
-    localStorage.getItem("eaglesPoints") || 120;
+async function loadCubs(){
 
-  const falcons =
-    localStorage.getItem("falconsPoints") || 105;
+  try {
 
-  document.getElementById("eaglesPoints")
-    .innerText = eagles;
+    const res = await fetch(API_URL);
 
-  document.getElementById("falconsPoints")
-    .innerText = falcons;
+    const data = await res.json();
 
-  document.getElementById("eaglesBar")
-    .style.width =
-    Math.min((eagles / 150) * 100, 100) + "%";
+    const cubs = data.cubs;
 
-  document.getElementById("falconsBar")
-    .style.width =
-    Math.min((falcons / 150) * 100, 100) + "%";
+    let eagles = 0;
+    let falcons = 0;
 
-});
+    cubs.forEach(row => {
+
+      if(row[0] === "Eagles"){
+        eagles = row[1];
+      }
+
+      if(row[0] === "Falcons"){
+        falcons = row[1];
+      }
+
+    });
+
+    document.getElementById("eaglesPoints")
+      .innerText = eagles;
+
+    document.getElementById("falconsPoints")
+      .innerText = falcons;
+
+    document.getElementById("eaglesBar")
+      .style.width =
+      Math.min((eagles / 150) * 100, 100) + "%";
+
+    document.getElementById("falconsBar")
+      .style.width =
+      Math.min((falcons / 150) * 100, 100) + "%";
+
+  } catch(err){
+
+    console.error(err);
+
+  }
+
+}
+
+loadCubs();
 
 </script>
 
