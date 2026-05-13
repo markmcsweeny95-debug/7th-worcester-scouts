@@ -23,10 +23,21 @@ header {
   text-align: center;
 }
 
+header h1 {
+  margin: 0;
+}
+
+header p {
+  opacity: 0.9;
+}
+
+/* NAV */
 nav {
   background: #4a2268;
   padding: 14px;
   text-align: center;
+  position: sticky;
+  top: 0;
 }
 
 nav a {
@@ -36,12 +47,14 @@ nav a {
   font-weight: bold;
 }
 
+/* CONTAINER */
 .container {
   max-width: 1000px;
   margin: auto;
   padding: 40px 20px;
 }
 
+/* CARDS */
 .card {
   background: white;
   padding: 30px;
@@ -54,7 +67,20 @@ h2 {
   color: #5b2c83;
 }
 
-/* buttons */
+/* ROW */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.valueBox {
+  text-align: center;
+  min-width: 90px;
+}
+
+/* BUTTONS */
 button {
   background: #5b2c83;
   color: white;
@@ -69,23 +95,6 @@ button:hover {
   background: #4a2268;
 }
 
-/* point controls */
-.row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 10px 0;
-}
-
-.valueBox {
-  text-align: center;
-  min-width: 80px;
-}
-
-small {
-  opacity: 0.6;
-}
-
 /* TOAST */
 #toast {
   position: fixed;
@@ -96,14 +105,18 @@ small {
   color: white;
   padding: 12px 20px;
   border-radius: 12px;
-  font-weight: bold;
   opacity: 0;
   transition: 0.3s;
+  pointer-events: none;
 }
 
 #toast.show {
   opacity: 1;
   transform: translateX(-50%) translateY(-10px);
+}
+
+small {
+  opacity: 0.6;
 }
 
 </style>
@@ -113,20 +126,23 @@ small {
 
 <header>
   <h1>Leader Dashboard</h1>
-  <p>7th Worcester Scout Group</p>
+  <p>7th Worcester Scout Group Admin Panel</p>
 </header>
 
 <nav>
-  <a href="../index.html">Home</a>
+  <a href="../index.html">Home Site</a>
   <a href="../events/index.html">Events</a>
   <a href="../sections/index.html">Sections</a>
   <a href="create-events.html">Create Event</a>
+  <a href="../discounts/index.html">Discounts</a>
+  <a href="../contact/index.html">Contact</a>
 </nav>
 
 <div class="container">
 
 <!-- CUBS -->
 <div class="card">
+
   <h2>Cubs Points</h2>
 
   <p><b>Eagles</b></p>
@@ -154,20 +170,25 @@ small {
   </div>
 
   <button onclick="saveCubs()">Save Cubs Points</button>
+
 </div>
 
 <!-- EVENTS -->
 <div class="card">
+
   <h2>Events</h2>
-  <p>Create or manage events</p>
+
+  <p>Manage Scout events and announcements</p>
 
   <button onclick="location.href='create-events.html'">
     Create New Event →
   </button>
-</div>
 
 </div>
 
+</div>
+
+<!-- TOAST -->
 <div id="toast">Saved ✓</div>
 
 <script>
@@ -185,26 +206,29 @@ let original = {
   falcons: 0
 };
 
-/* LOAD INITIAL DATA */
+/* LOAD DATA */
 fetch(API)
   .then(r => r.json())
   .then(data => {
 
     if (!data.cubs) return;
 
-    const rows = data.cubs;
+    data.cubs.forEach(r => {
 
-    rows.forEach(r => {
-      if (r[0] === "Eagles") {
-        state.eagles = original.eagles = r[1];
+      const name = r[0];
+      const value = Number(r[1]);
+
+      if (name === "Eagles") {
+        state.eagles = original.eagles = value;
       }
-      if (r[0] === "Falcons") {
-        state.falcons = original.falcons = r[1];
+
+      if (name === "Falcons") {
+        state.falcons = original.falcons = value;
       }
+
     });
 
     render();
-
   });
 
 function render() {
@@ -215,7 +239,7 @@ function render() {
   document.getElementById("falconsOriginal").innerText = original.falcons;
 }
 
-/* CHANGE POINTS */
+/* CHANGE VALUES */
 function change(team, val) {
   state[team] += val;
   render();
@@ -235,8 +259,11 @@ function saveCubs() {
   })
   .then(r => r.json())
   .then(d => {
-    if (d.success) showToast("Cubs saved ✓");
-    else showToast(d.error);
+    if (d.success) {
+      showToast("Cubs saved ✓");
+    } else {
+      showToast("Error: " + d.error);
+    }
   });
 
 }
