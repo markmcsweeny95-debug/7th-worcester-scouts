@@ -1,51 +1,224 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Admin Panel</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Leader Login | 7th Worcester Scouts</title>
+
+<style>
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #faf9ff;
+  color: #222;
+}
+
+/* HEADER */
+header {
+  background: linear-gradient(135deg, #5b2c83, #7b4bb3);
+  color: white;
+  padding: 70px 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+header p {
+  opacity: 0.9;
+}
+
+/* NAV (same as site) */
+nav {
+  background: #4a2268;
+  padding: 14px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 14px;
+  font-weight: bold;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+/* CARD */
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  margin-bottom: 25px;
+}
+
+/* INPUTS */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+button {
+  background: #5b2c83;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #4a2268;
+}
+
+/* STATUS */
+#msg {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* HIDDEN DASHBOARD */
+#dashboard {
+  display: none;
+}
+
+.section-title {
+  color: #5b2c83;
+  margin-top: 0;
+}
+
+</style>
 </head>
 
 <body>
 
-<h1>Scout Admin</h1>
+<header>
+  <h1>Leader Portal</h1>
+  <p>7th Worcester Scout Group Admin Access</p>
+</header>
 
-<input id="password" placeholder="Password"><br><br>
+<nav>
+  <a href="index.html">Login</a>
+  <a href="../index.html">Home Site</a>
+</nav>
 
-<h2>Cubs Points</h2>
+<div class="container">
 
-Eagles:
-<input id="eagles"><br><br>
+  <!-- LOGIN -->
+  <div class="card" id="loginBox">
 
-Falcons:
-<input id="falcons"><br><br>
+    <h2 class="section-title">Login</h2>
 
-<button onclick="save()">Save</button>
+    <input type="password" id="password" placeholder="Enter leader password">
 
-<p id="msg"></p>
+    <button onclick="login()">Login</button>
+
+    <p id="msg"></p>
+
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard">
+
+    <div class="card">
+
+      <h2 class="section-title">Cubs Points</h2>
+
+      <input id="eagles" placeholder="Eagles points">
+      <input id="falcons" placeholder="Falcons points">
+
+      <button onclick="saveCubs()">Save Cubs</button>
+
+    </div>
+
+    <div class="card">
+
+      <h2 class="section-title">Events</h2>
+
+      <p style="opacity:0.7;">
+        (This will be upgraded to full editor next step)
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
 
 <script>
 
 const API =
 "https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
 
-async function save() {
+let PASSWORD = "";
 
-  const res = await fetch(API, {
+function login() {
+
+  const pass = document.getElementById("password").value;
+
+  if (!pass) {
+    document.getElementById("msg").innerText = "Enter password";
+    return;
+  }
+
+  PASSWORD = pass;
+
+  // simple check by trying to fetch data
+  fetch(API)
+    .then(res => res.json())
+    .then(() => {
+
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+
+      document.getElementById("msg").innerText = "";
+
+    })
+    .catch(() => {
+      document.getElementById("msg").innerText = "Login failed";
+    });
+
+}
+
+function saveCubs() {
+
+  fetch(API, {
     method: "POST",
     body: JSON.stringify({
       type: "cubs",
-      password: document.getElementById("password").value,
+      password: PASSWORD,
       eagles: document.getElementById("eagles").value,
       falcons: document.getElementById("falcons").value
     })
+  })
+  .then(res => res.json())
+  .then(data => {
+
+    if (data.success) {
+      alert("Saved successfully!");
+    } else {
+      alert("Error: " + data.error);
+    }
+
   });
-
-  const data = await res.json();
-
-  if (data.success) {
-    document.getElementById("msg").innerText = "Saved!";
-  } else {
-    document.getElementById("msg").innerText = "Failed: " + data.error;
-  }
 
 }
 
