@@ -4,14 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create Event | Scouts</title>
+<title>Create Event | 7th Worcester Scouts</title>
 
 <style>
 
 body {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   margin: 0;
   background: #faf9ff;
+  color: #222;
 }
 
 header {
@@ -29,13 +30,13 @@ nav {
 
 nav a {
   color: white;
-  margin: 0 12px;
   text-decoration: none;
+  margin: 0 14px;
   font-weight: bold;
 }
 
 .container {
-  max-width: 800px;
+  max-width: 700px;
   margin: auto;
   padding: 40px 20px;
 }
@@ -47,28 +48,50 @@ nav a {
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-input, textarea {
+h2 {
+  color: #5b2c83;
+}
+
+input,
+textarea {
   width: 100%;
-  padding: 12px;
-  margin: 10px 0;
+  padding: 14px;
+  margin-top: 12px;
+  margin-bottom: 20px;
   border-radius: 10px;
   border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
 }
 
 button {
   background: #5b2c83;
   color: white;
   border: none;
-  padding: 12px 18px;
-  border-radius: 10px;
-  cursor: pointer;
+  padding: 14px 22px;
+  border-radius: 12px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 button:hover {
   background: #4a2268;
 }
 
+footer {
+  background: #5b2c83;
+  color: white;
+  text-align: center;
+  padding: 24px;
+  margin-top: 40px;
+}
+
+/* TOAST */
 #toast {
   position: fixed;
   bottom: 30px;
@@ -76,10 +99,11 @@ button:hover {
   transform: translateX(-50%);
   background: #5b2c83;
   color: white;
-  padding: 12px 20px;
+  padding: 14px 22px;
   border-radius: 12px;
   opacity: 0;
   transition: 0.3s;
+  pointer-events: none;
 }
 
 #toast.show {
@@ -94,74 +118,118 @@ button:hover {
 
 <header>
   <h1>Create Event</h1>
+  <p>7th Worcester Scout Group</p>
 </header>
 
 <nav>
-  <a href="leader.html">Dashboard</a>
-  <a href="../events/index.html">Public Events</a>
+  <a href="/7th-worcester-scouts/index.html">Home</a>
+  <a href="/7th-worcester-scouts/leader.html">Leader Panel</a>
+  <a href="/7th-worcester-scouts/events/index.html">Events</a>
 </nav>
 
 <div class="container">
 
-<div class="card">
+  <div class="card">
 
-<input id="title" placeholder="Event Title">
+    <h2>New Event</h2>
 
-<input id="date" type="date">
+    <input
+      type="text"
+      id="title"
+      placeholder="Event title"
+    >
 
-<textarea id="desc" placeholder="Description (optional)"></textarea>
+    <input
+      type="date"
+      id="date"
+    >
 
-<button onclick="saveEvent()">Create Event</button>
+    <textarea
+      id="description"
+      placeholder="Description (optional)"
+    ></textarea>
 
-</div>
+    <button onclick="createEvent()">
+      Create Event →
+    </button>
+
+  </div>
 
 </div>
 
 <div id="toast">Saved ✓</div>
+
+<footer>
+  © 2026 7th Worcester Scout Group
+</footer>
 
 <script>
 
 const API =
 "https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
 
-function saveEvent() {
+function createEvent() {
 
-  const event = {
-    title: document.getElementById("title").value,
-    date: document.getElementById("date").value,
-    description: document.getElementById("desc").value
-  };
+  const title =
+    document.getElementById("title").value;
+
+  const date =
+    document.getElementById("date").value;
+
+  const description =
+    document.getElementById("description").value;
+
+  if (!title || !date) {
+    showToast("Enter title and date");
+    return;
+  }
 
   fetch(API, {
     method: "POST",
     body: JSON.stringify({
-      type: "events",
+      type: "event",
       password: "scout-admin-2026",
-      events: [event]
+      title: title,
+      date: date,
+      description: description
     })
   })
+
   .then(r => r.json())
-  .then(d => {
-    if (d.success) {
-      showToast("Event created ✓");
+
+  .then(data => {
+
+    if (data.success) {
+
       document.getElementById("title").value = "";
       document.getElementById("date").value = "";
-      document.getElementById("desc").value = "";
+      document.getElementById("description").value = "";
+
+      showToast("Event Created ✓");
+
     } else {
-      showToast(d.error);
+
+      showToast("Error");
+
     }
+
   });
 
 }
 
-function showToast(msg) {
-  const t = document.getElementById("toast");
-  t.innerText = msg;
-  t.classList.add("show");
+function showToast(message) {
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.innerText = message;
+
+  toast.classList.add("show");
 
   setTimeout(() => {
-    t.classList.remove("show");
-  }, 2000);
+    toast.classList.remove("show");
+  }, 2200);
+
 }
 
 </script>
