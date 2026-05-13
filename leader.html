@@ -31,13 +31,14 @@ header p {
   opacity: 0.9;
 }
 
-/* NAV */
+/* NAVBAR */
 nav {
   background: #4a2268;
   padding: 14px;
   text-align: center;
   position: sticky;
   top: 0;
+  z-index: 1000;
 }
 
 nav a {
@@ -47,7 +48,7 @@ nav a {
   font-weight: bold;
 }
 
-/* CONTAINER */
+/* MAIN CONTAINER */
 .container {
   max-width: 1000px;
   margin: auto;
@@ -65,19 +66,25 @@ nav a {
 
 h2 {
   color: #5b2c83;
+  margin-top: 0;
 }
 
-/* ROW */
+/* POINT ROW */
 .row {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 10px 0;
+  margin: 14px 0;
 }
 
 .valueBox {
+  min-width: 100px;
   text-align: center;
-  min-width: 90px;
+}
+
+.score {
+  font-size: 1.4rem;
+  font-weight: bold;
 }
 
 /* BUTTONS */
@@ -85,14 +92,16 @@ button {
   background: #5b2c83;
   color: white;
   border: none;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
+  padding: 10px 16px;
+  border-radius: 12px;
   font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 button:hover {
   background: #4a2268;
+  transform: translateY(-2px);
 }
 
 /* TOAST */
@@ -103,11 +112,11 @@ button:hover {
   transform: translateX(-50%);
   background: #5b2c83;
   color: white;
-  padding: 12px 20px;
+  padding: 14px 22px;
   border-radius: 12px;
   opacity: 0;
-  transition: 0.3s;
   pointer-events: none;
+  transition: 0.3s ease;
 }
 
 #toast.show {
@@ -115,8 +124,17 @@ button:hover {
   transform: translateX(-50%) translateY(-10px);
 }
 
+/* FOOTER */
+footer {
+  background: #5b2c83;
+  color: white;
+  text-align: center;
+  padding: 24px;
+  margin-top: 40px;
+}
+
 small {
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 </style>
@@ -130,73 +148,95 @@ small {
 </header>
 
 <nav>
-  <a href="index.html">Home Site</a>
-  <a href="events/index.html">Events</a>
-  <a href="sections/index.html">Sections</a>
-  <a href="create-events.html">Create Event</a>
-  <a href="discounts/index.html">Discounts</a>
-  <a href="contact/index.html">Contact</a>
+  <a href="/7th-worcester-scouts/index.html">Home Site</a>
+  <a href="/7th-worcester-scouts/events/index.html">Events</a>
+  <a href="/7th-worcester-scouts/sections/index.html">Sections</a>
+  <a href="/7th-worcester-scouts/create-events.html">Create Event</a>
+  <a href="/7th-worcester-scouts/discounts/index.html">Discounts</a>
+  <a href="/7th-worcester-scouts/contact/index.html">Contact</a>
 </nav>
 
 <div class="container">
 
-<!-- CUBS -->
-<div class="card">
+  <!-- CUB POINTS -->
+  <div class="card">
 
-  <h2>Cubs Points</h2>
+    <h2>Cubs Points</h2>
 
-  <p><b>Eagles</b></p>
+    <!-- EAGLES -->
+    <p><b>Eagles</b></p>
 
-  <div class="row">
-    <button onclick="change('eagles', -1)">⬇</button>
+    <div class="row">
 
-    <div class="valueBox">
-      <div id="eagles">0</div>
-      <small>Original: <span id="eaglesOriginal">0</span></small>
+      <button onclick="change('eagles', -1)">⬇</button>
+
+      <div class="valueBox">
+        <div id="eagles" class="score">0</div>
+        <small>
+          Original:
+          <span id="eaglesOriginal">0</span>
+        </small>
+      </div>
+
+      <button onclick="change('eagles', 1)">⬆</button>
+
     </div>
 
-    <button onclick="change('eagles', 1)">⬆</button>
-  </div>
+    <!-- FALCONS -->
+    <p><b>Falcons</b></p>
 
-  <p><b>Falcons</b></p>
+    <div class="row">
 
-  <div class="row">
-    <button onclick="change('falcons', -1)">⬇</button>
+      <button onclick="change('falcons', -1)">⬇</button>
 
-    <div class="valueBox">
-      <div id="falcons">0</div>
-      <small>Original: <span id="falconsOriginal">0</span></small>
+      <div class="valueBox">
+        <div id="falcons" class="score">0</div>
+        <small>
+          Original:
+          <span id="falconsOriginal">0</span>
+        </small>
+      </div>
+
+      <button onclick="change('falcons', 1)">⬆</button>
+
     </div>
 
-    <button onclick="change('falcons', 1)">⬆</button>
+    <button onclick="saveCubs()">
+      Save Cubs Points →
+    </button>
+
   </div>
 
-  <button onclick="saveCubs()">Save Cubs Points</button>
+  <!-- EVENTS -->
+  <div class="card">
 
-</div>
+    <h2>Events</h2>
 
-<!-- EVENTS -->
-<div class="card">
+    <p>
+      Create and manage Scout events and announcements.
+    </p>
 
-  <h2>Events</h2>
+    <button onclick="location.href='/7th-worcester-scouts/create-events.html'">
+      Create Event →
+    </button>
 
-  <p>Manage Scout events and announcements</p>
-
-  <button onclick="location.href='create-events.html'">
-    Create New Event →
-  </button>
-
-</div>
+  </div>
 
 </div>
 
 <!-- TOAST -->
 <div id="toast">Saved ✓</div>
 
+<footer>
+  © 2026 7th Worcester Scout Group
+</footer>
+
 <script>
 
 const API =
 "https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
+
+const PASSWORD = "scout-admin-2026";
 
 let state = {
   eagles: 0,
@@ -208,77 +248,118 @@ let original = {
   falcons: 0
 };
 
-/* LOAD DATA */
+/* LOAD CURRENT POINTS */
 fetch(API)
   .then(r => r.json())
   .then(data => {
 
     if (!data.cubs) return;
 
-    data.cubs.forEach(r => {
+    data.cubs.forEach(row => {
 
-      const name = r[0];
-      const value = Number(r[1]);
+      const pack = row[0];
+      const points = Number(row[1]);
 
-      if (name === "Eagles") {
-        state.eagles = original.eagles = value;
+      if (pack === "Eagles") {
+        state.eagles = points;
+        original.eagles = points;
       }
 
-      if (name === "Falcons") {
-        state.falcons = original.falcons = value;
+      if (pack === "Falcons") {
+        state.falcons = points;
+        original.falcons = points;
       }
 
     });
 
     render();
+
   });
 
+/* UPDATE DISPLAY */
 function render() {
-  document.getElementById("eagles").innerText = state.eagles;
-  document.getElementById("falcons").innerText = state.falcons;
 
-  document.getElementById("eaglesOriginal").innerText = original.eagles;
-  document.getElementById("falconsOriginal").innerText = original.falcons;
+  document.getElementById("eagles").innerText =
+    state.eagles;
+
+  document.getElementById("falcons").innerText =
+    state.falcons;
+
+  document.getElementById("eaglesOriginal").innerText =
+    original.eagles;
+
+  document.getElementById("falconsOriginal").innerText =
+    original.falcons;
+
 }
 
 /* CHANGE VALUES */
-function change(team, val) {
-  state[team] += val;
+function change(team, amount) {
+
+  state[team] += amount;
+
   render();
+
 }
 
-/* SAVE CUBS */
+/* SAVE TO GOOGLE SHEETS */
 function saveCubs() {
 
   fetch(API, {
     method: "POST",
     body: JSON.stringify({
       type: "cubs",
-      password: "scout-admin-2026",
+      password: PASSWORD,
       eagles: state.eagles,
       falcons: state.falcons
     })
   })
+
   .then(r => r.json())
-  .then(d => {
-    if (d.success) {
-      showToast("Cubs saved ✓");
+
+  .then(data => {
+
+    if (data.success) {
+
+      original.eagles = state.eagles;
+      original.falcons = state.falcons;
+
+      render();
+
+      showToast("Points Saved ✓");
+
     } else {
-      showToast("Error: " + d.error);
+
+      showToast("Error saving");
+
     }
+
+  })
+
+  .catch(err => {
+
+    console.error(err);
+
+    showToast("Network error");
+
   });
 
 }
 
 /* TOAST */
-function showToast(msg) {
-  const t = document.getElementById("toast");
-  t.innerText = msg;
-  t.classList.add("show");
+function showToast(message) {
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.innerText = message;
+
+  toast.classList.add("show");
 
   setTimeout(() => {
-    t.classList.remove("show");
-  }, 2000);
+    toast.classList.remove("show");
+  }, 2200);
+
 }
 
 </script>
