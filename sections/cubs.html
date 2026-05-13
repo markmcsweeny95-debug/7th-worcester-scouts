@@ -98,15 +98,19 @@ footer {
 <body>
 
 <header>
+
   <h1>Cubs</h1>
+
   <p>7th Worcester Scout Group</p>
 
   <p>
-    <a style="color:white; font-weight:bold; text-decoration:underline;"
-       href="mailto:gsl@7thworcesterscouts.org?subject=Joining%20Cubs&body=Hi%2C%0A%0AI%20am%20interested%20in%20Cubs.%0A%0AThanks%2C">
+    <a
+      style="color:white; font-weight:bold; text-decoration:underline;"
+      href="../joining.html">
       Join Us →
     </a>
   </p>
+
 </header>
 
 <nav>
@@ -114,6 +118,7 @@ footer {
   <a href="../events/index.html">Events</a>
   <a href="../discounts/index.html">Discounts</a>
   <a href="../sections/index.html">Sections</a>
+  <a href="../joining.html">Join</a>
   <a href="../contact/index.html">Contact</a>
 </nav>
 
@@ -121,24 +126,43 @@ footer {
 
   <!-- MEETING INFO -->
   <div class="card">
+
     <h2>Meeting Times</h2>
-    <p>Monday Evenings<br>6:30 PM – 8:00 PM</p>
+
+    <p>
+      Monday Evenings<br>
+      6:30 PM – 8:00 PM
+    </p>
+
   </div>
 
   <!-- LIVE POINTS -->
   <div class="card">
-    <h2>Cub Pack Points (Live)</h2>
 
-    <p><b>Eagles</b> — <span id="eaglesPoints">Loading...</span> points</p>
-    <div class="bar"><div id="eaglesBar" class="fill"></div></div>
+    <h2>Cub Pack Points</h2>
 
-    <p><b>Falcons</b> — <span id="falconsPoints">Loading...</span> points</p>
-    <div class="bar"><div id="falconsBar" class="fill"></div></div>
+    <p>
+      <b>Eagles</b> —
+      <span id="eaglesPoints">120</span> points
+    </p>
 
-    <a class="button"
-       href="mailto:gsl@7thworcesterscouts.org?subject=Joining%20Cubs&body=Hi%2C%0A%0AI%20am%20interested%20in%20Cubs.%0A%0AThanks%2C">
-      Join Cubs 📩
+    <div class="bar">
+      <div id="eaglesBar" class="fill"></div>
+    </div>
+
+    <p>
+      <b>Falcons</b> —
+      <span id="falconsPoints">105</span> points
+    </p>
+
+    <div class="bar">
+      <div id="falconsBar" class="fill"></div>
+    </div>
+
+    <a class="button" href="../joining.html">
+      Join Cubs →
     </a>
+
   </div>
 
 </div>
@@ -147,47 +171,31 @@ footer {
   © 2026 7th Worcester Scout Group
 </footer>
 
-<!-- GOOGLE SHEETS LIVE DATA -->
 <script>
 
-async function loadCubs() {
+document.addEventListener("DOMContentLoaded", () => {
 
-  try {
-    const res = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vQrFILlB4hbC-71RRxDWJ9B8fzsZOk-ctYnPiNnNoDO3Sw9ZBqWvoIj1D_2hxlMy_3qF7y7QPopAiV_/gviz/tq?tqx=out:json");
+  const eagles =
+    localStorage.getItem("eaglesPoints") || 120;
 
-    const text = await res.text();
+  const falcons =
+    localStorage.getItem("falconsPoints") || 105;
 
-    // Google wraps JSON weirdly → clean it
-    const json = JSON.parse(text.substring(47).slice(0, -2));
+  document.getElementById("eaglesPoints")
+    .innerText = eagles;
 
-    const rows = json.table.rows;
+  document.getElementById("falconsPoints")
+    .innerText = falcons;
 
-    let eagles = 0;
-    let falcons = 0;
+  document.getElementById("eaglesBar")
+    .style.width =
+    Math.min((eagles / 150) * 100, 100) + "%";
 
-    rows.forEach(r => {
+  document.getElementById("falconsBar")
+    .style.width =
+    Math.min((falcons / 150) * 100, 100) + "%";
 
-      const pack = r.c[0]?.v;
-      const points = r.c[1]?.v;
-
-      if (pack === "Eagles") eagles = points;
-      if (pack === "Falcons") falcons = points;
-
-    });
-
-    document.getElementById("eaglesPoints").innerText = eagles;
-    document.getElementById("falconsPoints").innerText = falcons;
-
-    // bars (max 150 scale so it doesn't break layout)
-    document.getElementById("eaglesBar").style.width = Math.min((eagles / 150) * 100, 100) + "%";
-    document.getElementById("falconsBar").style.width = Math.min((falcons / 150) * 100, 100) + "%";
-
-  } catch (err) {
-    console.error("Failed to load Cubs data", err);
-  }
-}
-
-loadCubs();
+});
 
 </script>
 
