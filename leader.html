@@ -48,14 +48,14 @@ nav a {
   font-weight: bold;
 }
 
-/* MAIN CONTAINER */
+/* MAIN */
 .container {
   max-width: 1000px;
   margin: auto;
   padding: 40px 20px;
 }
 
-/* CARDS */
+/* CARD */
 .card {
   background: white;
   padding: 30px;
@@ -69,22 +69,31 @@ h2 {
   margin-top: 0;
 }
 
-/* POINT ROW */
+/* POINT CONTROLS */
+.teamBlock {
+  margin-bottom: 30px;
+}
+
 .row {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 14px 0;
+  margin-top: 12px;
 }
 
 .valueBox {
-  min-width: 100px;
+  min-width: 120px;
   text-align: center;
 }
 
 .score {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: bold;
+}
+
+.original {
+  opacity: 0.7;
+  font-size: 0.9rem;
 }
 
 /* BUTTONS */
@@ -92,7 +101,7 @@ button {
   background: #5b2c83;
   color: white;
   border: none;
-  padding: 10px 16px;
+  padding: 12px 18px;
   border-radius: 12px;
   font-weight: bold;
   cursor: pointer;
@@ -102,6 +111,10 @@ button {
 button:hover {
   background: #4a2268;
   transform: translateY(-2px);
+}
+
+.bigButton {
+  margin-top: 20px;
 }
 
 /* TOAST */
@@ -115,8 +128,8 @@ button:hover {
   padding: 14px 22px;
   border-radius: 12px;
   opacity: 0;
-  pointer-events: none;
   transition: 0.3s ease;
+  pointer-events: none;
 }
 
 #toast.show {
@@ -131,10 +144,6 @@ footer {
   text-align: center;
   padding: 24px;
   margin-top: 40px;
-}
-
-small {
-  opacity: 0.7;
 }
 
 </style>
@@ -164,44 +173,70 @@ small {
     <h2>Cubs Points</h2>
 
     <!-- EAGLES -->
-    <p><b>Eagles</b></p>
+    <div class="teamBlock">
 
-    <div class="row">
+      <h3>Eagles</h3>
 
-      <button onclick="change('eagles', -1)">⬇</button>
+      <div class="row">
 
-      <div class="valueBox">
-        <div id="eagles" class="score">0</div>
-        <small>
-          Original:
-          <span id="eaglesOriginal">0</span>
-        </small>
+        <button onclick="change('eagles', -1)">
+          ⬇
+        </button>
+
+        <div class="valueBox">
+
+          <div id="eagles" class="score">
+            0
+          </div>
+
+          <div class="original">
+            Original:
+            <span id="eaglesOriginal">0</span>
+          </div>
+
+        </div>
+
+        <button onclick="change('eagles', 1)">
+          ⬆
+        </button>
+
       </div>
-
-      <button onclick="change('eagles', 1)">⬆</button>
 
     </div>
 
     <!-- FALCONS -->
-    <p><b>Falcons</b></p>
+    <div class="teamBlock">
 
-    <div class="row">
+      <h3>Falcons</h3>
 
-      <button onclick="change('falcons', -1)">⬇</button>
+      <div class="row">
 
-      <div class="valueBox">
-        <div id="falcons" class="score">0</div>
-        <small>
-          Original:
-          <span id="falconsOriginal">0</span>
-        </small>
+        <button onclick="change('falcons', -1)">
+          ⬇
+        </button>
+
+        <div class="valueBox">
+
+          <div id="falcons" class="score">
+            0
+          </div>
+
+          <div class="original">
+            Original:
+            <span id="falconsOriginal">0</span>
+          </div>
+
+        </div>
+
+        <button onclick="change('falcons', 1)">
+          ⬆
+        </button>
+
       </div>
-
-      <button onclick="change('falcons', 1)">⬆</button>
 
     </div>
 
-    <button onclick="saveCubs()">
+    <button class="bigButton" onclick="saveCubs()">
       Save Cubs Points →
     </button>
 
@@ -213,7 +248,7 @@ small {
     <h2>Events</h2>
 
     <p>
-      Create and manage Scout events and announcements.
+      Create and manage Scout events.
     </p>
 
     <button onclick="location.href='/7th-worcester-scouts/create-events.html'">
@@ -225,7 +260,9 @@ small {
 </div>
 
 <!-- TOAST -->
-<div id="toast">Saved ✓</div>
+<div id="toast">
+  Saved ✓
+</div>
 
 <footer>
   © 2026 7th Worcester Scout Group
@@ -236,7 +273,8 @@ small {
 const API =
 "https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
 
-const PASSWORD = "scout-admin-2026";
+const PASSWORD =
+"scout-admin-2026";
 
 let state = {
   eagles: 0,
@@ -249,34 +287,57 @@ let original = {
 };
 
 /* LOAD CURRENT POINTS */
+
 fetch(API)
-  .then(r => r.json())
-  .then(data => {
 
-    if (!data.cubs) return;
+.then(r => r.json())
 
-    data.cubs.forEach(row => {
+.then(data => {
 
-      const pack = row[0];
-      const points = Number(row[1]);
+  if (!data.cubs || data.cubs.length < 3) {
+    return;
+  }
 
-      if (pack === "Eagles") {
-        state.eagles = points;
-        original.eagles = points;
-      }
+  // Remove header row
+  const rows =
+    data.cubs.slice(1);
 
-      if (pack === "Falcons") {
-        state.falcons = points;
-        original.falcons = points;
-      }
+  rows.forEach(row => {
 
-    });
+    const pack =
+      row[0];
 
-    render();
+    const points =
+      Number(row[1]);
+
+    if (pack === "Eagles") {
+
+      state.eagles = points;
+      original.eagles = points;
+
+    }
+
+    if (pack === "Falcons") {
+
+      state.falcons = points;
+      original.falcons = points;
+
+    }
 
   });
 
+  render();
+
+})
+
+.catch(err => {
+
+  console.error(err);
+
+});
+
 /* UPDATE DISPLAY */
+
 function render() {
 
   document.getElementById("eagles").innerText =
@@ -293,7 +354,8 @@ function render() {
 
 }
 
-/* CHANGE VALUES */
+/* CHANGE POINTS */
+
 function change(team, amount) {
 
   state[team] += amount;
@@ -302,17 +364,26 @@ function change(team, amount) {
 
 }
 
-/* SAVE TO GOOGLE SHEETS */
+/* SAVE POINTS */
+
 function saveCubs() {
 
   fetch(API, {
+
     method: "POST",
+
     body: JSON.stringify({
+
       type: "cubs",
+
       password: PASSWORD,
+
       eagles: state.eagles,
+
       falcons: state.falcons
+
     })
+
   })
 
   .then(r => r.json())
@@ -328,9 +399,11 @@ function saveCubs() {
 
       showToast("Points Saved ✓");
 
-    } else {
+    }
 
-      showToast("Error saving");
+    else {
+
+      showToast("Save failed");
 
     }
 
@@ -347,6 +420,7 @@ function saveCubs() {
 }
 
 /* TOAST */
+
 function showToast(message) {
 
   const toast =
@@ -357,7 +431,9 @@ function showToast(message) {
   toast.classList.add("show");
 
   setTimeout(() => {
+
     toast.classList.remove("show");
+
   }, 2200);
 
 }
