@@ -1,151 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Events | 7th Worcester Scouts</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #faf9ff;
-      color: #222;
-    }
+<title>Events | 7th Worcester Scouts</title>
 
-    .main-header {
-      background: linear-gradient(135deg, #5b2c83, #7b4bb3);
-      color: white;
-      padding: 80px 20px;
-      text-align: center;
-    }
+<style>
 
-    nav {
-      background: #4a2268;
-      padding: 14px;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #faf9ff;
+  color: #222;
+}
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 14px;
-      font-weight: bold;
-    }
+header {
+  background: linear-gradient(135deg, #5b2c83, #7b4bb3);
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+}
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 40px 20px;
-    }
+nav {
+  background: #4a2268;
+  padding: 14px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 
-    .card {
-      background: white;
-      padding: 30px;
-      margin-bottom: 25px;
-      border-radius: 18px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    }
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 14px;
+  font-weight: bold;
+}
 
-    .pinned-badge {
-      display: inline-block;
-      background: #ffe082;
-      color: #5b2c83;
-      font-weight: bold;
-      padding: 6px 12px;
-      border-radius: 999px;
-      margin-bottom: 16px;
-      font-size: 0.9rem;
-    }
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+}
 
-    h2 {
-      color: #5b2c83;
-    }
+.card {
+  background: white;
+  padding: 30px;
+  margin-bottom: 20px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
 
-    .button {
-      display: inline-block;
-      margin-top: 18px;
-      padding: 12px 22px;
-      background: #5b2c83;
-      color: white;
-      text-decoration: none;
-      border-radius: 12px;
-      font-weight: bold;
-    }
+h2 {
+  color: #5b2c83;
+  margin-top: 0;
+}
 
-    footer {
-      background: #5b2c83;
-      color: white;
-      text-align: center;
-      padding: 24px;
-      margin-top: 40px;
-    }
-  </style>
+.date {
+  opacity: 0.7;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.desc {
+  margin-top: 10px;
+}
+
+.loading {
+  opacity: 0.6;
+  font-style: italic;
+}
+
+</style>
 </head>
 
 <body>
 
-<header class="main-header">
+<header>
   <h1>Events</h1>
-  <p>Upcoming activities and announcements</p>
+  <p>7th Worcester Scout Group</p>
 </header>
 
 <nav>
   <a href="../index.html">Home</a>
-  <a href="../events/index.html">Events</a>
-  <a href="../discounts/index.html">Discounts</a>
   <a href="../sections/index.html">Sections</a>
+  <a href="../discounts/index.html">Discounts</a>
+  <a href="../joining.html">Join</a>
   <a href="../contact/index.html">Contact</a>
 </nav>
 
-<div class="container">
+<div class="container" id="eventsContainer">
 
-  <div class="card">
-
-    <div class="pinned-badge">
-      📌 Featured Event
-    </div>
-
-    <h2>50th Anniversary Family Fun Day</h2>
-
-    <p>
-      Sunday 5th July — 2 PM to 5 PM
-    </p>
-
-    <a class="button" href="50th-anniversary.html">
-      View Event
-    </a>
-
-  </div>
-
-  <div class="card">
-
-    <h2>Cardboard Canoe Challenge</h2>
-
-    <p>
-      30 May — Build and race handmade cardboard canoes.
-    </p>
-
-  </div>
-
-  <div class="card">
-
-    <h2>District Camp</h2>
-
-    <p>
-      14 June — Weekend camp with activities and challenges.
-    </p>
-
+  <div class="card loading">
+    Loading events...
   </div>
 
 </div>
 
-<footer>
-  © 2026 7th Worcester Scout Group
-</footer>
+<script>
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
+
+async function loadEvents() {
+
+  try {
+
+    const res = await fetch(API_URL);
+    const data = await res.json();
+
+    const events = data.events;
+
+    let html = "";
+
+    // skip header row (index 0)
+    for (let i = 1; i < events.length; i++) {
+
+      const title = events[i][0] || "";
+      const date = events[i][1] || "";
+      const desc = events[i][2] || "";
+
+      html += `
+        <div class="card">
+          <div class="date">${date}</div>
+          <h2>${title}</h2>
+          <div class="desc">${desc}</div>
+        </div>
+      `;
+
+    }
+
+    document.getElementById("eventsContainer").innerHTML = html;
+
+  } catch (err) {
+
+    console.error(err);
+
+    document.getElementById("eventsContainer").innerHTML =
+      "<div class='card'>Failed to load events.</div>";
+
+  }
+
+}
+
+loadEvents();
+
+</script>
 
 </body>
 </html>
