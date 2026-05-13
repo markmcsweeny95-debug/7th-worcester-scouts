@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>7th Worcester Scout Group</title>
 
 <style>
@@ -11,6 +12,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   background: #faf9ff;
+  color: #222;
 }
 
 .main-header {
@@ -20,9 +22,40 @@ body {
   text-align: center;
 }
 
+.main-header h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.main-header p {
+  font-size: 1.2rem;
+  opacity: 0.95;
+}
+
+.quick-links {
+  margin-top: 30px;
+}
+
+.quick-links a {
+  display: inline-block;
+  margin: 8px;
+  padding: 12px 22px;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.25);
+  border-radius: 12px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.quick-links a:hover {
+  background: rgba(255,255,255,0.25);
+}
+
 nav {
   background: #4a2268;
-  padding: 15px;
+  padding: 14px;
   text-align: center;
   position: sticky;
   top: 0;
@@ -44,16 +77,10 @@ nav a {
 
 .card {
   background: white;
-  padding: 30px;
+  padding: 35px;
   margin-bottom: 25px;
   border-radius: 18px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-}
-
-.card-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
 }
 
 .pinned-badge {
@@ -63,18 +90,19 @@ nav a {
   padding: 6px 12px;
   border-radius: 999px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 .countdown {
   font-size: 2rem;
   font-weight: bold;
   color: #7b4bb3;
+  margin-top: 15px;
 }
 
 .button {
   display: inline-block;
-  margin-top: 18px;
+  margin-top: 20px;
   padding: 12px 22px;
   background: #5b2c83;
   color: white;
@@ -83,100 +111,174 @@ nav a {
   font-weight: bold;
 }
 
+.button:hover {
+  opacity: 0.92;
+}
+
+footer {
+  background: #5b2c83;
+  color: white;
+  text-align: center;
+  padding: 24px;
+  margin-top: 40px;
+}
+
+@media (max-width: 700px){
+
+  .main-header h1{
+    font-size: 2.2rem;
+  }
+
+  nav a{
+    display:inline-block;
+    margin:8px;
+  }
+
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="main-header">
+<header class="main-header">
+
   <h1>7th Worcester Scout Group</h1>
+
   <p>Adventure Starts Here</p>
 
-  <p>
-    <a style="color:white; font-weight:bold; text-decoration:underline;"
-       href="mailto:gsl@7thworcesterscouts.org?subject=Joining%207th%20Worcester%20Scouts&body=Hi%2C%0A%0AI%20would%20like%20to%20join%207th%20Worcester%20Scouts.%0A%0AThanks%2C">
-      Join Us Today →
-    </a>
-  </p>
+  <div class="quick-links">
 
-</div>
+    <a href="events/index.html">Events</a>
+
+    <a href="sections/index.html">Sections</a>
+
+    <a href="discounts/index.html">Discounts</a>
+
+    <a href="joining.html">Join</a>
+
+    <a href="contact/index.html">Contact</a>
+
+  </div>
+
+</header>
 
 <nav>
   <a href="index.html">Home</a>
   <a href="events/index.html">Events</a>
   <a href="discounts/index.html">Discounts</a>
   <a href="sections/index.html">Sections</a>
+  <a href="joining.html">Join</a>
   <a href="contact/index.html">Contact</a>
 </nav>
 
 <div class="container">
 
-<div class="card">
-  <div class="pinned-badge">📌 Featured Event</div>
-
-  <h2>50th Anniversary Celebration</h2>
-
-  <p>Family Fun Day at The Scout Zone, Powick</p>
-
-  <div class="countdown" id="countdown"></div>
-
-  <a class="button" href="events/50th-anniversary.html">View Event</a>
-</div>
-
-<div class="card">
-  <h2>Upcoming Events</h2>
-
-  <p><b>30 May</b> — Cardboard Canoe Challenge</p>
-  <p><b>14 June</b> — District Camp</p>
-
-  <a class="button" href="events/index.html">See All Events</a>
-</div>
-
-<a class="card-link" href="discounts/index.html">
   <div class="card">
+
+    <div class="pinned-badge">
+      📌 Featured Event
+    </div>
+
+    <h2>50th Anniversary Family Fun Day</h2>
+
+    <p>
+      Family Fun Day at The Scout Zone, Powick
+    </p>
+
+    <div class="countdown" id="countdown"></div>
+
+    <a class="button" href="events/50th-anniversary.html">
+      View Event →
+    </a>
+
+  </div>
+
+  <div class="card">
+
+    <h2>Upcoming Events</h2>
+
+    <p><b>30 May</b> — Cardboard Canoe Challenge</p>
+
+    <p><b>14 June</b> — District Camp</p>
+
+    <a class="button" href="events/index.html">
+      See More →
+    </a>
+
+  </div>
+
+  <div class="card">
+
     <h2>Scout Discounts</h2>
-    <p>Up to 10%–20% off selected outdoor retailers.</p>
-    <span class="button">See More →</span>
-  </div>
-</a>
 
-<a class="card-link" href="sections/index.html">
+    <p>
+      Exclusive savings and outdoor retailer discounts available for Scout members and families.
+    </p>
+
+    <a class="button" href="discounts/index.html">
+      See More →
+    </a>
+
+  </div>
+
   <div class="card">
+
     <h2>Sections</h2>
-    <p>Beavers, Cubs and Scouts groups information.</p>
-    <span class="button">See More →</span>
-  </div>
-</a>
 
-<a class="card-link" href="mailto:gsl@7thworcesterscouts.org?subject=Joining%207th%20Worcester%20Scouts&body=Hi%2C%0A%0AI%20would%20like%20to%20join%207th%20Worcester%20Scouts.%0A%0AThanks%2C">
+    <p>
+      Explore Beavers, Cubs and Scouts at 7th Worcester.
+    </p>
+
+    <a class="button" href="sections/index.html">
+      See More →
+    </a>
+
+  </div>
 
   <div class="card">
-    <h2>Join Us</h2>
-    <p>Send us an enquiry to join your local Scout Group.</p>
-    <span class="button">Send Email 📩</span>
-  </div>
 
-</a>
+    <h2>Join 7th Worcester Scouts</h2>
+
+    <p>
+      Interested in joining? Learn how to apply and get in touch with our leaders.
+    </p>
+
+    <a class="button" href="joining.html">
+      Join Today →
+    </a>
+
+  </div>
 
 </div>
+
+<footer>
+  © 2026 7th Worcester Scout Group
+</footer>
 
 <script>
 
-const target = new Date("2026-07-05T13:00:00Z").getTime();
+const target = new Date("2026-07-05T14:00:00").getTime();
 
-function update() {
+function update(){
+
   const now = new Date().getTime();
+
   const diff = target - now;
 
   const d = Math.floor(diff / (1000*60*60*24));
+
   const h = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
+
   const m = Math.floor((diff % (1000*60*60))/(1000*60));
 
   document.getElementById("countdown").innerText =
-    `${d} Days : ${h} Hours : ${m} Mins`;
+  `${d} Days : ${h} Hours : ${m} Mins`;
+
 }
 
 update();
+
 setInterval(update,1000);
 
 </script>
