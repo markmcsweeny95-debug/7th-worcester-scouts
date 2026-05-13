@@ -15,7 +15,7 @@ body {
   color: #222;
 }
 
-/* HEADER (same style as site) */
+/* HEADER */
 header {
   background: linear-gradient(135deg, #5b2c83, #7b4bb3);
   color: white;
@@ -23,22 +23,10 @@ header {
   text-align: center;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 2.6rem;
-}
-
-header p {
-  opacity: 0.9;
-}
-
-/* NAV */
 nav {
   background: #4a2268;
   padding: 14px;
   text-align: center;
-  position: sticky;
-  top: 0;
 }
 
 nav a {
@@ -48,14 +36,12 @@ nav a {
   font-weight: bold;
 }
 
-/* CONTAINER */
 .container {
   max-width: 1000px;
   margin: auto;
   padding: 40px 20px;
 }
 
-/* CARDS */
 .card {
   background: white;
   padding: 30px;
@@ -66,36 +52,58 @@ nav a {
 
 h2 {
   color: #5b2c83;
-  margin-top: 0;
 }
 
-/* INPUTS */
-input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
-
-/* BUTTON */
+/* buttons */
 button {
   background: #5b2c83;
   color: white;
   border: none;
-  padding: 12px 18px;
+  padding: 10px 14px;
   border-radius: 10px;
-  font-weight: bold;
   cursor: pointer;
+  font-weight: bold;
 }
 
 button:hover {
   background: #4a2268;
 }
 
-/* SMALL TEXT */
+/* point controls */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.valueBox {
+  text-align: center;
+  min-width: 80px;
+}
+
 small {
-  opacity: 0.7;
+  opacity: 0.6;
+}
+
+/* TOAST */
+#toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #5b2c83;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: bold;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px);
 }
 
 </style>
@@ -105,101 +113,143 @@ small {
 
 <header>
   <h1>Leader Dashboard</h1>
-  <p>7th Worcester Scout Group Admin Panel</p>
+  <p>7th Worcester Scout Group</p>
 </header>
 
 <nav>
   <a href="../index.html">Home</a>
   <a href="../events/index.html">Events</a>
   <a href="../sections/index.html">Sections</a>
-  <a href="../discounts/index.html">Discounts</a>
-  <a href="admin.html">Logout</a>
+  <a href="create-events.html">Create Event</a>
 </nav>
 
 <div class="container">
 
-  <!-- CUBS -->
-  <div class="card">
+<!-- CUBS -->
+<div class="card">
+  <h2>Cubs Points</h2>
 
-    <h2>Cubs Points</h2>
+  <p><b>Eagles</b></p>
+  <div class="row">
+    <button onclick="change('eagles', -1)">⬇</button>
 
-    <input id="eagles" placeholder="Eagles points">
-    <input id="falcons" placeholder="Falcons points">
+    <div class="valueBox">
+      <div id="eagles">0</div>
+      <small>Original: <span id="eaglesOriginal">0</span></small>
+    </div>
 
-    <button onclick="saveCubs()">Save Cubs Points</button>
-
-    <small>Updates live on Cubs page</small>
-
+    <button onclick="change('eagles', 1)">⬆</button>
   </div>
 
-  <!-- EVENTS -->
-  <div class="card">
+  <p><b>Falcons</b></p>
+  <div class="row">
+    <button onclick="change('falcons', -1)">⬇</button>
 
-    <h2>Events (Simple Editor)</h2>
+    <div class="valueBox">
+      <div id="falcons">0</div>
+      <small>Original: <span id="falconsOriginal">0</span></small>
+    </div>
 
-    <textarea id="eventsData" rows="10" style="width:100%; padding:10px; border-radius:10px;">
-[
-  {
-    "title": "Example Event",
-    "date": "2026-06-14",
-    "description": "Camp weekend"
-  }
-]
-    </textarea>
-
-    <button onclick="saveEvents()">Save Events</button>
-
-    <small>Replace full list to update events</small>
-
+    <button onclick="change('falcons', 1)">⬆</button>
   </div>
+
+  <button onclick="saveCubs()">Save Cubs Points</button>
+</div>
+
+<!-- EVENTS -->
+<div class="card">
+  <h2>Events</h2>
+  <p>Create or manage events</p>
+
+  <button onclick="location.href='create-events.html'">
+    Create New Event →
+  </button>
+</div>
 
 </div>
+
+<div id="toast">Saved ✓</div>
 
 <script>
 
 const API =
 "https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
 
-const PASSWORD = "scout-admin-2026";
+let state = {
+  eagles: 0,
+  falcons: 0
+};
 
+let original = {
+  eagles: 0,
+  falcons: 0
+};
+
+/* LOAD INITIAL DATA */
+fetch(API)
+  .then(r => r.json())
+  .then(data => {
+
+    if (!data.cubs) return;
+
+    const rows = data.cubs;
+
+    rows.forEach(r => {
+      if (r[0] === "Eagles") {
+        state.eagles = original.eagles = r[1];
+      }
+      if (r[0] === "Falcons") {
+        state.falcons = original.falcons = r[1];
+      }
+    });
+
+    render();
+
+  });
+
+function render() {
+  document.getElementById("eagles").innerText = state.eagles;
+  document.getElementById("falcons").innerText = state.falcons;
+
+  document.getElementById("eaglesOriginal").innerText = original.eagles;
+  document.getElementById("falconsOriginal").innerText = original.falcons;
+}
+
+/* CHANGE POINTS */
+function change(team, val) {
+  state[team] += val;
+  render();
+}
+
+/* SAVE CUBS */
 function saveCubs() {
 
   fetch(API, {
     method: "POST",
     body: JSON.stringify({
       type: "cubs",
-      password: PASSWORD,
-      eagles: document.getElementById("eagles").value,
-      falcons: document.getElementById("falcons").value
+      password: "scout-admin-2026",
+      eagles: state.eagles,
+      falcons: state.falcons
     })
   })
   .then(r => r.json())
-  .then(d => alert(d.success ? "Saved Cubs!" : d.error));
+  .then(d => {
+    if (d.success) showToast("Cubs saved ✓");
+    else showToast(d.error);
+  });
 
 }
 
-function saveEvents() {
+/* TOAST */
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.innerText = msg;
+  t.classList.add("show");
 
-  let events;
-
-  try {
-    events = JSON.parse(document.getElementById("eventsData").value);
-  } catch(e) {
-    alert("Invalid JSON");
-    return;
-  }
-
-  fetch(API, {
-    method: "POST",
-    body: JSON.stringify({
-      type: "events",
-      password: PASSWORD,
-      events: events
-    })
-  })
-  .then(r => r.json())
-  .then(d => alert(d.success ? "Saved Events!" : d.error));
-
+  setTimeout(() => {
+    t.classList.remove("show");
+  }, 2000);
 }
 
 </script>
