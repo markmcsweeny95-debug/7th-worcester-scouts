@@ -27,18 +27,13 @@ header h1 {
   margin: 0;
 }
 
-header p {
-  opacity: 0.9;
-}
-
-/* NAVBAR */
+/* NAV */
 nav {
   background: #4a2268;
   padding: 14px;
   text-align: center;
   position: sticky;
   top: 0;
-  z-index: 1000;
 }
 
 nav a {
@@ -50,12 +45,12 @@ nav a {
 
 /* MAIN */
 .container {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: auto;
   padding: 40px 20px;
 }
 
-/* CARD */
+/* CARDS */
 .card {
   background: white;
   padding: 30px;
@@ -69,8 +64,8 @@ h2 {
   margin-top: 0;
 }
 
-/* POINT CONTROLS */
-.teamBlock {
+/* TEAM */
+.team {
   margin-bottom: 30px;
 }
 
@@ -78,22 +73,36 @@ h2 {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 12px;
-}
-
-.valueBox {
-  min-width: 120px;
-  text-align: center;
 }
 
 .score {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
+  min-width: 60px;
+  text-align: center;
   font-weight: bold;
 }
 
 .original {
   opacity: 0.7;
   font-size: 0.9rem;
+}
+
+/* INPUTS */
+input,
+textarea {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
 }
 
 /* BUTTONS */
@@ -113,8 +122,61 @@ button:hover {
   transform: translateY(-2px);
 }
 
-.bigButton {
-  margin-top: 20px;
+.red {
+  background: #d32f2f;
+}
+
+.red:hover {
+  background: #b71c1c;
+}
+
+.green {
+  background: #2e7d32;
+}
+
+.green:hover {
+  background: #1b5e20;
+}
+
+/* EVENTS */
+.eventGrid {
+  display: grid;
+  gap: 20px;
+}
+
+.eventCard {
+  position: relative;
+  background: #faf9ff;
+  border: 2px solid #eee;
+  padding: 22px;
+  border-radius: 16px;
+}
+
+.eventCard h3 {
+  margin-top: 0;
+  color: #5b2c83;
+}
+
+.deleteBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #d32f2f;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 1rem;
+}
+
+.pinTag {
+  display: inline-block;
+  background: gold;
+  color: #222;
+  font-weight: bold;
+  padding: 6px 10px;
+  border-radius: 999px;
+  margin-top: 10px;
 }
 
 /* TOAST */
@@ -128,7 +190,7 @@ button:hover {
   padding: 14px 22px;
   border-radius: 12px;
   opacity: 0;
-  transition: 0.3s ease;
+  transition: 0.3s;
   pointer-events: none;
 }
 
@@ -153,39 +215,24 @@ footer {
 
 <header>
   <h1>Leader Dashboard</h1>
-  <p>7th Worcester Scout Group Admin Panel</p>
+  <p>7th Worcester Scout Group</p>
 </header>
 
 <nav>
   <a href="/7th-worcester-scouts/index.html">Home Site</a>
   <a href="/7th-worcester-scouts/events/index.html">Events</a>
   <a href="/7th-worcester-scouts/sections/index.html">Sections</a>
-
-  <a
-    href="https://docs.google.com/spreadsheets/d/1tF9MfOTB6orbx495xQ0HzJeDJBqXFdO1M_88CdXwZ-E/edit?usp=sharing"
-    target="_blank"
-  >
-    Events Sheet
-  </a>
-
-  <a href="/7th-worcester-scouts/discounts/index.html">Discounts</a>
-  <a href="/7th-worcester-scouts/contact/index.html">Contact</a>
 </nav>
 
 <div class="container">
 
-  <!-- CUB POINTS -->
+  <!-- CUBS -->
   <div class="card">
 
     <h2>Cubs Points</h2>
 
-    <p style="opacity:0.8; line-height:1.6;">
-      Use the arrows to quickly adjust pack points during meetings and activities.
-      Press save once finished to update the public Cubs leaderboard.
-    </p>
-
     <!-- EAGLES -->
-    <div class="teamBlock">
+    <div class="team">
 
       <h3>Eagles</h3>
 
@@ -195,7 +242,7 @@ footer {
           ⬇
         </button>
 
-        <div class="valueBox">
+        <div>
 
           <div id="eagles" class="score">
             0
@@ -217,7 +264,7 @@ footer {
     </div>
 
     <!-- FALCONS -->
-    <div class="teamBlock">
+    <div class="team">
 
       <h3>Falcons</h3>
 
@@ -227,7 +274,7 @@ footer {
           ⬇
         </button>
 
-        <div class="valueBox">
+        <div>
 
           <div id="falcons" class="score">
             0
@@ -248,8 +295,41 @@ footer {
 
     </div>
 
-    <button class="bigButton" onclick="saveCubs()">
+    <button onclick="saveCubs()">
       Save Cubs Points →
+    </button>
+
+  </div>
+
+  <!-- CREATE EVENT -->
+  <div class="card">
+
+    <h2>Create Event</h2>
+
+    <p style="opacity:0.8; line-height:1.6;">
+      Add events to the public website. You can also pin one event
+      to appear featured on the homepage.
+    </p>
+
+    <input
+      type="text"
+      id="title"
+      placeholder="Event title"
+    >
+
+    <input
+      type="text"
+      id="date"
+      placeholder="10th July 2026"
+    >
+
+    <textarea
+      id="description"
+      placeholder="Event description"
+    ></textarea>
+
+    <button onclick="createEvent()">
+      Create Event →
     </button>
 
   </div>
@@ -257,27 +337,18 @@ footer {
   <!-- EVENTS -->
   <div class="card">
 
-    <h2>Events Management</h2>
+    <h2>Manage Events</h2>
 
-    <p style="opacity:0.8; line-height:1.6;">
-      Events are now managed directly through Google Sheets.
-      Any events added to the sheet automatically appear on the public website.
-    </p>
+    <div id="events" class="eventGrid">
 
-    <button
-      onclick="window.open(
-        'https://docs.google.com/spreadsheets/d/1tF9MfOTB6orbx495xQ0HzJeDJBqXFdO1M_88CdXwZ-E/edit?usp=sharing',
-        '_blank'
-      )"
-    >
-      Open Events Sheet →
-    </button>
+      <p>Loading events...</p>
+
+    </div>
 
   </div>
 
 </div>
 
-<!-- TOAST -->
 <div id="toast">
   Saved ✓
 </div>
@@ -304,40 +375,34 @@ let original = {
   falcons: 0
 };
 
-/* LOAD CURRENT POINTS */
+/* LOAD EVERYTHING */
 
-fetch(API)
+async function loadData() {
 
-.then(r => r.json())
+  const res =
+    await fetch(API);
 
-.then(data => {
+  const data =
+    await res.json();
 
-  if (!data.cubs || data.cubs.length < 3) {
-    return;
-  }
+  /* CUBS */
 
-  const rows =
+  const cubs =
     data.cubs.slice(1);
 
-  rows.forEach(row => {
+  cubs.forEach(row => {
 
-    const pack =
-      row[0];
+    if (row[0] === "Eagles") {
 
-    const points =
-      Number(row[1]);
-
-    if (pack === "Eagles") {
-
-      state.eagles = points;
-      original.eagles = points;
+      state.eagles = Number(row[1]);
+      original.eagles = Number(row[1]);
 
     }
 
-    if (pack === "Falcons") {
+    if (row[0] === "Falcons") {
 
-      state.falcons = points;
-      original.falcons = points;
+      state.falcons = Number(row[1]);
+      original.falcons = Number(row[1]);
 
     }
 
@@ -345,15 +410,15 @@ fetch(API)
 
   render();
 
-})
+  /* EVENTS */
 
-.catch(err => {
+  renderEvents(data.events);
 
-  console.error(err);
+}
 
-});
+loadData();
 
-/* UPDATE DISPLAY */
+/* RENDER CUBS */
 
 function render() {
 
@@ -371,7 +436,7 @@ function render() {
 
 }
 
-/* CHANGE POINTS */
+/* CHANGE */
 
 function change(team, amount) {
 
@@ -381,16 +446,16 @@ function change(team, amount) {
 
 }
 
-/* SAVE POINTS */
+/* SAVE CUBS */
 
-function saveCubs() {
+async function saveCubs() {
 
-  fetch(API, {
+  const res = await fetch(API, {
 
     method: "POST",
 
     headers: {
-      "Content-Type": "text/plain;charset=utf-8"
+      "Content-Type": "text/plain"
     },
 
     body: JSON.stringify({
@@ -405,44 +470,213 @@ function saveCubs() {
 
     })
 
-  })
+  });
 
-  .then(r => r.json())
+  const data =
+    await res.json();
 
-  .then(data => {
+  if (data.success) {
 
-    if (data.success) {
+    original.eagles = state.eagles;
+    original.falcons = state.falcons;
 
-      original.eagles = state.eagles;
-      original.falcons = state.falcons;
+    render();
 
-      render();
+    toast("Points Saved ✓");
 
-      showToast("Points Saved ✓");
+  }
 
-    }
+}
 
-    else {
+/* CREATE EVENT */
 
-      showToast("Save failed");
+async function createEvent() {
 
-    }
+  const title =
+    document.getElementById("title").value;
 
-  })
+  const date =
+    document.getElementById("date").value;
 
-  .catch(err => {
+  const description =
+    document.getElementById("description").value;
 
-    console.error(err);
+  const res = await fetch(API, {
 
-    showToast("Network error");
+    method: "POST",
+
+    headers: {
+      "Content-Type": "text/plain"
+    },
+
+    body: JSON.stringify({
+
+      type: "addEvent",
+
+      password: PASSWORD,
+
+      title,
+
+      date,
+
+      description
+
+    })
+
+  });
+
+  const data =
+    await res.json();
+
+  if (data.success) {
+
+    toast("Event Created ✓");
+
+    document.getElementById("title").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("description").value = "";
+
+    loadData();
+
+  }
+
+}
+
+/* RENDER EVENTS */
+
+function renderEvents(events) {
+
+  const container =
+    document.getElementById("events");
+
+  container.innerHTML = "";
+
+  const rows =
+    events.slice(1).reverse();
+
+  rows.forEach(event => {
+
+    const div =
+      document.createElement("div");
+
+    div.className = "eventCard";
+
+    div.innerHTML = `
+
+      <button
+        class="deleteBtn"
+        onclick="deleteEvent(${event[0]})"
+      >
+        ✕
+      </button>
+
+      <h3>${event[1]}</h3>
+
+      <p><b>${event[2]}</b></p>
+
+      <p>${event[3]}</p>
+
+      <button
+        class="green"
+        onclick="pinEvent(${event[0]})"
+      >
+        📌 Pin To Homepage
+      </button>
+
+      ${
+        event[4] === "YES"
+        ? `<div class="pinTag">Pinned Event</div>`
+        : ""
+      }
+
+    `;
+
+    container.appendChild(div);
 
   });
 
 }
 
+/* DELETE EVENT */
+
+async function deleteEvent(id) {
+
+  if (!confirm("Delete event?"))
+    return;
+
+  const res = await fetch(API, {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type": "text/plain"
+    },
+
+    body: JSON.stringify({
+
+      type: "deleteEvent",
+
+      password: PASSWORD,
+
+      id
+
+    })
+
+  });
+
+  const data =
+    await res.json();
+
+  if (data.success) {
+
+    toast("Event Deleted");
+
+    loadData();
+
+  }
+
+}
+
+/* PIN EVENT */
+
+async function pinEvent(id) {
+
+  const res = await fetch(API, {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type": "text/plain"
+    },
+
+    body: JSON.stringify({
+
+      type: "pinEvent",
+
+      password: PASSWORD,
+
+      id
+
+    })
+
+  });
+
+  const data =
+    await res.json();
+
+  if (data.success) {
+
+    toast("Pinned To Homepage");
+
+    loadData();
+
+  }
+
+}
+
 /* TOAST */
 
-function showToast(message) {
+function toast(message) {
 
   const toast =
     document.getElementById("toast");
