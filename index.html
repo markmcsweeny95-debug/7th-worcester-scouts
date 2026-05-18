@@ -9,33 +9,49 @@
 <style>
 
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
+  margin: 0;
   background: #faf9ff;
   color: #222;
 }
 
-/* HEADER */
-
-header {
+.main-header {
   background: linear-gradient(135deg, #5b2c83, #7b4bb3);
   color: white;
-  padding: 90px 20px;
+  padding: 80px 20px;
   text-align: center;
 }
 
-header h1 {
-  margin: 0;
+.main-header h1 {
   font-size: 3rem;
+  margin-bottom: 10px;
 }
 
-header p {
+.main-header p {
   font-size: 1.2rem;
   opacity: 0.95;
-  margin-top: 12px;
 }
 
-/* NAV */
+.quick-links {
+  margin-top: 30px;
+}
+
+.quick-links a {
+  display: inline-block;
+  margin: 8px;
+  padding: 12px 22px;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.25);
+  border-radius: 12px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.quick-links a:hover {
+  background: rgba(255,255,255,0.25);
+}
 
 nav {
   background: #4a2268;
@@ -53,75 +69,41 @@ nav a {
   font-weight: bold;
 }
 
-/* CONTAINER */
-
 .container {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: auto;
   padding: 40px 20px;
 }
 
-/* FEATURED EVENT */
-
-.featured {
-  background: linear-gradient(135deg, #ffca28, #ffd54f);
-  color: #222;
-  padding: 35px;
-  border-radius: 24px;
-  margin-bottom: 35px;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.12);
-}
-
-.featured h2 {
-  margin-top: 0;
-  font-size: 2rem;
-}
-
-.pinBadge {
-  display: inline-block;
+.card {
   background: white;
-  padding: 8px 14px;
+  padding: 35px;
+  margin-bottom: 25px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.pinned-badge {
+  display: inline-block;
+  background: #ffe082;
+  color: #5b2c83;
+  padding: 6px 12px;
   border-radius: 999px;
   font-weight: bold;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
 
-/* GRID */
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-  gap: 25px;
-}
-
-/* TILE */
-
-.tile {
-  background: white;
-  padding: 28px;
-  border-radius: 20px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  transition: 0.25s;
-}
-
-.tile:hover {
-  transform: translateY(-4px);
-}
-
-.tile h3 {
-  margin-top: 0;
-  color: #5b2c83;
-}
-
-.tile p {
-  line-height: 1.6;
-  opacity: 0.85;
+.countdown {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #7b4bb3;
+  margin-top: 15px;
 }
 
 .button {
   display: inline-block;
-  margin-top: 14px;
-  padding: 12px 18px;
+  margin-top: 20px;
+  padding: 12px 22px;
   background: #5b2c83;
   color: white;
   text-decoration: none;
@@ -130,34 +112,43 @@ nav a {
 }
 
 .button:hover {
-  background: #4a2268;
+  opacity: 0.92;
 }
-
-/* HERO BUTTONS */
-
-.heroButtons {
-  margin-top: 28px;
-}
-
-.heroButtons a {
-  display: inline-block;
-  margin: 8px;
-  padding: 14px 22px;
-  background: white;
-  color: #5b2c83;
-  text-decoration: none;
-  border-radius: 14px;
-  font-weight: bold;
-}
-
-/* FOOTER */
 
 footer {
   background: #5b2c83;
   color: white;
   text-align: center;
   padding: 24px;
-  margin-top: 50px;
+  margin-top: 40px;
+}
+
+.footer-login {
+  margin-top: 12px;
+}
+
+.footer-login a {
+  color: white;
+  opacity: 0.65;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.footer-login a:hover {
+  opacity: 1;
+}
+
+@media (max-width: 700px){
+
+  .main-header h1{
+    font-size: 2.2rem;
+  }
+
+  nav a{
+    display:inline-block;
+    margin:8px;
+  }
+
 }
 
 </style>
@@ -165,215 +156,155 @@ footer {
 
 <body>
 
-<header>
+<header class="main-header">
 
   <h1>7th Worcester Scout Group</h1>
 
-  <p>
-    Adventure, Skills and Friendship for Young People
-  </p>
+  <p>Adventure Starts Here</p>
 
-  <div class="heroButtons">
+  <div class="quick-links">
 
-    <a href="/7th-worcester-scouts/joining.html">
-      Join →
-    </a>
+    <a href="events/index.html">Events</a>
 
-    <a href="/7th-worcester-scouts/admin.html">
-      Leader Login →
-    </a>
+    <a href="sections/index.html">Sections</a>
+
+    <a href="discounts/index.html">Discounts</a>
+
+    <a href="joining.html">Join</a>
+
+    <a href="contact/index.html">Contact</a>
+
+    <a href="admin.html">Leader Login</a>
 
   </div>
 
 </header>
 
 <nav>
-
-  <a href="/7th-worcester-scouts/index.html">
-    Home
-  </a>
-
-  <a href="/7th-worcester-scouts/events/index.html">
-    Events
-  </a>
-
-  <a href="/7th-worcester-scouts/sections/index.html">
-    Sections
-  </a>
-
-  <a href="/7th-worcester-scouts/discounts/index.html">
-    Discounts
-  </a>
-
-  <a href="/7th-worcester-scouts/contact/index.html">
-    Contact
-  </a>
-
+  <a href="index.html">Home</a>
+  <a href="events/index.html">Events</a>
+  <a href="discounts/index.html">Discounts</a>
+  <a href="sections/index.html">Sections</a>
+  <a href="joining.html">Join</a>
+  <a href="contact/index.html">Contact</a>
 </nav>
 
 <div class="container">
 
-  <!-- FEATURED EVENT -->
-  <div id="featuredContainer"></div>
+  <div class="card">
 
-  <!-- MAIN GRID -->
-  <div class="grid">
-
-    <!-- JOIN -->
-    <div class="tile">
-
-      <h3>Join Scouts</h3>
-
-      <p>
-        Join our Scout group and take part in camps,
-        hikes, activities and adventures throughout the year.
-      </p>
-
-      <a
-        class="button"
-        href="/7th-worcester-scouts/joining.html"
-      >
-        Join Today →
-      </a>
-
+    <div class="pinned-badge">
+      📌 Featured Event
     </div>
 
-    <!-- EVENTS -->
-    <div class="tile">
+    <h2>50th Anniversary Family Fun Day</h2>
 
-      <h3>Upcoming Events</h3>
+    <p>
+      Family Fun Day at The Scout Zone, Powick
+    </p>
 
-      <p>
-        View upcoming camps, activities,
-        district events and special celebrations.
-      </p>
+    <div class="countdown" id="countdown"></div>
 
-      <a
-        class="button"
-        href="/7th-worcester-scouts/events/index.html"
-      >
-        View Events →
-      </a>
+    <a class="button" href="events/50th-anniversary.html">
+      View Event →
+    </a>
 
-    </div>
+  </div>
 
-    <!-- SECTIONS -->
-    <div class="tile">
+  <div class="card">
 
-      <h3>Scout Sections</h3>
+    <h2>Upcoming Events</h2>
 
-      <p>
-        Explore Beavers, Cubs, Scouts and
-        our different weekly sections.
-      </p>
+    <p><b>30 May</b> — Cardboard Canoe Challenge</p>
 
-      <a
-        class="button"
-        href="/7th-worcester-scouts/sections/index.html"
-      >
-        Explore Sections →
-      </a>
+    <p><b>14 June</b> — District Camp</p>
 
-    </div>
+    <a class="button" href="events/index.html">
+      See More →
+    </a>
 
-    <!-- DISCOUNTS -->
-    <div class="tile">
+  </div>
 
-      <h3>Member Discounts</h3>
+  <div class="card">
 
-      <p>
-        Access exclusive discounts and offers
-        available for Scout members.
-      </p>
+    <h2>Scout Discounts</h2>
 
-      <a
-        class="button"
-        href="/7th-worcester-scouts/discounts/index.html"
-      >
-        View Discounts →
-      </a>
+    <p>
+      Exclusive savings and outdoor retailer discounts available for Scout members and families.
+    </p>
 
-    </div>
+    <a class="button" href="discounts/index.html">
+      See More →
+    </a>
+
+  </div>
+
+  <div class="card">
+
+    <h2>Sections</h2>
+
+    <p>
+      Explore Beavers, Cubs and Scouts at 7th Worcester.
+    </p>
+
+    <a class="button" href="sections/index.html">
+      See More →
+    </a>
+
+  </div>
+
+  <div class="card">
+
+    <h2>Join 7th Worcester Scouts</h2>
+
+    <p>
+      Interested in joining? Learn how to apply and get in touch with our leaders.
+    </p>
+
+    <a class="button" href="joining.html">
+      Join Today →
+    </a>
 
   </div>
 
 </div>
 
 <footer>
+
   © 2026 7th Worcester Scout Group
+
+  <div class="footer-login">
+    <a href="admin.html">
+      Leader Login
+    </a>
+  </div>
+
 </footer>
 
 <script>
 
-const API =
-"https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
+const target = new Date("2026-07-05T14:00:00").getTime();
 
-/* LOAD FEATURED EVENT */
+function update(){
 
-async function loadFeatured() {
+  const now = new Date().getTime();
 
-  try {
+  const diff = target - now;
 
-    const res =
-      await fetch(API);
+  const d = Math.floor(diff / (1000*60*60*24));
 
-    const data =
-      await res.json();
+  const h = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
 
-    const events =
-      data.events.slice(1);
+  const m = Math.floor((diff % (1000*60*60))/(1000*60));
 
-    const pinned =
-      events.find(
-        e => e[4] === "YES"
-      );
-
-    if (!pinned)
-      return;
-
-    const container =
-      document.getElementById(
-        "featuredContainer"
-      );
-
-    container.innerHTML = `
-
-      <div class="featured">
-
-        <div class="pinBadge">
-          📌 Featured Event
-        </div>
-
-        <h2>${pinned[1]}</h2>
-
-        <h3>${pinned[2]}</h3>
-
-        <p>
-          ${pinned[3]}
-        </p>
-
-        <a
-          class="button"
-          href="/7th-worcester-scouts/events/index.html"
-        >
-          View All Events →
-        </a>
-
-      </div>
-
-    `;
-
-  }
-
-  catch(err) {
-
-    console.error(err);
-
-  }
+  document.getElementById("countdown").innerText =
+  `${d} Days : ${h} Hours : ${m} Mins`;
 
 }
 
-loadFeatured();
+update();
+
+setInterval(update,1000);
 
 </script>
 
