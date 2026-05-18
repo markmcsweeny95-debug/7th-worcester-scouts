@@ -8,77 +8,48 @@
 
 <style>
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #faf9ff;
-  color: #222;
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#faf9ff;
 }
 
-/* HEADER */
-header {
-  background: linear-gradient(135deg, #5b2c83, #7b4bb3);
-  color: white;
-  padding: 80px 20px;
-  text-align: center;
+header{
+  background:#5b2c83;
+  color:white;
+  padding:70px 20px;
+  text-align:center;
 }
 
-/* NAV */
-nav {
-  background: #4a2268;
-  padding: 14px;
-  text-align: center;
-  position: sticky;
-  top: 0;
+nav{
+  background:#4a2268;
+  padding:14px;
+  text-align:center;
 }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  margin: 0 14px;
-  font-weight: bold;
+nav a{
+  color:white;
+  text-decoration:none;
+  margin:0 14px;
+  font-weight:bold;
 }
 
-/* CONTAINER */
-.container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 40px 20px;
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:40px 20px;
 }
 
-/* EVENT CARD */
-.eventCard {
-  background: white;
-  padding: 28px;
-  border-radius: 18px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  margin-bottom: 22px;
+.event{
+  background:white;
+  padding:28px;
+  border-radius:18px;
+  margin-bottom:22px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
 }
 
-.eventCard h2 {
-  color: #5b2c83;
-  margin-top: 0;
-}
-
-.date {
-  font-weight: bold;
-  margin-bottom: 14px;
-  opacity: 0.7;
-}
-
-/* FOOTER */
-footer {
-  background: #5b2c83;
-  color: white;
-  text-align: center;
-  padding: 24px;
-  margin-top: 40px;
-}
-
-.loading {
-  text-align: center;
-  opacity: 0.6;
-  font-size: 1.1rem;
+.pinned{
+  border:3px solid gold;
 }
 
 </style>
@@ -88,100 +59,72 @@ footer {
 
 <header>
   <h1>Upcoming Events</h1>
-  <p>7th Worcester Scout Group</p>
 </header>
 
 <nav>
   <a href="/7th-worcester-scouts/index.html">Home</a>
-  <a href="/7th-worcester-scouts/sections/index.html">Sections</a>
-  <a href="/7th-worcester-scouts/discounts/index.html">Discounts</a>
-  <a href="/7th-worcester-scouts/contact/index.html">Contact</a>
 </nav>
 
-<div class="container">
+<div class="container" id="events">
 
-  <div id="events">
-
-    <p class="loading">
-      Loading events...
-    </p>
-
-  </div>
+  Loading events...
 
 </div>
-
-<footer>
-  © 2026 7th Worcester Scout Group
-</footer>
 
 <script>
 
 const API =
 "https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
 
-fetch(API)
+async function loadEvents(){
 
-.then(r => r.json())
+  const res =
+    await fetch(API);
 
-.then(data => {
+  const data =
+    await res.json();
+
+  const rows =
+    data.events.slice(1).reverse();
 
   const container =
     document.getElementById("events");
 
   container.innerHTML = "";
 
-  if (!data.events || data.events.length <= 1) {
+  rows.forEach(event=>{
 
-    container.innerHTML =
-      "<p>No events yet.</p>";
+    container.innerHTML += `
 
-    return;
+      <div class="event ${event[4]==="YES"?"pinned":""}">
 
-  }
+        <h2>
+          ${event[1]}
+        </h2>
 
-  // Remove header row
-  let events =
-    data.events.slice(1);
+        <h3>
+          ${event[2]}
+        </h3>
 
-  // Reverse newest first
-  events.reverse();
+        <p>
+          ${event[3]}
+        </p>
 
-  events.forEach(event => {
+        ${
+          event[4]==="YES"
+          ? "<p><b>📌 Featured Event</b></p>"
+          : ""
+        }
 
-    const title =
-      event[0];
+      </div>
 
-    const date =
-      event[1];
-
-    const description =
-      event[2] || "";
-
-    const div =
-      document.createElement("div");
-
-    div.className = "eventCard";
-
-    div.innerHTML = `
-      <h2>${title}</h2>
-      <div class="date">${date}</div>
-      <p>${description}</p>
     `;
-
-    container.appendChild(div);
 
   });
 
-})
+}
 
-.catch(err => {
-
-  console.error(err);
-
-  document.getElementById("events").innerHTML =
-    "<p>Failed to load events.</p>";
-
-});
+loadEvents();
 
 </script>
 
