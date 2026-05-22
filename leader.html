@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Leader Dashboard | 7th Worcester Scouts</title>
+<title>Leader Dashboard</title>
 
 <style>
 
@@ -12,7 +12,6 @@ body{
   font-family:Arial,sans-serif;
   margin:0;
   background:#faf9ff;
-  color:#222;
 }
 
 header{
@@ -49,35 +48,7 @@ nav a{
   margin-bottom:25px;
 }
 
-h2{
-  color:#5b2c83;
-  margin-top:0;
-}
-
-.team{
-  margin-bottom:28px;
-}
-
-.row{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.score{
-  font-size:1.7rem;
-  font-weight:bold;
-  min-width:70px;
-  text-align:center;
-}
-
-.original{
-  opacity:0.7;
-  font-size:0.9rem;
-}
-
-input,
-textarea{
+input,textarea{
   width:100%;
   padding:14px;
   margin-top:10px;
@@ -85,12 +56,6 @@ textarea{
   border-radius:12px;
   border:1px solid #ccc;
   box-sizing:border-box;
-  font-size:1rem;
-}
-
-textarea{
-  min-height:120px;
-  resize:vertical;
 }
 
 button{
@@ -101,12 +66,6 @@ button{
   border-radius:12px;
   cursor:pointer;
   font-weight:bold;
-  transition:0.2s;
-}
-
-button:hover{
-  background:#4a2268;
-  transform:translateY(-2px);
 }
 
 .event{
@@ -143,92 +102,26 @@ button:hover{
 
 <header>
   <h1>Leader Dashboard</h1>
-  <p>7th Worcester Scout Group</p>
 </header>
 
 <nav>
-  <a href="/7th-worcester-scouts/index.html">
-    Home Site
-  </a>
-
-  <a href="/7th-worcester-scouts/events/index.html">
-    Events
-  </a>
+  <a href="/7th-worcester-scouts/index.html">Home Site</a>
+  <a href="/7th-worcester-scouts/events/index.html">Events</a>
 </nav>
 
 <div class="container">
 
-  <!-- CUBS -->
+  <!-- CREATE EVENT -->
   <div class="card">
 
-    <h2>Cubs Points</h2>
+    <h2>Create Event</h2>
 
-    <!-- EAGLES -->
-    <div class="team">
+    <input id="title" placeholder="Event title">
+    <input id="date" placeholder="10th July 2026">
+    <textarea id="description" placeholder="Description"></textarea>
 
-      <h3>Eagles</h3>
-
-      <div class="row">
-
-        <button onclick="change('eagles',-1)">
-          ⬇
-        </button>
-
-        <div>
-
-          <div id="eagles" class="score">
-            0
-          </div>
-
-          <div class="original">
-            Original:
-            <span id="eaglesOriginal">0</span>
-          </div>
-
-        </div>
-
-        <button onclick="change('eagles',1)">
-          ⬆
-        </button>
-
-      </div>
-
-    </div>
-
-    <!-- FALCONS -->
-    <div class="team">
-
-      <h3>Falcons</h3>
-
-      <div class="row">
-
-        <button onclick="change('falcons',-1)">
-          ⬇
-        </button>
-
-        <div>
-
-          <div id="falcons" class="score">
-            0
-          </div>
-
-          <div class="original">
-            Original:
-            <span id="falconsOriginal">0</span>
-          </div>
-
-        </div>
-
-        <button onclick="change('falcons',1)">
-          ⬆
-        </button>
-
-      </div>
-
-    </div>
-
-    <button onclick="saveCubs()">
-      Save Cubs Points →
+    <button onclick="addEventItem()">
+      Create Event →
     </button>
 
   </div>
@@ -236,51 +129,15 @@ button:hover{
   <!-- EVENTS -->
   <div class="card">
 
-    <h2>Create Event</h2>
+    <h2>Events</h2>
 
-    <p style="opacity:0.8; line-height:1.6;">
-      Add new events to the public events page.
-    </p>
-
-    <input
-      id="title"
-      placeholder="Event title"
-    >
-
-    <input
-      id="date"
-      placeholder="10th July 2026"
-    >
-
-    <textarea
-      id="description"
-      placeholder="Event description"
-    ></textarea>
-
-    <button onclick="createEvent()">
-      Create Event →
-    </button>
-
-  </div>
-
-  <!-- LIVE EVENTS -->
-  <div class="card">
-
-    <h2>Current Events</h2>
-
-    <div id="events">
-
-      Loading events...
-
-    </div>
+    <div id="events">Loading...</div>
 
   </div>
 
 </div>
 
-<div id="toast">
-  Saved ✓
-</div>
+<div id="toast">Saved ✓</div>
 
 <script>
 
@@ -290,19 +147,9 @@ const API =
 const PASSWORD =
 "scout-admin-2026";
 
-let state = {
-  eagles:0,
-  falcons:0
-};
+/* LOAD EVENTS */
 
-let original = {
-  eagles:0,
-  falcons:0
-};
-
-/* LOAD DATA */
-
-async function loadData(){
+async function loadEvents(){
 
   const res =
     await fetch(API);
@@ -310,129 +157,37 @@ async function loadData(){
   const data =
     await res.json();
 
-  /* CUBS */
+  const rows =
+    data.events.slice(1).reverse();
 
-  if(data.cubs){
+  const container =
+    document.getElementById("events");
 
-    const cubs =
-      data.cubs.slice(1);
+  container.innerHTML = "";
 
-    cubs.forEach(row=>{
+  rows.forEach(e=>{
 
-      if(row[0]==="Eagles"){
+    container.innerHTML += `
 
-        state.eagles =
-          Number(row[1]);
+      <div class="event">
 
-        original.eagles =
-          Number(row[1]);
+        <h3>${e[0]}</h3>
+        <p><b>${e[1]}</b></p>
+        <p>${e[2]}</p>
 
-      }
+      </div>
 
-      if(row[0]==="Falcons"){
-
-        state.falcons =
-          Number(row[1]);
-
-        original.falcons =
-          Number(row[1]);
-
-      }
-
-    });
-
-    renderCubs();
-
-  }
-
-  /* EVENTS */
-
-  if(data.events){
-
-    renderEvents(data.events);
-
-  }
-
-}
-
-loadData();
-
-/* RENDER CUBS */
-
-function renderCubs(){
-
-  document.getElementById("eagles")
-    .innerText = state.eagles;
-
-  document.getElementById("falcons")
-    .innerText = state.falcons;
-
-  document.getElementById("eaglesOriginal")
-    .innerText = original.eagles;
-
-  document.getElementById("falconsOriginal")
-    .innerText = original.falcons;
-
-}
-
-/* CHANGE POINTS */
-
-function change(team,amount){
-
-  state[team] += amount;
-
-  renderCubs();
-
-}
-
-/* SAVE CUBS */
-
-async function saveCubs(){
-
-  const res = await fetch(API,{
-
-    method:"POST",
-
-    headers:{
-      "Content-Type":"text/plain"
-    },
-
-    body:JSON.stringify({
-
-      type:"cubs",
-
-      password:PASSWORD,
-
-      eagles:state.eagles,
-
-      falcons:state.falcons
-
-    })
+    `;
 
   });
 
-  const data =
-    await res.json();
-
-  if(data.success){
-
-    original.eagles =
-      state.eagles;
-
-    original.falcons =
-      state.falcons;
-
-    renderCubs();
-
-    toast("Points Saved ✓");
-
-  }
-
 }
 
-/* CREATE EVENT */
+loadEvents();
 
-async function createEvent(){
+/* FIXED FUNCTION NAME */
+
+async function addEventItem(){
 
   const title =
     document.getElementById("title").value;
@@ -458,9 +213,7 @@ async function createEvent(){
       password:PASSWORD,
 
       title,
-
       date,
-
       description
 
     })
@@ -478,61 +231,28 @@ async function createEvent(){
     document.getElementById("date").value="";
     document.getElementById("description").value="";
 
-    loadData();
+    loadEvents();
 
   }
 
 }
 
-/* RENDER EVENTS */
-
-function renderEvents(events){
-
-  const container =
-    document.getElementById("events");
-
-  container.innerHTML = "";
-
-  const rows =
-    events.slice(1).reverse();
-
-  rows.forEach(event=>{
-
-    container.innerHTML += `
-
-      <div class="event">
-
-        <h3>${event[0]}</h3>
-
-        <p><b>${event[1]}</b></p>
-
-        <p>${event[2]}</p>
-
-      </div>
-
-    `;
-
-  });
-
-}
-
 /* TOAST */
 
-function toast(message){
+function toast(msg){
 
-  const toast =
+  const t =
     document.getElementById("toast");
 
-  toast.innerText =
-    message;
+  t.innerText = msg;
 
-  toast.classList.add("show");
+  t.classList.add("show");
 
   setTimeout(()=>{
 
-    toast.classList.remove("show");
+    t.classList.remove("show");
 
-  },2200);
+  },2000);
 
 }
 
