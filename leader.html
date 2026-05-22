@@ -4,26 +4,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Leader Dashboard</title>
+<title>Leader Dashboard (NEW) | 7th Worcester Scouts</title>
 
 <style>
 
 body{
-  font-family:Arial,sans-serif;
   margin:0;
-  background:#faf9ff;
+  font-family:Arial,sans-serif;
+  background:#f3f0ff;
+  color:#222;
 }
 
+/* NEW HEADER STYLE */
 header{
-  background:#5b2c83;
+  background:linear-gradient(135deg,#5b2c83,#7b3fb3);
   color:white;
-  padding:60px 20px;
+  padding:50px 20px;
   text-align:center;
 }
 
+header h1{
+  margin:0;
+  font-size:2rem;
+}
+
+header p{
+  margin-top:8px;
+  opacity:0.85;
+}
+
+/* NAV */
 nav{
-  background:#4a2268;
-  padding:14px;
+  background:#3e1d5c;
+  padding:12px;
   text-align:center;
 }
 
@@ -34,65 +47,96 @@ nav a{
   font-weight:bold;
 }
 
-.container{
-  max-width:1000px;
+/* NEW LAYOUT */
+.wrapper{
+  display:flex;
+  gap:20px;
+  max-width:1200px;
   margin:auto;
-  padding:40px 20px;
+  padding:30px;
 }
 
+/* LEFT PANEL */
+.left{
+  flex:2;
+}
+
+/* RIGHT PANEL */
+.right{
+  flex:1;
+  position:sticky;
+  top:20px;
+  height:fit-content;
+}
+
+/* CARDS */
 .card{
   background:white;
-  padding:28px;
-  border-radius:18px;
+  border-radius:16px;
+  padding:22px;
+  margin-bottom:20px;
   box-shadow:0 6px 18px rgba(0,0,0,0.08);
-  margin-bottom:25px;
 }
 
+h2{
+  margin-top:0;
+  color:#5b2c83;
+}
+
+/* INPUTS */
 input,textarea{
   width:100%;
-  padding:14px;
-  margin-top:10px;
-  margin-bottom:20px;
-  border-radius:12px;
+  padding:12px;
+  margin:10px 0;
+  border-radius:10px;
   border:1px solid #ccc;
-  box-sizing:border-box;
 }
 
+textarea{
+  min-height:100px;
+}
+
+/* BUTTON */
 button{
   background:#5b2c83;
   color:white;
   border:none;
-  padding:12px 18px;
-  border-radius:12px;
+  padding:12px 16px;
+  border-radius:10px;
   cursor:pointer;
   font-weight:bold;
 }
 
-.event{
-  background:#faf9ff;
-  border:2px solid #eee;
-  padding:22px;
-  border-radius:16px;
-  margin-top:18px;
+button:hover{
+  background:#4a2268;
 }
 
+/* EVENT BOX */
+.event{
+  border:2px solid #eee;
+  border-radius:12px;
+  padding:16px;
+  margin-top:12px;
+  background:#faf9ff;
+}
+
+/* TOAST */
 #toast{
   position:fixed;
-  bottom:30px;
+  bottom:25px;
   left:50%;
   transform:translateX(-50%);
   background:#5b2c83;
   color:white;
-  padding:14px 22px;
+  padding:12px 20px;
   border-radius:12px;
   opacity:0;
   transition:0.3s;
-  pointer-events:none;
 }
 
 #toast.show{
   opacity:1;
-  transform:translateX(-50%) translateY(-10px);
+  transform:translateX(-50%) translateY(-8px);
 }
 
 </style>
@@ -101,7 +145,8 @@ button{
 <body>
 
 <header>
-  <h1>Leader Dashboard</h1>
+  <h1>Leader Dashboard (UPDATED)</h1>
+  <p>7th Worcester Scouts Admin Panel</p>
 </header>
 
 <nav>
@@ -109,29 +154,39 @@ button{
   <a href="/7th-worcester-scouts/events/index.html">Events</a>
 </nav>
 
-<div class="container">
+<div class="wrapper">
 
-  <!-- CREATE EVENT -->
-  <div class="card">
+  <!-- LEFT SIDE -->
+  <div class="left">
 
-    <h2>Create Event</h2>
+    <div class="card">
 
-    <input id="title" placeholder="Event title">
-    <input id="date" placeholder="10th July 2026">
-    <textarea id="description" placeholder="Description"></textarea>
+      <h2>Create New Event</h2>
 
-    <button onclick="addEventItem()">
-      Create Event →
-    </button>
+      <input id="title" placeholder="Event title">
+      <input id="date" placeholder="10th July 2026">
+      <textarea id="description" placeholder="Description (optional)"></textarea>
+
+      <button onclick="addEventItem()">
+        + Create Event
+      </button>
+
+    </div>
 
   </div>
 
-  <!-- EVENTS -->
-  <div class="card">
+  <!-- RIGHT SIDE -->
+  <div class="right">
 
-    <h2>Events</h2>
+    <div class="card">
 
-    <div id="events">Loading...</div>
+      <h2>Live Events</h2>
+
+      <div id="events">
+        Loading...
+      </div>
+
+    </div>
 
   </div>
 
@@ -151,32 +206,25 @@ const PASSWORD =
 
 async function loadEvents(){
 
-  const res =
-    await fetch(API);
-
-  const data =
-    await res.json();
-
-  const rows =
-    data.events.slice(1).reverse();
+  const res = await fetch(API);
+  const data = await res.json();
 
   const container =
     document.getElementById("events");
 
   container.innerHTML = "";
 
+  const rows =
+    data.events.slice(1).reverse();
+
   rows.forEach(e=>{
 
     container.innerHTML += `
-
       <div class="event">
-
         <h3>${e[0]}</h3>
         <p><b>${e[1]}</b></p>
         <p>${e[2]}</p>
-
       </div>
-
     `;
 
   });
@@ -185,7 +233,7 @@ async function loadEvents(){
 
 loadEvents();
 
-/* FIXED FUNCTION NAME */
+/* CREATE EVENT */
 
 async function addEventItem(){
 
@@ -209,7 +257,6 @@ async function addEventItem(){
     body:JSON.stringify({
 
       type:"add",
-
       password:PASSWORD,
 
       title,
@@ -220,8 +267,7 @@ async function addEventItem(){
 
   });
 
-  const data =
-    await res.json();
+  const data = await res.json();
 
   if(data.success){
 
@@ -245,13 +291,10 @@ function toast(msg){
     document.getElementById("toast");
 
   t.innerText = msg;
-
   t.classList.add("show");
 
   setTimeout(()=>{
-
     t.classList.remove("show");
-
   },2000);
 
 }
