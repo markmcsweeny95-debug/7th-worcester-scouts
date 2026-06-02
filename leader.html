@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Leader Dashboard (NEW) | 7th Worcester Scouts</title>
+<title>Leader Dashboard | 7th Worcester Scouts</title>
 
 <style>
 
@@ -15,22 +15,16 @@ body{
   color:#222;
 }
 
-/* NEW HEADER STYLE */
+/* HEADER */
 header{
   background:linear-gradient(135deg,#5b2c83,#7b3fb3);
   color:white;
-  padding:50px 20px;
+  padding:40px 20px;
   text-align:center;
 }
 
 header h1{
   margin:0;
-  font-size:2rem;
-}
-
-header p{
-  margin-top:8px;
-  opacity:0.85;
 }
 
 /* NAV */
@@ -47,7 +41,33 @@ nav a{
   font-weight:bold;
 }
 
-/* NEW LAYOUT */
+/* SETTINGS BAR */
+.settings-bar{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  padding:15px;
+  background:#eee;
+}
+
+.settings-btn{
+  background:white;
+  border:2px solid #5b2c83;
+  padding:10px 14px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+  text-decoration:none;
+  color:#5b2c83;
+  transition:0.2s;
+}
+
+.settings-btn:hover{
+  background:#5b2c83;
+  color:white;
+}
+
+/* WRAPPER */
 .wrapper{
   display:flex;
   gap:20px;
@@ -56,18 +76,8 @@ nav a{
   padding:30px;
 }
 
-/* LEFT PANEL */
-.left{
-  flex:2;
-}
-
-/* RIGHT PANEL */
-.right{
-  flex:1;
-  position:sticky;
-  top:20px;
-  height:fit-content;
-}
+.left{ flex:2; }
+.right{ flex:1; position:sticky; top:20px; height:fit-content; }
 
 /* CARDS */
 .card{
@@ -79,8 +89,8 @@ nav a{
 }
 
 h2{
-  margin-top:0;
   color:#5b2c83;
+  margin-top:0;
 }
 
 /* INPUTS */
@@ -93,7 +103,7 @@ input,textarea{
 }
 
 textarea{
-  min-height:100px;
+  min-height:90px;
 }
 
 /* BUTTON */
@@ -111,17 +121,17 @@ button:hover{
   background:#4a2268;
 }
 
-/* EVENT BOX */
+/* EVENT */
 .event{
-  border:2px solid #eee;
+  border:1px solid #eee;
   border-radius:12px;
-  padding:16px;
-  margin-top:12px;
+  padding:14px;
+  margin-top:10px;
   background:#faf9ff;
 }
 
 /* TOAST */
-#toast{
+.toast{
   position:fixed;
   bottom:25px;
   left:50%;
@@ -134,9 +144,14 @@ button:hover{
   transition:0.3s;
 }
 
-#toast.show{
+.toast.show{
   opacity:1;
-  transform:translateX(-50%) translateY(-8px);
+  transform:translateX(-50%) translateY(-6px);
+}
+
+.small{
+  font-size:0.85rem;
+  opacity:0.7;
 }
 
 </style>
@@ -145,159 +160,155 @@ button:hover{
 <body>
 
 <header>
-  <h1>Leader Dashboard (UPDATED)</h1>
+  <h1>Leader Dashboard</h1>
   <p>7th Worcester Scouts Admin Panel</p>
 </header>
 
+<!-- SETTINGS BAR -->
+<div class="settings-bar">
+
+  <a class="settings-btn" href="cubs-settings.html">
+    🏆 Cubs Settings
+  </a>
+
+  <a class="settings-btn" href="beavers-settings.html">
+    🐻 Beavers Settings
+  </a>
+
+  <a class="settings-btn" href="scouts-settings.html">
+    ⚜️ Scouts Settings
+  </a>
+
+</div>
+
 <nav>
-  <a href="/7th-worcester-scouts/index.html">Home Site</a>
-  <a href="/7th-worcester-scouts/events/index.html">Events</a>
+  <a href="../index.html">Home Site</a>
+  <a href="../events/index.html">Events</a>
 </nav>
 
 <div class="wrapper">
 
-  <!-- LEFT SIDE -->
+  <!-- LEFT -->
   <div class="left">
 
     <div class="card">
 
-      <h2>Create New Event</h2>
+      <h2>Create Event</h2>
 
       <input id="title" placeholder="Event title">
-      <input id="date" placeholder="10th July 2026">
-      <textarea id="description" placeholder="Description (optional)"></textarea>
 
-      <button onclick="addEventItem()">
+      <input id="date" type="date">
+
+      <textarea id="description" placeholder="Description"></textarea>
+
+      <button onclick="addEvent()">
         + Create Event
       </button>
+
+      <p class="small">
+        Events are saved to Google Sheets and auto-sorted by date.
+      </p>
 
     </div>
 
   </div>
 
-  <!-- RIGHT SIDE -->
+  <!-- RIGHT -->
   <div class="right">
 
     <div class="card">
-
       <h2>Live Events</h2>
-
-      <div id="events">
-        Loading...
-      </div>
-
+      <div id="events">Loading...</div>
     </div>
 
   </div>
 
 </div>
 
-<div id="toast">Saved ✓</div>
+<div id="toast" class="toast">Saved ✓</div>
 
 <script>
 
 const API =
 "https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
 
-const PASSWORD =
-"scout-admin-2026";
-
 /* LOAD EVENTS */
-
 async function loadEvents(){
 
   const res = await fetch(API);
   const data = await res.json();
 
-  const container =
-    document.getElementById("events");
-
+  const container = document.getElementById("events");
   container.innerHTML = "";
 
-  const rows =
-    data.events.slice(1).reverse();
+  const events = data.events || [];
 
-  rows.forEach(e=>{
+  if(events.length === 0){
+    container.innerHTML = "No events yet";
+    return;
+  }
+
+  events.forEach(ev => {
 
     container.innerHTML += `
       <div class="event">
-        <h3>${e[0]}</h3>
-        <p><b>${e[1]}</b></p>
-        <p>${e[2]}</p>
+        <h3>${ev.name}</h3>
+        <p><b>${ev.date}</b></p>
+        <p>${ev.description}</p>
       </div>
     `;
-
   });
 
 }
 
-loadEvents();
+/* ADD EVENT */
+async function addEvent(){
 
-/* CREATE EVENT */
+  const title = document.getElementById("title").value;
+  const date = document.getElementById("date").value;
+  const description = document.getElementById("description").value;
 
-async function addEventItem(){
+  if(!title || !date){
+    toast("Missing title or date");
+    return;
+  }
 
-  const title =
-    document.getElementById("title").value;
-
-  const date =
-    document.getElementById("date").value;
-
-  const description =
-    document.getElementById("description").value;
-
-  const res = await fetch(API,{
-
-    method:"POST",
-
-    headers:{
-      "Content-Type":"text/plain"
-    },
-
-    body:JSON.stringify({
-
-      type:"add",
-      password:PASSWORD,
-
-      title,
-      date,
-      description
-
+  const res = await fetch(API, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({
+      type: "addEvent",
+      name: title,
+      date: date,
+      description: description
     })
-
   });
 
   const data = await res.json();
 
   if(data.success){
-
     toast("Event Created ✓");
-
-    document.getElementById("title").value="";
-    document.getElementById("date").value="";
-    document.getElementById("description").value="";
-
+    document.getElementById("title").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("description").value = "";
     loadEvents();
-
+  } else {
+    toast("Failed to create event");
   }
-
 }
 
 /* TOAST */
-
 function toast(msg){
-
-  const t =
-    document.getElementById("toast");
-
+  const t = document.getElementById("toast");
   t.innerText = msg;
   t.classList.add("show");
 
-  setTimeout(()=>{
+  setTimeout(() => {
     t.classList.remove("show");
-  },2000);
-
+  }, 2000);
 }
+
+loadEvents();
 
 </script>
 
