@@ -23,17 +23,26 @@ header{
   text-align:center;
 }
 
+/* NAV (UNIVERSAL) */
 nav{
   background:#3e1d5c;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
   padding:12px;
-  text-align:center;
 }
 
 nav a{
   color:white;
   text-decoration:none;
-  margin:0 12px;
   font-weight:bold;
+  padding:8px 12px;
+  border-radius:8px;
+}
+
+nav a:hover{
+  background:rgba(255,255,255,0.12);
 }
 
 /* CONTAINER */
@@ -76,9 +85,15 @@ nav a{
   <p>7th Worcester Scout Group</p>
 </header>
 
+<!-- UNIVERSAL NAVBAR -->
 <nav>
-  <a href="https://markmcsweeny95-debug.github.io/7th-worcester-scouts/">Home</a>
+  <a href="../index.html">Home</a>
+  <a href="../events/index.html">Events</a>
   <a href="../sections/index.html">Sections</a>
+  <a href="../discounts/index.html">Discounts</a>
+  <a href="../joining.html">Join</a>
+  <a href="../contact/index.html">Contact</a>
+  <a href="../admin.html">Leader Login</a>
 </nav>
 
 <div class="container">
@@ -90,7 +105,7 @@ nav a{
 
 <script>
 
-/* ✅ YOUR API */
+/* API */
 const API =
 "https://script.google.com/macros/s/AKfycbwpewJd11-3eJcaRd1UYMVux3tE-dHdmjudXMgd89gWJgtDwCzDJX4-f-kuyaJJLi_V/exec";
 
@@ -106,7 +121,7 @@ function formatDate(dateString){
   });
 }
 
-/* LOAD EVENTS (ROBUST VERSION) */
+/* LOAD EVENTS */
 async function loadEvents(){
 
   try {
@@ -133,7 +148,6 @@ async function loadEvents(){
       return;
     }
 
-    /* SORT BY DATE */
     events.sort((a,b) => new Date(a.date) - new Date(b.date));
 
     let html = "";
