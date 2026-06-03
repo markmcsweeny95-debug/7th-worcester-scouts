@@ -15,6 +15,7 @@ body {
   color: #222;
 }
 
+/* HEADER */
 header {
   background: linear-gradient(135deg, #5b2c83, #7b4bb3);
   color: white;
@@ -22,25 +23,36 @@ header {
   padding: 80px 20px;
 }
 
+/* NAV (UNIVERSAL) */
 nav {
-  background: #4a2268;
-  padding: 14px;
-  text-align: center;
+  background: #3e1d5c;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
 }
 
 nav a {
   color: white;
   text-decoration: none;
-  margin: 0 14px;
   font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 8px;
 }
 
+nav a:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* CONTAINER */
 .container {
   max-width: 500px;
   margin: 50px auto;
   padding: 20px;
 }
 
+/* CARD */
 .card {
   background: white;
   padding: 35px;
@@ -52,6 +64,7 @@ h2 {
   color: #5b2c83;
 }
 
+/* INPUTS */
 input {
   width: 100%;
   padding: 14px;
@@ -63,6 +76,7 @@ input {
   box-sizing: border-box;
 }
 
+/* BUTTON */
 button {
   width: 100%;
   padding: 14px;
@@ -79,12 +93,14 @@ button:hover {
   background: #4a2268;
 }
 
+/* ERROR */
 #error {
   color: red;
   display: none;
   margin-top: 15px;
 }
 
+/* FOOTER */
 footer {
   background: #5b2c83;
   color: white;
@@ -103,11 +119,15 @@ footer {
   <p>7th Worcester Scout Group</p>
 </header>
 
+<!-- UNIVERSAL NAVBAR -->
 <nav>
-  <a href="/7th-worcester-scouts/index.html">Home</a>
-  <a href="/7th-worcester-scouts/events/index.html">Events</a>
-  <a href="/7th-worcester-scouts/sections/index.html">Sections</a>
-  <a href="/7th-worcester-scouts/contact/index.html">Contact</a>
+  <a href="index.html">Home</a>
+  <a href="events/index.html">Events</a>
+  <a href="sections/index.html">Sections</a>
+  <a href="discounts/index.html">Discounts</a>
+  <a href="joining.html">Join</a>
+  <a href="contact/index.html">Contact</a>
+  <a href="admin.html">Leader Login</a>
 </nav>
 
 <div class="container">
@@ -116,25 +136,12 @@ footer {
 
     <h2>Leader Access</h2>
 
-    <input
-      type="text"
-      id="username"
-      placeholder="Username"
-    >
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
 
-    <input
-      type="text"
-      id="password"
-      placeholder="Password"
-    >
+    <button onclick="login()">Login →</button>
 
-    <button onclick="login()">
-      Login →
-    </button>
-
-    <p id="error">
-      Incorrect username or password
-    </p>
+    <p id="error">Incorrect username or password</p>
 
   </div>
 
@@ -148,29 +155,17 @@ footer {
 
 function login() {
 
-  const username =
-    document.getElementById("username").value;
-
-  const password =
-    document.getElementById("password").value;
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
   if (
     username === "leader" &&
     password === "scout-admin-2026"
   ) {
-
-    window.location.href =
-      "/7th-worcester-scouts/leader.html";
-
+    window.location.href = "leader.html";
+  } else {
+    document.getElementById("error").style.display = "block";
   }
-
-  else {
-
-    document.getElementById("error").style.display =
-      "block";
-
-  }
-
 }
 
 </script>
