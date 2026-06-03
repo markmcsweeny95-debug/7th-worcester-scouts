@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Scouts | 7th Worcester Scouts</title>
 
 <style>
@@ -14,6 +15,7 @@ body {
   color: #222;
 }
 
+/* HEADER */
 header {
   background: #16351c;
   color: white;
@@ -21,9 +23,9 @@ header {
   text-align: center;
 }
 
-/* UNIVERSAL NAV */
+/* NAV (UNIVERSAL - DARKER GREEN) */
 nav {
-  background: #4a2268;
+  background: #0f2413;
   padding: 14px;
   text-align: center;
   position: sticky;
@@ -34,20 +36,23 @@ nav {
 nav a {
   color: white;
   text-decoration: none;
-  margin: 0 12px;
+  margin: 0 14px;
   font-weight: bold;
+  transition: 0.2s;
 }
 
 nav a:hover {
-  opacity: 0.8;
+  opacity: 0.75;
 }
 
+/* CONTAINER */
 .container {
   max-width: 900px;
   margin: auto;
   padding: 40px 20px;
 }
 
+/* CARD */
 .card {
   background: white;
   padding: 30px;
@@ -56,10 +61,12 @@ nav a:hover {
   margin-bottom: 25px;
 }
 
+/* HEADINGS */
 h2 {
   color: #16351c;
 }
 
+/* BUTTON */
 .button {
   display: inline-block;
   margin-top: 15px;
@@ -71,6 +78,11 @@ h2 {
   font-weight: bold;
 }
 
+.button:hover {
+  background: #4a2268;
+}
+
+/* FOOTER */
 footer {
   background: #16351c;
   color: white;
@@ -89,6 +101,7 @@ footer {
   <p>7th Worcester Scout Group</p>
 </header>
 
+<!-- UNIVERSAL NAVBAR -->
 <nav>
   <a href="../index.html">Home</a>
   <a href="../events/index.html">Events</a>
@@ -102,8 +115,19 @@ footer {
 <div class="container">
 
   <div class="card">
+
     <h2>Meeting Times</h2>
-    <p>Thursday Evenings<br>7:00 PM – 9:00 PM</p>
+
+    <p>
+      Thursday Evenings<br>
+      7:00 PM – 9:00 PM
+    </p>
+
+    <!-- RESTORED JOIN BUTTON -->
+    <a class="button" href="../join.html">
+      Find Out How To Join →
+    </a>
+
   </div>
 
 </div>
