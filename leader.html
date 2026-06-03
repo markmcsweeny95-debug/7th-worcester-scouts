@@ -23,83 +23,67 @@ header{
   text-align:center;
 }
 
-header h1{ margin:0; }
-
-/* NAV */
+/* NAV BAR */
 nav{
   background:#3e1d5c;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
   padding:12px;
-  text-align:center;
 }
 
 nav a{
   color:white;
   text-decoration:none;
-  margin:0 14px;
   font-weight:bold;
+  padding:8px 12px;
+  border-radius:8px;
 }
 
-/* SETTINGS BAR */
-.settings-bar{
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  padding:15px;
-  background:#eee;
+nav a:hover{
+  background:rgba(255,255,255,0.15);
 }
 
-.settings-btn{
-  background:white;
-  border:2px solid #5b2c83;
-  padding:10px 14px;
-  border-radius:12px;
-  cursor:pointer;
-  font-weight:bold;
-  text-decoration:none;
-  color:#5b2c83;
-}
-
-.settings-btn:hover{
-  background:#5b2c83;
-  color:white;
-}
-
-/* LAYOUT */
+/* WRAPPER */
 .wrapper{
-  display:flex;
-  gap:20px;
-  max-width:1200px;
+  max-width:1100px;
   margin:auto;
-  padding:30px;
+  padding:20px;
+  display:flex;
+  flex-direction:column; /* STACKED LAYOUT */
+  gap:20px;
 }
-
-.left{ flex:2; }
-.right{ flex:1; position:sticky; top:20px; height:fit-content; }
 
 /* CARD */
 .card{
   background:white;
   border-radius:16px;
-  padding:22px;
-  margin-bottom:20px;
+  padding:20px;
   box-shadow:0 6px 18px rgba(0,0,0,0.08);
 }
 
+/* HEADINGS */
 h2{
-  color:#5b2c83;
   margin-top:0;
+  color:#5b2c83;
 }
 
 /* INPUTS */
 input,textarea{
   width:100%;
+  box-sizing:border-box;
   padding:12px;
   margin:10px 0;
   border-radius:10px;
   border:1px solid #ccc;
+  font-size:1rem;
 }
 
-textarea{ min-height:90px; }
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
 
 /* BUTTON */
 button{
@@ -110,13 +94,14 @@ button{
   border-radius:10px;
   cursor:pointer;
   font-weight:bold;
+  width:100%;
 }
 
 button:hover{
   background:#4a2268;
 }
 
-/* EVENT CARD */
+/* EVENT */
 .event{
   border:1px solid #eee;
   border-radius:12px;
@@ -131,14 +116,13 @@ button:hover{
   position:absolute;
   top:10px;
   right:10px;
-  background:red;
+  background:#c62828;
   color:white;
   border:none;
-  border-radius:8px;
+  border-radius:6px;
   width:28px;
   height:28px;
   cursor:pointer;
-  font-weight:bold;
 }
 
 /* TOAST */
@@ -160,9 +144,21 @@ button:hover{
   transform:translateX(-50%) translateY(-6px);
 }
 
+/* SMALL TEXT */
 .small{
   font-size:0.85rem;
   opacity:0.7;
+}
+
+/* MOBILE TWEAKS */
+@media (max-width: 700px){
+  header{
+    padding:30px 15px;
+  }
+
+  .card{
+    padding:16px;
+  }
 }
 
 </style>
@@ -175,52 +171,47 @@ button:hover{
   <p>7th Worcester Scouts Admin Panel</p>
 </header>
 
-<!-- SETTINGS -->
-<div class="settings-bar">
-
-  <a class="settings-btn" href="cubs-settings.html">🏆 Cubs Settings</a>
-  <a class="settings-btn" href="beavers-settings.html">🐻 Beavers Settings</a>
-  <a class="settings-btn" href="scouts-settings.html">⚜️ Scouts Settings</a>
-
-</div>
-
+<!-- NAV BAR -->
 <nav>
-  <a href="https://markmcsweeny95-debug.github.io/7th-worcester-scouts/">Home Site</a>
-  <a href="../events/index.html">Events</a>
+
+  <a href="cubs-settings.html">Cubs Settings</a>
+  <a href="beavers-settings.html">Beavers Settings</a>
+  <a href="scouts-settings.html">Scouts Settings</a>
+
+  <a href="../login.html">Logout</a>
+
 </nav>
 
 <div class="wrapper">
 
-  <!-- LEFT -->
-  <div class="left">
+  <!-- CREATE EVENT -->
+  <div class="card">
 
-    <div class="card">
+    <h2>Create Event</h2>
 
-      <h2>Create Event</h2>
+    <input id="title" placeholder="Event title">
+    <input id="date" type="date">
+    <textarea id="description" placeholder="Description"></textarea>
 
-      <input id="title" placeholder="Event title">
-      <input id="date" type="date">
-      <textarea id="description" placeholder="Description"></textarea>
+    <button onclick="addEvent()">Create Event</button>
 
-      <button onclick="addEvent()">+ Create Event</button>
-
-    </div>
+    <p class="small">
+      Events are saved to Google Sheets and automatically appear on the website.
+    </p>
 
   </div>
 
-  <!-- RIGHT -->
-  <div class="right">
+  <!-- LIVE EVENTS -->
+  <div class="card">
 
-    <div class="card">
-      <h2>Live Events</h2>
-      <div id="events">Loading...</div>
-    </div>
+    <h2>Live Events</h2>
+    <div id="events">Loading...</div>
 
   </div>
 
 </div>
 
-<div id="toast" class="toast">Saved ✓</div>
+<div id="toast" class="toast">Saved</div>
 
 <script>
 
@@ -295,20 +286,20 @@ async function addEvent(){
   const data = await res.json();
 
   if(data.success){
-    toast("Event Created ✓");
+    toast("Event created");
     document.getElementById("title").value = "";
     document.getElementById("date").value = "";
     document.getElementById("description").value = "";
     loadEvents();
   } else {
-    toast("Failed to create event");
+    toast("Failed");
   }
 }
 
-/* DELETE EVENT */
+/* DELETE */
 async function deleteEvent(name, date){
 
-  if(!confirm("Delete this event?")) return;
+  if(!confirm("Delete event?")) return;
 
   const res = await fetch(API, {
     method: "POST",
@@ -323,7 +314,7 @@ async function deleteEvent(name, date){
   const data = await res.json();
 
   if(data.success){
-    toast("Event deleted ✓");
+    toast("Deleted");
     loadEvents();
   } else {
     toast("Delete failed");
