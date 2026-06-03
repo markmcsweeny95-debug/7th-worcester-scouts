@@ -15,6 +15,7 @@ body {
   color: #222;
 }
 
+/* HEADER */
 header {
   background: linear-gradient(135deg, #5b2c83, #7b4bb3);
   color: white;
@@ -22,28 +23,36 @@ header {
   text-align: center;
 }
 
+/* NAV (UNIVERSAL) */
 nav {
-  background: #4a2268;
-  padding: 14px;
-  text-align: center;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  background: #3e1d5c;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
 }
 
 nav a {
   color: white;
   text-decoration: none;
-  margin: 0 14px;
   font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 8px;
 }
 
+nav a:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* CONTAINER */
 .container {
   max-width: 1000px;
   margin: auto;
   padding: 40px 20px;
 }
 
+/* CARDS */
 .intro-card {
   background: white;
   padding: 35px;
@@ -65,11 +74,13 @@ nav a {
   transform: translateY(-4px);
 }
 
+/* TEXT */
 h2 {
   color: #5b2c83;
   margin-top: 0;
 }
 
+/* BADGE */
 .badge {
   display: inline-block;
   background: #ede7f6;
@@ -81,6 +92,7 @@ h2 {
   margin-bottom: 14px;
 }
 
+/* DISCOUNT */
 .discount {
   font-size: 2.4rem;
   font-weight: bold;
@@ -88,6 +100,7 @@ h2 {
   margin: 12px 0;
 }
 
+/* BUTTON */
 .button {
   display: inline-block;
   margin-top: 18px;
@@ -99,6 +112,7 @@ h2 {
   font-weight: bold;
 }
 
+/* FOOTER */
 footer {
   background: #5b2c83;
   color: white;
@@ -117,12 +131,15 @@ footer {
   <p>Exclusive offers for members and families</p>
 </header>
 
+<!-- UNIVERSAL NAVBAR -->
 <nav>
   <a href="../index.html">Home</a>
   <a href="../events/index.html">Events</a>
-  <a href="../discounts/index.html">Discounts</a>
   <a href="../sections/index.html">Sections</a>
+  <a href="../discounts/index.html">Discounts</a>
+  <a href="../joining.html">Join</a>
   <a href="../contact/index.html">Contact</a>
+  <a href="../admin.html">Leader Login</a>
 </nav>
 
 <div class="container">
@@ -139,7 +156,6 @@ footer {
   </div>
 
   <!-- GO OUTDOORS -->
-
   <div class="discount-card">
 
     <div class="badge">Outdoor Retailer</div>
@@ -149,9 +165,7 @@ footer {
     <div class="discount">10% OFF</div>
 
     <p>
-      *T&C's: Offer valid until 31 January 2027. Proof of membership must be shown at the till in store to receive the discount. Members must have a valid GO Outdoors membership card to receive the discount. Cannot be used in conjunction with any other offer or Price Match. Excludes Members Deals, Sale/Clearance items, multibuys and cannot be redeemed against Gift Cards, Members Cards, Gas Hire, Maps, Garmin, Weber, Stanley, Goal Zero, Ecoflow, Mind, Dickies, Timberland & Cat products. This offer excludes all brand partner direct fulfilled products. Subject to availability. Offer can be withdrawn at any time.  
-      <br><br>
-      To receive your discount, either use the online discount codes or go in-store and show your necker or any form of proof you're a Scout at the till.  
+      *T&C's: Offer valid until 31 January 2027. Proof of membership must be shown at the till in store to receive the discount...
       <br><br>
       (These discount codes are for the Scouts movement only, please do not share them)
     </p>
@@ -165,7 +179,6 @@ footer {
   </div>
 
   <!-- MILLETS / BLACKS / ULTIMATE -->
-
   <div class="discount-card">
 
     <div class="badge">Outdoor Retailer</div>
@@ -175,9 +188,7 @@ footer {
     <div class="discount">15% OFF</div>
 
     <p>
-      *T&Cs: Offer is not available in conjunction with any other offer. Cannot be used in conjunction with any other offer or Price Match. Excludes Members Deals, Sale/Clearance items, multibuys and cannot be redeemed against Gift Cards, Members Cards, Gas Hire, Maps, Garmin, Weber, Stanley, Goal Zero, Ecoflow, Mind, Dickies, Timberland & Cat products. This offer excludes all brand partner direct fulfilled products. Cannot be used in conjunction with a price match or any other coupon.  
-      <br><br>
-      To receive your discount, either use the online discount codes or go in-store and show your necker or any form of proof you're a Scout at the till.  
+      *T&Cs: Offer applies in store only. Cannot be used with other promotions...
       <br><br>
       (These discount codes are for the Scouts movement only, please do not share them)
     </p>
@@ -191,7 +202,6 @@ footer {
   </div>
 
   <!-- HOBBYCRAFT -->
-
   <div class="discount-card">
 
     <div class="badge">Craft Retailer</div>
@@ -201,10 +211,7 @@ footer {
     <div class="discount">10% OFF</div>
 
     <p>
-      10% off instore only. Proof of discount eligibility must be shown at the till to receive the offer.  
-      The discount cannot be used on craft machines, workshops, subscriptions, or gift cards.  
-      Cannot be used with other vouchers or subscription discounts. Hobbycraft may refuse invalid proof of ID and may withdraw the offer at any time.  
-      This offer is exclusive to the Scouts movement and must not be shared.
+      10% off instore only. Proof required at checkout...
     </p>
 
     <a class="button"
