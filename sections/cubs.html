@@ -63,4 +63,136 @@ h2 {
 
 /* PROGRESS BAR (was green, now blue) */
 .bar {
-  height:
+  height: 24px;
+  border-radius: 999px;
+  background: #e0e0e0;
+  overflow: hidden;
+  margin-top: 8px;
+  margin-bottom: 15px;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 999px;
+  background: #4aa3d8;
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+/* BUTTON (was purple, now blue) */
+.button {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 22px;
+  background: #4aa3d8;
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+/* FOOTER (was green, now blue) */
+footer {
+  background: #4aa3d8;
+  color: white;
+  text-align: center;
+  padding: 24px;
+  margin-top: 40px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Cubs</h1>
+  <p>7th Worcester Scout Group</p>
+</header>
+
+<nav>
+  <a href="../index.html">Home</a>
+  <a href="../events/index.html">Events</a>
+  <a href="../discounts/index.html">Discounts</a>
+  <a href="../sections/index.html">Sections</a>
+  <a href="../contact/index.html">Contact</a>
+</nav>
+
+<div class="container">
+
+  <div class="card">
+
+    <h2>Meeting Times</h2>
+
+    <p>
+      Monday Evenings<br>
+      6:30 PM – 8:00 PM
+    </p>
+
+    <a class="button" href="../joining.html">
+      Find Out How To Join →
+    </a>
+
+  </div>
+
+  <div class="card">
+
+    <h2>Live Cub Pack Points</h2>
+
+    <p><b>Eagles</b> — <span id="eaglesPoints">Loading...</span> points</p>
+    <div class="bar"><div id="eaglesBar" class="fill"></div></div>
+
+    <p><b>Falcons</b> — <span id="falconsPoints">Loading...</span> points</p>
+    <div class="bar"><div id="falconsBar" class="fill"></div></div>
+
+  </div>
+
+</div>
+
+<footer>
+  © 2026 7th Worcester Scout Group
+</footer>
+
+<script>
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
+
+async function loadCubs(){
+
+  try {
+
+    const res = await fetch(API_URL);
+    const data = await res.json();
+
+    const cubs = data.cubs;
+
+    let eagles = 0;
+    let falcons = 0;
+
+    cubs.forEach(row => {
+      if(row[0] === "Eagles") eagles = row[1];
+      if(row[0] === "Falcons") falcons = row[1];
+    });
+
+    document.getElementById("eaglesPoints").innerText = eagles;
+    document.getElementById("falconsPoints").innerText = falcons;
+
+    document.getElementById("eaglesBar").style.width =
+      Math.min((eagles / 150) * 100, 100) + "%";
+
+    document.getElementById("falconsBar").style.width =
+      Math.min((falcons / 150) * 100, 100) + "%";
+
+  } catch(err){
+    console.error(err);
+  }
+
+}
+
+loadCubs();
+
+</script>
+
+</body>
+</html>
