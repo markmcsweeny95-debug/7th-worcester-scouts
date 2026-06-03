@@ -15,7 +15,7 @@ body {
   color: #222;
 }
 
-/* HEADER */
+/* HEADER (restored dark green) */
 header {
   background: #16351c;
   color: white;
@@ -23,26 +23,21 @@ header {
   text-align: center;
 }
 
-/* NAV (UNIVERSAL) */
+/* NAV (restored dark green) */
 nav {
-  background: #3e1d5c;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  padding: 12px;
+  background: #102513;
+  padding: 14px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 nav a {
   color: white;
   text-decoration: none;
+  margin: 0 14px;
   font-weight: bold;
-  padding: 8px 12px;
-  border-radius: 8px;
-}
-
-nav a:hover {
-  background: rgba(255,255,255,0.12);
 }
 
 /* CONTAINER */
@@ -61,12 +56,12 @@ nav a:hover {
   margin-bottom: 25px;
 }
 
-/* HEADINGS */
+/* HEADINGS (restored green) */
 h2 {
   color: #16351c;
 }
 
-/* BUTTON */
+/* BUTTON (restored purple button if you still want consistency with old system) */
 .button {
   display: inline-block;
   margin-top: 15px;
@@ -76,9 +71,14 @@ h2 {
   text-decoration: none;
   border-radius: 12px;
   font-weight: bold;
+  transition: 0.2s;
 }
 
-/* FOOTER */
+.button:hover {
+  background: #4a2268;
+}
+
+/* FOOTER (restored green) */
 footer {
   background: #16351c;
   color: white;
@@ -97,15 +97,12 @@ footer {
   <p>7th Worcester Scout Group</p>
 </header>
 
-<!-- UNIVERSAL NAVBAR -->
 <nav>
   <a href="../index.html">Home</a>
   <a href="../events/index.html">Events</a>
-  <a href="../sections/index.html">Sections</a>
   <a href="../discounts/index.html">Discounts</a>
-  <a href="../joining.html">Join</a>
+  <a href="../sections/index.html">Sections</a>
   <a href="../contact/index.html">Contact</a>
-  <a href="../admin.html">Leader Login</a>
 </nav>
 
 <div class="container">
