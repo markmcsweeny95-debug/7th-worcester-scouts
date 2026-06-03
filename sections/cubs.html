@@ -15,17 +15,17 @@ body {
   color: #222;
 }
 
-/* HEADER (was green, now unified blue theme) */
+/* HEADER (RESTORED ORIGINAL GREEN) */
 header {
-  background: linear-gradient(135deg, #6ec6ff, #4aa3d8);
+  background: #2e7d32;
   color: white;
   padding: 80px 20px;
   text-align: center;
 }
 
-/* NAV (was green, now blue like everything else) */
+/* NAV (kept simple; universal structure applied below) */
 nav {
-  background: #4aa3d8;
+  background: #1b5e20;
   padding: 14px;
   text-align: center;
   position: sticky;
@@ -56,12 +56,12 @@ nav a {
   margin-bottom: 25px;
 }
 
-/* HEADINGS (was green, now blue) */
+/* HEADINGS (GREEN THEME) */
 h2 {
-  color: #4aa3d8;
+  color: #2e7d32;
 }
 
-/* PROGRESS BAR (was green, now blue) */
+/* PROGRESS BAR */
 .bar {
   height: 24px;
   border-radius: 999px;
@@ -74,26 +74,26 @@ h2 {
 .fill {
   height: 100%;
   border-radius: 999px;
-  background: #4aa3d8;
+  background: #2e7d32;
   width: 0%;
   transition: width 0.5s ease;
 }
 
-/* BUTTON (was purple, now blue) */
+/* BUTTON */
 .button {
   display: inline-block;
   margin-top: 15px;
   padding: 12px 22px;
-  background: #4aa3d8;
+  background: #2e7d32;
   color: white;
   text-decoration: none;
   border-radius: 12px;
   font-weight: bold;
 }
 
-/* FOOTER (was green, now blue) */
+/* FOOTER */
 footer {
-  background: #4aa3d8;
+  background: #2e7d32;
   color: white;
   text-align: center;
   padding: 24px;
@@ -110,12 +110,15 @@ footer {
   <p>7th Worcester Scout Group</p>
 </header>
 
+<!-- 🌐 UNIVERSAL NAVBAR -->
 <nav>
   <a href="../index.html">Home</a>
   <a href="../events/index.html">Events</a>
-  <a href="../discounts/index.html">Discounts</a>
   <a href="../sections/index.html">Sections</a>
+  <a href="../discounts/index.html">Discounts</a>
+  <a href="../joining.html">Join</a>
   <a href="../contact/index.html">Contact</a>
+  <a href="../leader.html">Leader Login</a>
 </nav>
 
 <div class="container">
@@ -139,11 +142,21 @@ footer {
 
     <h2>Live Cub Pack Points</h2>
 
-    <p><b>Eagles</b> — <span id="eaglesPoints">Loading...</span> points</p>
-    <div class="bar"><div id="eaglesBar" class="fill"></div></div>
+    <p>
+      <b>Eagles</b> — <span id="eaglesPoints">Loading...</span> points
+    </p>
 
-    <p><b>Falcons</b> — <span id="falconsPoints">Loading...</span> points</p>
-    <div class="bar"><div id="falconsBar" class="fill"></div></div>
+    <div class="bar">
+      <div id="eaglesBar" class="fill"></div>
+    </div>
+
+    <p>
+      <b>Falcons</b> — <span id="falconsPoints">Loading...</span> points
+    </p>
+
+    <div class="bar">
+      <div id="falconsBar" class="fill"></div>
+    </div>
 
   </div>
 
