@@ -9,11 +9,13 @@
 <style>
 
 body {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   margin: 0;
   background: #faf9ff;
+  color: #222;
 }
 
+/* HEADER */
 header {
   background: linear-gradient(135deg, #5b2c83, #7b4bb3);
   color: white;
@@ -21,25 +23,36 @@ header {
   text-align: center;
 }
 
+/* NAV (UNIVERSAL) */
 nav {
-  background: #4a2268;
-  padding: 14px;
-  text-align: center;
+  background: #3e1d5c;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
 }
 
 nav a {
   color: white;
-  margin: 0 12px;
   text-decoration: none;
   font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 8px;
 }
 
+nav a:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* CONTAINER */
 .container {
   max-width: 800px;
   margin: auto;
   padding: 40px 20px;
 }
 
+/* CARD */
 .card {
   background: white;
   padding: 30px;
@@ -47,14 +60,18 @@ nav a {
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
+/* INPUTS */
 input, textarea {
   width: 100%;
   padding: 12px;
   margin: 10px 0;
   border-radius: 10px;
   border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 1rem;
 }
 
+/* BUTTON */
 button {
   background: #5b2c83;
   color: white;
@@ -63,12 +80,14 @@ button {
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
+  width: 100%;
 }
 
 button:hover {
   background: #4a2268;
 }
 
+/* TOAST */
 #toast {
   position: fixed;
   bottom: 30px;
@@ -96,24 +115,28 @@ button:hover {
   <h1>Create Event</h1>
 </header>
 
+<!-- UNIVERSAL NAVBAR -->
 <nav>
   <a href="leader.html">Dashboard</a>
-  <a href="../events/index.html">Public Events</a>
+  <a href="../index.html">Home</a>
+  <a href="../events/index.html">Events</a>
+  <a href="../sections/index.html">Sections</a>
+  <a href="../discounts/index.html">Discounts</a>
+  <a href="../joining.html">Join</a>
+  <a href="../contact/index.html">Contact</a>
 </nav>
 
 <div class="container">
 
-<div class="card">
+  <div class="card">
 
-<input id="title" placeholder="Event Title">
+    <input id="title" placeholder="Event Title">
+    <input id="date" type="date">
+    <textarea id="desc" placeholder="Description (optional)"></textarea>
 
-<input id="date" type="date">
+    <button onclick="saveEvent()">Create Event</button>
 
-<textarea id="desc" placeholder="Description (optional)"></textarea>
-
-<button onclick="saveEvent()">Create Event</button>
-
-</div>
+  </div>
 
 </div>
 
@@ -122,36 +145,39 @@ button:hover {
 <script>
 
 const API =
-"https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
+"https://script.google.com/macros/s/AKfycbwpewJd11-3eJcaRd1UYMVux3tE-dHdmjudXMgd89gWJgtDwCzDJX4-f-kuyaJJLi_V/exec";
 
-function saveEvent() {
+async function saveEvent() {
 
-  const event = {
-    title: document.getElementById("title").value,
-    date: document.getElementById("date").value,
-    description: document.getElementById("desc").value
-  };
+  const title = document.getElementById("title").value;
+  const date = document.getElementById("date").value;
+  const description = document.getElementById("desc").value;
 
-  fetch(API, {
+  const res = await fetch(API, {
     method: "POST",
+    headers: { "Content-Type": "text/plain" },
     body: JSON.stringify({
-      type: "events",
-      password: "scout-admin-2026",
-      events: [event]
+      type: "addEvent",
+      name: title,
+      date: date,
+      description: description
     })
-  })
-  .then(r => r.json())
-  .then(d => {
-    if (d.success) {
-      showToast("Event created ✓");
-      document.getElementById("title").value = "";
-      document.getElementById("date").value = "";
-      document.getElementById("desc").value = "";
-    } else {
-      showToast(d.error);
-    }
   });
 
+  const data = await res.json();
+
+  if (data.success) {
+
+    showToast("Event created ✓");
+
+    // CLEAR FIELDS (prevents duplicates)
+    document.getElementById("title").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("desc").value = "";
+
+  } else {
+    showToast("Failed to create event");
+  }
 }
 
 function showToast(msg) {
