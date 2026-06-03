@@ -1,64 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Contact | 7th Worcester Scouts</title>
+<title>Contact | 7th Worcester Scouts</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #faf9ff;
-      color: #222;
-    }
+<style>
 
-    header {
-      background: linear-gradient(135deg, #5b2c83, #7b4bb3);
-      color: white;
-      padding: 70px 20px;
-      text-align: center;
-    }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #faf9ff;
+  color: #222;
+}
 
-    nav {
-      background: #4a2268;
-      padding: 14px;
-      text-align: center;
-    }
+/* HEADER */
+header {
+  background: linear-gradient(135deg, #5b2c83, #7b4bb3);
+  color: white;
+  padding: 70px 20px;
+  text-align: center;
+}
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 14px;
-      font-weight: bold;
-    }
+/* NAV (UNIVERSAL STYLE) */
+nav {
+  background: #3e1d5c;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+}
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 40px 20px;
-    }
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
 
-    .card {
-      background: white;
-      padding: 30px;
-      border-radius: 18px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    }
+nav a:hover {
+  background: rgba(255,255,255,0.12);
+}
 
-    h2 {
-      color: #5b2c83;
-    }
+/* CONTAINER */
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+}
 
-    footer {
-      background: #5b2c83;
-      color: white;
-      text-align: center;
-      padding: 24px;
-      margin-top: 40px;
-    }
-  </style>
+/* CARD */
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* HEADINGS */
+h2 {
+  color: #5b2c83;
+}
+
+/* FOOTER */
+footer {
+  background: #5b2c83;
+  color: white;
+  text-align: center;
+  padding: 24px;
+  margin-top: 40px;
+}
+
+</style>
 </head>
 
 <body>
@@ -68,10 +84,15 @@
   <p>7th Worcester Scout Group</p>
 </header>
 
+<!-- UNIVERSAL NAVBAR -->
 <nav>
   <a href="../index.html">Home</a>
-  <a href="../news/index.html">News</a>
+  <a href="../events/index.html">Events</a>
   <a href="../sections/index.html">Sections</a>
+  <a href="../discounts/index.html">Discounts</a>
+  <a href="../joining.html">Join</a>
+  <a href="../contact/index.html">Contact</a>
+  <a href="../admin.html">Leader Login</a>
 </nav>
 
 <div class="container">
@@ -79,13 +100,9 @@
   <div class="card">
 
     <h2>Email</h2>
-
-    <p>
-      gsl@7thworcesterscouts.org
-    </p>
+    <p>gsl@7thworcesterscouts.org</p>
 
     <h2>Meeting Location</h2>
-
     <p>
       Powick Village Hall<br>
       Malvern Road<br>
