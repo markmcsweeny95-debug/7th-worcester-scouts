@@ -23,9 +23,7 @@ header{
   text-align:center;
 }
 
-header h1{
-  margin:0;
-}
+header h1{ margin:0; }
 
 /* NAV */
 nav{
@@ -59,7 +57,6 @@ nav a{
   font-weight:bold;
   text-decoration:none;
   color:#5b2c83;
-  transition:0.2s;
 }
 
 .settings-btn:hover{
@@ -67,7 +64,7 @@ nav a{
   color:white;
 }
 
-/* WRAPPER */
+/* LAYOUT */
 .wrapper{
   display:flex;
   gap:20px;
@@ -79,7 +76,7 @@ nav a{
 .left{ flex:2; }
 .right{ flex:1; position:sticky; top:20px; height:fit-content; }
 
-/* CARDS */
+/* CARD */
 .card{
   background:white;
   border-radius:16px;
@@ -102,9 +99,7 @@ input,textarea{
   border:1px solid #ccc;
 }
 
-textarea{
-  min-height:90px;
-}
+textarea{ min-height:90px; }
 
 /* BUTTON */
 button{
@@ -121,7 +116,7 @@ button:hover{
   background:#4a2268;
 }
 
-/* EVENT */
+/* EVENT BOX */
 .event{
   border:1px solid #eee;
   border-radius:12px;
@@ -164,20 +159,12 @@ button:hover{
   <p>7th Worcester Scouts Admin Panel</p>
 </header>
 
-<!-- SETTINGS BAR -->
+<!-- SETTINGS -->
 <div class="settings-bar">
 
-  <a class="settings-btn" href="cubs-settings.html">
-    🏆 Cubs Settings
-  </a>
-
-  <a class="settings-btn" href="beavers-settings.html">
-    🐻 Beavers Settings
-  </a>
-
-  <a class="settings-btn" href="scouts-settings.html">
-    ⚜️ Scouts Settings
-  </a>
+  <a class="settings-btn" href="cubs-settings.html">🏆 Cubs Settings</a>
+  <a class="settings-btn" href="beavers-settings.html">🐻 Beavers Settings</a>
+  <a class="settings-btn" href="scouts-settings.html">⚜️ Scouts Settings</a>
 
 </div>
 
@@ -196,18 +183,12 @@ button:hover{
       <h2>Create Event</h2>
 
       <input id="title" placeholder="Event title">
-
       <input id="date" type="date">
-
       <textarea id="description" placeholder="Description"></textarea>
 
-      <button onclick="addEvent()">
-        + Create Event
-      </button>
+      <button onclick="addEvent()">+ Create Event</button>
 
-      <p class="small">
-        Events are saved to Google Sheets and auto-sorted by date.
-      </p>
+      <p class="small">Events are stored in Google Sheets and auto-sorted.</p>
 
     </div>
 
@@ -229,14 +210,17 @@ button:hover{
 
 <script>
 
+/* ✅ NEW WORKING API */
 const API =
-"https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
+"https://script.google.com/macros/s/AKfycbwpewJd11-3eJcaRd1UYMVux3tE-dHdmjudXMgd89gWJgtDwCzDJX4-f-kuyaJJLi_V/exec";
 
 /* LOAD EVENTS */
 async function loadEvents(){
 
   const res = await fetch(API);
   const data = await res.json();
+
+  console.log("GET DATA:", data);
 
   const container = document.getElementById("events");
   container.innerHTML = "";
@@ -249,7 +233,6 @@ async function loadEvents(){
   }
 
   events.forEach(ev => {
-
     container.innerHTML += `
       <div class="event">
         <h3>${ev.name}</h3>
@@ -273,18 +256,24 @@ async function addEvent(){
     return;
   }
 
+  const payload = {
+    type: "addEvent",
+    name: title,
+    date: date,
+    description: description
+  };
+
+  console.log("SENDING:", payload);
+
   const res = await fetch(API, {
     method: "POST",
     headers: { "Content-Type": "text/plain" },
-    body: JSON.stringify({
-      type: "addEvent",
-      name: title,
-      date: date,
-      description: description
-    })
+    body: JSON.stringify(payload)
   });
 
   const data = await res.json();
+
+  console.log("POST RESPONSE:", data);
 
   if(data.success){
     toast("Event Created ✓");
