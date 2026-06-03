@@ -110,7 +110,6 @@ button:hover{
   background:#faf9ff;
 }
 
-/* DELETE BUTTON */
 /* DELETE */
 .delete-btn{
   position:absolute;
@@ -190,21 +189,16 @@ button:hover{
   <p>7th Worcester Scouts Admin Panel</p>
 </header>
 
-<!-- NAV -->
 <nav>
   <a href="cubs-settings.html">Cubs Settings</a>
   <a href="beavers-settings.html">Beavers Settings</a>
   <a href="scouts-settings.html">Scouts Settings</a>
-
-  <!-- FIXED LOGOUT -->
   <a href="https://markmcsweeny95-debug.github.io/7th-worcester-scouts/index.html">Logout</a>
 </nav>
 
 <div class="wrapper">
 
-  <!-- CREATE EVENT -->
   <div class="card">
-
     <h2>Create Event</h2>
 
     <input id="title" placeholder="Event title">
@@ -212,15 +206,11 @@ button:hover{
     <textarea id="description" placeholder="Description"></textarea>
 
     <button onclick="addEvent()">Create Event</button>
-
   </div>
 
-  <!-- LIVE EVENTS -->
   <div class="card">
-
     <h2>Live Events</h2>
     <div id="events">Loading...</div>
-
   </div>
 
 </div>
@@ -251,7 +241,9 @@ async function loadEvents(){
       <div class="event">
 
         <button class="delete-btn" onclick="deleteEvent('${id}')">×</button>
-        <button class="pin-btn ${ev.pinned ? 'active' : ''}" onclick="pinEvent('${id}')">📌</button>
+
+        <button class="pin-btn ${ev.pinned ? 'active' : ''}"
+          onclick="pinEvent('${id}')">📌</button>
 
         <h3>${ev.name}</h3>
         <p><b>${ev.date}</b></p>
@@ -269,7 +261,7 @@ async function addEvent(){
   const date = document.getElementById("date").value;
   const description = document.getElementById("description").value;
 
-  await fetch(API,{
+  const res = await fetch(API,{
     method:"POST",
     headers:{"Content-Type":"text/plain"},
     body:JSON.stringify({
@@ -280,13 +272,23 @@ async function addEvent(){
     })
   });
 
-  loadEvents();
+  const data = await res.json();
+
+  if(data.success){
+
+    document.getElementById("title").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("description").value = "";
+
+    toast("Event Created");
+    loadEvents();
+  }
 }
 
 /* DELETE EVENT */
 async function deleteEvent(id){
 
-  await fetch(API,{
+  const res = await fetch(API,{
     method:"POST",
     headers:{"Content-Type":"text/plain"},
     body:JSON.stringify({
@@ -295,13 +297,18 @@ async function deleteEvent(id){
     })
   });
 
-  loadEvents();
+  const data = await res.json();
+
+  if(data.success){
+    toast("Event Deleted");
+    loadEvents();
+  }
 }
 
 /* PIN EVENT */
 async function pinEvent(id){
 
-  await fetch(API,{
+  const res = await fetch(API,{
     method:"POST",
     headers:{"Content-Type":"text/plain"},
     body:JSON.stringify({
@@ -310,7 +317,12 @@ async function pinEvent(id){
     })
   });
 
-  loadEvents();
+  const data = await res.json();
+
+  if(data.success){
+    toast("Event Pinned");
+    loadEvents();
+  }
 }
 
 /* TOAST */
