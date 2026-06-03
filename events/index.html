@@ -11,45 +11,59 @@
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:#faf9ff;
+  background:#f6f3ff;
+  color:#222;
 }
 
+/* HEADER */
 header{
   background:#5b2c83;
   color:white;
-  padding:70px 20px;
+  padding:50px 20px;
   text-align:center;
 }
 
 nav{
-  background:#4a2268;
-  padding:14px;
+  background:#3e1d5c;
+  padding:12px;
   text-align:center;
 }
 
 nav a{
   color:white;
   text-decoration:none;
-  margin:0 14px;
+  margin:0 12px;
   font-weight:bold;
 }
 
+/* CONTAINER */
 .container{
-  max-width:1000px;
+  max-width:900px;
   margin:auto;
-  padding:40px 20px;
+  padding:30px;
 }
 
+/* EVENT CARD */
 .event{
   background:white;
-  padding:28px;
-  border-radius:18px;
-  margin-bottom:22px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:15px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 
-.pinned{
-  border:3px solid gold;
+/* DATE */
+.date{
+  font-weight:bold;
+  color:#5b2c83;
+  margin-top:5px;
+}
+
+/* LOADING */
+#loading{
+  text-align:center;
+  padding:30px;
+  opacity:0.7;
 }
 
 </style>
@@ -58,70 +72,93 @@ nav a{
 <body>
 
 <header>
-  <h1>Upcoming Events</h1>
+  <h1>Events</h1>
+  <p>7th Worcester Scout Group</p>
 </header>
 
 <nav>
-  <a href="/7th-worcester-scouts/index.html">Home</a>
+  <a href="https://markmcsweeny95-debug.github.io/7th-worcester-scouts/">Home</a>
+  <a href="../sections/index.html">Sections</a>
 </nav>
 
-<div class="container" id="events">
+<div class="container">
 
-  Loading events...
+  <div id="loading">Loading events...</div>
+  <div id="events"></div>
 
 </div>
 
 <script>
 
+/* ✅ YOUR API */
 const API =
-"https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
+"https://script.google.com/macros/s/AKfycbwpewJd11-3eJcaRd1UYMVux3tE-dHdmjudXMgd89gWJgtDwCzDJX4-f-kuyaJJLi_V/exec";
 
+/* FORMAT DATE */
+function formatDate(dateString){
+
+  const date = new Date(dateString);
+
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+}
+
+/* LOAD EVENTS (ROBUST VERSION) */
 async function loadEvents(){
 
-  const res =
-    await fetch(API);
+  try {
 
-  const data =
-    await res.json();
+    const res = await fetch(API, {
+      method: "GET",
+      redirect: "follow"
+    });
 
-  const rows =
-    data.events.slice(1).reverse();
+    const text = await res.text();
+    const data = JSON.parse(text);
 
-  const container =
-    document.getElementById("events");
+    console.log("EVENT DATA:", data);
 
-  container.innerHTML = "";
+    const container = document.getElementById("events");
+    const loading = document.getElementById("loading");
 
-  rows.forEach(event=>{
+    loading.style.display = "none";
 
-    container.innerHTML += `
+    const events = data.events || [];
 
-      <div class="event ${event[4]==="YES"?"pinned":""}">
+    if(events.length === 0){
+      container.innerHTML = "<p>No events yet.</p>";
+      return;
+    }
 
-        <h2>
-          ${event[1]}
-        </h2>
+    /* SORT BY DATE */
+    events.sort((a,b) => new Date(a.date) - new Date(b.date));
 
-        <h3>
-          ${event[2]}
-        </h3>
+    let html = "";
 
-        <p>
-          ${event[3]}
-        </p>
+    for(const ev of events){
 
-        ${
-          event[4]==="YES"
-          ? "<p><b>📌 Featured Event</b></p>"
-          : ""
-        }
+      html += `
+        <div class="event">
+          <h3>${ev.name}</h3>
+          <div class="date">${formatDate(ev.date)}</div>
+          <p>${ev.description}</p>
+        </div>
+      `;
+    }
 
-      </div>
+    container.innerHTML = html;
 
-    `;
+  } catch(err){
 
-  });
+    console.error(err);
 
+    document.getElementById("loading").innerHTML =
+      "Failed to load events. Check API connection.";
+
+  }
 }
 
 loadEvents();
