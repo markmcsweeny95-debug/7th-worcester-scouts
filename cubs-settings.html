@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cubs Settings</title>
+
+<style>
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f0ff;
+  color:#222;
+}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,#5b2c83,#7b3fb3);
+  color:white;
+  padding:25px;
+  text-align:center;
+}
+
+/* NAV */
+nav{
+  background:#3e1d5c;
+  padding:12px;
+  text-align:center;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+  margin:0 10px;
+}
+
+/* LAYOUT */
+.wrapper{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+/* CARD */
+.card{
+  background:white;
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* PACK TILE */
+.pack{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px;
+  border-radius:12px;
+  background:#faf9ff;
+  border:1px solid #eee;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+.pack:hover{
+  background:#efeaff;
+}
+
+.pack h3{
+  margin:0;
+}
+
+/* INPUT */
+input{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+
+/* BUTTON */
+button{
+  width:100%;
+  margin-top:15px;
+  padding:12px;
+  border:none;
+  background:#5b2c83;
+  color:white;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+button:hover{
+  background:#4a2268;
+}
+
+/* PREVIEW */
+.preview{
+  display:flex;
+  justify-content:space-between;
+  padding:14px;
+  border-radius:12px;
+  background:#fff;
+  border:2px dashed #ddd;
+}
+
+.small{
+  opacity:0.7;
+  font-size:0.85rem;
+}
+
+.toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#5b2c83;
+  color:white;
+  padding:10px 18px;
+  border-radius:10px;
+  opacity:0;
+  transition:0.3s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(-5px);
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Cubs Settings</h1>
+  <p>Edit Cubs points</p>
+</header>
+
+<nav>
+  <a href="leader.html">Back</a>
+</nav>
+
+<div class="wrapper">
+
+  <!-- PREVIEW -->
+  <div class="card">
+    <h2>Homepage Preview</h2>
+    <div id="preview"></div>
+  </div>
+
+  <!-- EDIT -->
+  <div class="card">
+    <h2>Edit Packs</h2>
+    <div id="packs">Loading...</div>
+  </div>
+
+</div>
+
+<div id="toast" class="toast">Saved</div>
+
+<script>
+
+const API =
+"https://script.google.com/macros/s/AKfycbwpewJd11-3eJcaRd1UYMVux3tE-dHdmjudXMgd89gWJgtDwCzDJX4-f-kuyaJJLi_V/exec";
+
+let cubsData = [];
+
+/* LOAD */
+async function load(){
+
+  const res = await fetch(API);
+  const data = await res.json();
+
+  cubsData = data.cubs || [];
+
+  render();
+}
+
+/* RENDER */
+function render(){
+
+  const container = document.getElementById("packs");
+  const preview = document.getElementById("preview");
+
+  container.innerHTML = "";
+  preview.innerHTML = "";
+
+  for(let i = 1; i < cubsData.length; i++){
+
+    const name = cubsData[i][0];
+    const points = cubsData[i][1];
+
+    /* EDIT TILE */
+    container.innerHTML += `
+      <div class="pack" onclick="editPack(${i})">
+        <h3>${name}</h3>
+        <span>${points} pts</span>
+      </div>
+    `;
+
+    /* PREVIEW */
+    preview.innerHTML += `
+      <div class="preview">
+        <b>${name}</b>
+        <span>${points} pts</span>
+      </div>
+    `;
+  }
+}
+
+/* EDIT */
+function editPack(index){
+
+  const current = cubsData[index];
+
+  const newPoints = prompt("Enter new points for " + current[0], current[1]);
+
+  if(newPoints === null) return;
+
+  updatePoints(index, newPoints);
+}
+
+/* UPDATE SHEET */
+async function updatePoints(rowIndex, points){
+
+  await fetch(API,{
+    method:"POST",
+    headers:{"Content-Type":"text/plain"},
+    body:JSON.stringify({
+      type:"updateCubsPoints",
+      row:rowIndex,
+      points:points
+    })
+  });
+
+  toast("Saved");
+  load();
+}
+
+/* TOAST */
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.innerText = msg;
+  t.classList.add("show");
+
+  setTimeout(()=>t.classList.remove("show"),2000);
+}
+
+load();
+
+</script>
+
+</body>
+</html>
