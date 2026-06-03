@@ -64,7 +64,7 @@ nav a{
   color:white;
 }
 
-/* WRAPPER */
+/* LAYOUT */
 .wrapper{
   display:flex;
   gap:20px;
@@ -116,13 +116,29 @@ button:hover{
   background:#4a2268;
 }
 
-/* EVENT */
+/* EVENT CARD */
 .event{
   border:1px solid #eee;
   border-radius:12px;
   padding:14px;
   margin-top:10px;
   background:#faf9ff;
+  position:relative;
+}
+
+/* DELETE BUTTON */
+.delete-btn{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:red;
+  color:white;
+  border:none;
+  border-radius:8px;
+  width:28px;
+  height:28px;
+  cursor:pointer;
+  font-weight:bold;
 }
 
 /* TOAST */
@@ -159,7 +175,7 @@ button:hover{
   <p>7th Worcester Scouts Admin Panel</p>
 </header>
 
-<!-- SETTINGS BAR -->
+<!-- SETTINGS -->
 <div class="settings-bar">
 
   <a class="settings-btn" href="cubs-settings.html">🏆 Cubs Settings</a>
@@ -237,16 +253,25 @@ async function loadEvents(){
     return;
   }
 
-  events.forEach(ev => {
+  events.sort((a,b) => new Date(a.date) - new Date(b.date));
+
+  for(const ev of events){
+
     container.innerHTML += `
       <div class="event">
+
+        <button class="delete-btn"
+          onclick="deleteEvent('${ev.name}','${ev.date}')">
+          ×
+        </button>
+
         <h3>${ev.name}</h3>
         <p><b>${formatDate(ev.date)}</b></p>
         <p>${ev.description}</p>
+
       </div>
     `;
-  });
-
+  }
 }
 
 /* ADD EVENT */
@@ -255,11 +280,6 @@ async function addEvent(){
   const title = document.getElementById("title").value;
   const date = document.getElementById("date").value;
   const description = document.getElementById("description").value;
-
-  if(!title || !date){
-    toast("Missing title or date");
-    return;
-  }
 
   const res = await fetch(API, {
     method: "POST",
@@ -282,6 +302,31 @@ async function addEvent(){
     loadEvents();
   } else {
     toast("Failed to create event");
+  }
+}
+
+/* DELETE EVENT */
+async function deleteEvent(name, date){
+
+  if(!confirm("Delete this event?")) return;
+
+  const res = await fetch(API, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({
+      type: "deleteEvent",
+      name: name,
+      date: date
+    })
+  });
+
+  const data = await res.json();
+
+  if(data.success){
+    toast("Event deleted ✓");
+    loadEvents();
+  } else {
+    toast("Delete failed");
   }
 }
 
