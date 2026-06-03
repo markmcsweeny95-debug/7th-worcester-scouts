@@ -19,16 +19,16 @@ body{
 header{
   background:linear-gradient(135deg,#5b2c83,#7b3fb3);
   color:white;
-  padding:40px 20px;
+  padding:35px 20px;
   text-align:center;
 }
 
-/* NAV BAR */
+/* NAV */
 nav{
   background:#3e1d5c;
   display:flex;
-  justify-content:center;
   flex-wrap:wrap;
+  justify-content:center;
   gap:10px;
   padding:12px;
 }
@@ -42,16 +42,16 @@ nav a{
 }
 
 nav a:hover{
-  background:rgba(255,255,255,0.15);
+  background:rgba(255,255,255,0.12);
 }
 
-/* WRAPPER */
+/* LAYOUT */
 .wrapper{
-  max-width:1100px;
+  max-width:1000px;
   margin:auto;
   padding:20px;
   display:flex;
-  flex-direction:column; /* STACKED LAYOUT */
+  flex-direction:column;
   gap:20px;
 }
 
@@ -82,19 +82,18 @@ input,textarea{
 
 textarea{
   min-height:90px;
-  resize:vertical;
 }
 
 /* BUTTON */
 button{
+  width:100%;
   background:#5b2c83;
   color:white;
   border:none;
-  padding:12px 16px;
+  padding:12px;
   border-radius:10px;
-  cursor:pointer;
   font-weight:bold;
-  width:100%;
+  cursor:pointer;
 }
 
 button:hover{
@@ -103,26 +102,34 @@ button:hover{
 
 /* EVENT */
 .event{
+  position:relative;
   border:1px solid #eee;
   border-radius:12px;
   padding:14px;
   margin-top:10px;
   background:#faf9ff;
-  position:relative;
 }
 
 /* DELETE BUTTON */
 .delete-btn{
   position:absolute;
-  top:10px;
-  right:10px;
-  background:#c62828;
-  color:white;
-  border:none;
+  top:8px;
+  right:8px;
+  width:24px;
+  height:24px;
   border-radius:6px;
-  width:28px;
-  height:28px;
+  border:none;
+  background:#d32f2f;
+  color:white;
+  font-size:16px;
   cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.delete-btn:hover{
+  background:#b71c1c;
 }
 
 /* TOAST */
@@ -150,17 +157,6 @@ button:hover{
   opacity:0.7;
 }
 
-/* MOBILE TWEAKS */
-@media (max-width: 700px){
-  header{
-    padding:30px 15px;
-  }
-
-  .card{
-    padding:16px;
-  }
-}
-
 </style>
 </head>
 
@@ -171,15 +167,12 @@ button:hover{
   <p>7th Worcester Scouts Admin Panel</p>
 </header>
 
-<!-- NAV BAR -->
+<!-- NAV -->
 <nav>
-
   <a href="cubs-settings.html">Cubs Settings</a>
   <a href="beavers-settings.html">Beavers Settings</a>
   <a href="scouts-settings.html">Scouts Settings</a>
-
   <a href="../login.html">Logout</a>
-
 </nav>
 
 <div class="wrapper">
@@ -196,7 +189,7 @@ button:hover{
     <button onclick="addEvent()">Create Event</button>
 
     <p class="small">
-      Events are saved to Google Sheets and automatically appear on the website.
+      Events automatically sync to the website and sort by date.
     </p>
 
   </div>
@@ -252,7 +245,7 @@ async function loadEvents(){
       <div class="event">
 
         <button class="delete-btn"
-          onclick="deleteEvent('${ev.name}','${ev.date}')">
+          onclick="deleteEvent(${ev.id})">
           ×
         </button>
 
@@ -296,18 +289,15 @@ async function addEvent(){
   }
 }
 
-/* DELETE */
-async function deleteEvent(name, date){
-
-  if(!confirm("Delete event?")) return;
+/* DELETE EVENT (NO POPUP) */
+async function deleteEvent(id){
 
   const res = await fetch(API, {
     method: "POST",
     headers: { "Content-Type": "text/plain" },
     body: JSON.stringify({
       type: "deleteEvent",
-      name: name,
-      date: date
+      id: id
     })
   });
 
