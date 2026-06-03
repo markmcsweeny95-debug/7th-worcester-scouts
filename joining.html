@@ -15,6 +15,7 @@ body{
   color:#222;
 }
 
+/* HEADER */
 header{
   background: linear-gradient(135deg, #5b2c83, #7b4bb3);
   color:white;
@@ -22,28 +23,36 @@ header{
   text-align:center;
 }
 
+/* UNIVERSAL NAV */
 nav{
-  background:#4a2268;
-  padding:14px;
-  text-align:center;
-  position:sticky;
-  top:0;
-  z-index:1000;
+  background:#3e1d5c;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  padding:12px;
 }
 
 nav a{
   color:white;
   text-decoration:none;
-  margin:0 14px;
   font-weight:bold;
+  padding:8px 12px;
+  border-radius:8px;
 }
 
+nav a:hover{
+  background:rgba(255,255,255,0.12);
+}
+
+/* CONTAINER */
 .container{
   max-width:900px;
   margin:auto;
   padding:40px 20px;
 }
 
+/* CARD */
 .card{
   background:white;
   padding:35px;
@@ -56,6 +65,7 @@ h2{
   color:#5b2c83;
 }
 
+/* BUTTON */
 .button{
   display:inline-block;
   margin-top:18px;
@@ -68,6 +78,11 @@ h2{
   font-weight:bold;
 }
 
+.button:hover{
+  opacity:0.9;
+}
+
+/* FOOTER */
 footer{
   background:#5b2c83;
   color:white;
@@ -85,19 +100,19 @@ footer{
 
   <h1>Join 7th Worcester Scouts</h1>
 
-  <p>
-    Start your next adventure with Beavers, Cubs or Scouts.
-  </p>
+  <p>Start your next adventure with Beavers, Cubs or Scouts.</p>
 
 </header>
 
+<!-- UNIVERSAL NAVBAR -->
 <nav>
   <a href="index.html">Home</a>
   <a href="events/index.html">Events</a>
-  <a href="discounts/index.html">Discounts</a>
   <a href="sections/index.html">Sections</a>
+  <a href="discounts/index.html">Discounts</a>
   <a href="joining.html">Join</a>
   <a href="contact/index.html">Contact</a>
+  <a href="admin.html">Leader Login</a>
 </nav>
 
 <div class="container">
@@ -111,16 +126,14 @@ footer{
       please contact us using one of the options below.
     </p>
 
-    <p>
-      In your message, please include:
-    </p>
+    <p><b>Please include:</b></p>
 
     <ul>
-      <li>[name]</li>
-      <li>[age]</li>
-      <li>[parent / guardian name]</li>
-      <li>[contact number]</li>
-      <li>[which section you are interested in]</li>
+      <li>Name</li>
+      <li>Age</li>
+      <li>Parent / Guardian name</li>
+      <li>Contact number</li>
+      <li>Section interested in (Beavers, Cubs or Scouts)</li>
     </ul>
 
     <a class="button"
@@ -139,13 +152,9 @@ footer{
 
     <h2>Contact Information</h2>
 
-    <p>
-      <b>Email:</b><br>
-      gsl@7thworcesterscouts.org
-    </p>
+    <p><b>Email:</b><br> gsl@7thworcesterscouts.org</p>
 
-    <p>
-      <b>Meeting Location:</b><br>
+    <p><b>Meeting Location:</b><br>
       Powick Village Hall<br>
       Malvern Road<br>
       Powick<br>
