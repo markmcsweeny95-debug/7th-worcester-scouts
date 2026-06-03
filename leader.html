@@ -172,7 +172,9 @@ button:hover{
   <a href="cubs-settings.html">Cubs Settings</a>
   <a href="beavers-settings.html">Beavers Settings</a>
   <a href="scouts-settings.html">Scouts Settings</a>
-  <a href="../login.html">Logout</a>
+
+  <!-- FIXED LOGOUT LINK -->
+  <a href="https://markmcsweeny95-debug-debug.github.io/7th-worcester-scouts/">Logout</a>
 </nav>
 
 <div class="wrapper">
@@ -187,10 +189,6 @@ button:hover{
     <textarea id="description" placeholder="Description"></textarea>
 
     <button onclick="addEvent()">Create Event</button>
-
-    <p class="small">
-      Events automatically sync to the website and sort by date.
-    </p>
 
   </div>
 
@@ -231,11 +229,6 @@ async function loadEvents(){
   container.innerHTML = "";
 
   const events = data.events || [];
-
-  if(events.length === 0){
-    container.innerHTML = "No events yet";
-    return;
-  }
 
   events.sort((a,b) => new Date(a.date) - new Date(b.date));
 
@@ -284,12 +277,10 @@ async function addEvent(){
     document.getElementById("date").value = "";
     document.getElementById("description").value = "";
     loadEvents();
-  } else {
-    toast("Failed");
   }
 }
 
-/* DELETE EVENT (NO POPUP) */
+/* DELETE EVENT */
 async function deleteEvent(id){
 
   const res = await fetch(API, {
@@ -306,8 +297,6 @@ async function deleteEvent(id){
   if(data.success){
     toast("Deleted");
     loadEvents();
-  } else {
-    toast("Delete failed");
   }
 }
 
