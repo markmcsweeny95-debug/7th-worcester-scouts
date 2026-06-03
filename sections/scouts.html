@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Scouts | 7th Worcester Scouts</title>
 
 <style>
@@ -15,7 +14,6 @@ body {
   color: #222;
 }
 
-/* HEADER (restored dark green) */
 header {
   background: #16351c;
   color: white;
@@ -23,9 +21,9 @@ header {
   text-align: center;
 }
 
-/* NAV (restored dark green) */
+/* UNIVERSAL NAV */
 nav {
-  background: #102513;
+  background: #4a2268;
   padding: 14px;
   text-align: center;
   position: sticky;
@@ -36,18 +34,20 @@ nav {
 nav a {
   color: white;
   text-decoration: none;
-  margin: 0 14px;
+  margin: 0 12px;
   font-weight: bold;
 }
 
-/* CONTAINER */
+nav a:hover {
+  opacity: 0.8;
+}
+
 .container {
   max-width: 900px;
   margin: auto;
   padding: 40px 20px;
 }
 
-/* CARD */
 .card {
   background: white;
   padding: 30px;
@@ -56,12 +56,10 @@ nav a {
   margin-bottom: 25px;
 }
 
-/* HEADINGS (restored green) */
 h2 {
   color: #16351c;
 }
 
-/* BUTTON (restored purple button if you still want consistency with old system) */
 .button {
   display: inline-block;
   margin-top: 15px;
@@ -71,14 +69,8 @@ h2 {
   text-decoration: none;
   border-radius: 12px;
   font-weight: bold;
-  transition: 0.2s;
 }
 
-.button:hover {
-  background: #4a2268;
-}
-
-/* FOOTER (restored green) */
 footer {
   background: #16351c;
   color: white;
@@ -100,26 +92,18 @@ footer {
 <nav>
   <a href="../index.html">Home</a>
   <a href="../events/index.html">Events</a>
-  <a href="../discounts/index.html">Discounts</a>
   <a href="../sections/index.html">Sections</a>
+  <a href="../discounts/index.html">Discounts</a>
+  <a href="../join.html">Join</a>
   <a href="../contact/index.html">Contact</a>
+  <a href="../leader.html">Leader Login</a>
 </nav>
 
 <div class="container">
 
   <div class="card">
-
     <h2>Meeting Times</h2>
-
-    <p>
-      Thursday Evenings<br>
-      7:00 PM – 9:00 PM
-    </p>
-
-    <a class="button" href="../joining.html">
-      Find Out How To Join →
-    </a>
-
+    <p>Thursday Evenings<br>7:00 PM – 9:00 PM</p>
   </div>
 
 </div>
