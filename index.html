@@ -15,15 +15,16 @@ body {
   color: #222;
 }
 
+/* HEADER */
 .main-header {
   background: linear-gradient(135deg, #5b2c83, #7b4bb3);
   color: white;
-  padding: 80px 20px;
+  padding: 70px 20px;
   text-align: center;
 }
 
 .main-header h1 {
-  font-size: 3rem;
+  font-size: 2.8rem;
   margin-bottom: 10px;
 }
 
@@ -32,43 +33,36 @@ body {
   opacity: 0.95;
 }
 
-.quick-links {
-  margin-top: 30px;
-}
-
-.quick-links a {
-  display: inline-block;
-  margin: 8px;
-  padding: 12px 22px;
-  background: rgba(255,255,255,0.15);
-  border: 2px solid rgba(255,255,255,0.25);
-  border-radius: 12px;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.2s;
-}
-
-.quick-links a:hover {
-  background: rgba(255,255,255,0.25);
-}
-
+/* NAV (UNIVERSAL PURPLE BAR) */
 nav {
   background: #4a2268;
-  padding: 14px;
+  padding: 12px;
   text-align: center;
   position: sticky;
   top: 0;
   z-index: 1000;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
 }
 
 nav a {
   color: white;
   text-decoration: none;
-  margin: 0 14px;
+  margin: 4px;
   font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: 0.2s;
 }
 
+nav a:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* CONTAINER */
 .container {
   max-width: 1000px;
   margin: auto;
@@ -115,6 +109,7 @@ nav a {
   opacity: 0.92;
 }
 
+/* FOOTER */
 footer {
   background: #5b2c83;
   color: white;
@@ -124,12 +119,12 @@ footer {
 }
 
 .footer-login {
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .footer-login a {
   color: white;
-  opacity: 0.65;
+  opacity: 0.7;
   text-decoration: none;
   font-size: 0.95rem;
 }
@@ -138,17 +133,15 @@ footer {
   opacity: 1;
 }
 
+/* MOBILE */
 @media (max-width: 700px){
-
   .main-header h1{
     font-size: 2.2rem;
   }
 
-  nav a{
-    display:inline-block;
-    margin:8px;
+  nav {
+    flex-direction: row;
   }
-
 }
 
 </style>
@@ -159,34 +152,21 @@ footer {
 <header class="main-header">
 
   <h1>7th Worcester Scout Group</h1>
-
   <p>Adventure Starts Here</p>
-
-  <div class="quick-links">
-
-    <a href="events/index.html">Events</a>
-
-    <a href="sections/index.html">Sections</a>
-
-    <a href="discounts/index.html">Discounts</a>
-
-    <a href="joining.html">Join</a>
-
-    <a href="contact/index.html">Contact</a>
-
-    <a href="admin.html">Leader Login</a>
-
-  </div>
 
 </header>
 
+<!-- 🔥 UNIFIED NAVBAR -->
 <nav>
+
   <a href="index.html">Home</a>
   <a href="events/index.html">Events</a>
-  <a href="discounts/index.html">Discounts</a>
   <a href="sections/index.html">Sections</a>
+  <a href="discounts/index.html">Discounts</a>
   <a href="joining.html">Join</a>
   <a href="contact/index.html">Contact</a>
+  <a href="admin.html">Leader Login</a>
+
 </nav>
 
 <div class="container">
@@ -216,7 +196,6 @@ footer {
     <h2>Upcoming Events</h2>
 
     <p><b>30 May</b> — Cardboard Canoe Challenge</p>
-
     <p><b>14 June</b> — District Camp</p>
 
     <a class="button" href="events/index.html">
@@ -228,10 +207,7 @@ footer {
   <div class="card">
 
     <h2>Scout Discounts</h2>
-
-    <p>
-      Exclusive savings and outdoor retailer discounts available for Scout members and families.
-    </p>
+    <p>Exclusive savings and outdoor retailer discounts available for Scout members and families.</p>
 
     <a class="button" href="discounts/index.html">
       See More →
@@ -242,10 +218,7 @@ footer {
   <div class="card">
 
     <h2>Sections</h2>
-
-    <p>
-      Explore Beavers, Cubs and Scouts at 7th Worcester.
-    </p>
+    <p>Explore Beavers, Cubs and Scouts at 7th Worcester.</p>
 
     <a class="button" href="sections/index.html">
       See More →
@@ -256,10 +229,7 @@ footer {
   <div class="card">
 
     <h2>Join 7th Worcester Scouts</h2>
-
-    <p>
-      Interested in joining? Learn how to apply and get in touch with our leaders.
-    </p>
+    <p>Interested in joining? Learn how to apply and get in touch with our leaders.</p>
 
     <a class="button" href="joining.html">
       Join Today →
@@ -274,9 +244,7 @@ footer {
   © 2026 7th Worcester Scout Group
 
   <div class="footer-login">
-    <a href="admin.html">
-      Leader Login
-    </a>
+    <a href="admin.html">Leader Login</a>
   </div>
 
 </footer>
@@ -288,22 +256,17 @@ const target = new Date("2026-07-05T14:00:00").getTime();
 function update(){
 
   const now = new Date().getTime();
-
   const diff = target - now;
 
   const d = Math.floor(diff / (1000*60*60*24));
-
   const h = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
-
   const m = Math.floor((diff % (1000*60*60))/(1000*60));
 
   document.getElementById("countdown").innerText =
-  `${d} Days : ${h} Hours : ${m} Mins`;
-
+    `${d} Days : ${h} Hours : ${m} Mins`;
 }
 
 update();
-
 setInterval(update,1000);
 
 </script>
