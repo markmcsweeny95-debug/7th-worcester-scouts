@@ -64,7 +64,7 @@ nav a{
   color:white;
 }
 
-/* LAYOUT */
+/* WRAPPER */
 .wrapper{
   display:flex;
   gap:20px;
@@ -116,7 +116,7 @@ button:hover{
   background:#4a2268;
 }
 
-/* EVENT BOX */
+/* EVENT */
 .event{
   border:1px solid #eee;
   border-radius:12px;
@@ -159,7 +159,7 @@ button:hover{
   <p>7th Worcester Scouts Admin Panel</p>
 </header>
 
-<!-- SETTINGS -->
+<!-- SETTINGS BAR -->
 <div class="settings-bar">
 
   <a class="settings-btn" href="cubs-settings.html">🏆 Cubs Settings</a>
@@ -169,7 +169,7 @@ button:hover{
 </div>
 
 <nav>
-  <a href="../index.html">Home Site</a>
+  <a href="https://markmcsweeny95-debug.github.io/7th-worcester-scouts/">Home Site</a>
   <a href="../events/index.html">Events</a>
 </nav>
 
@@ -187,8 +187,6 @@ button:hover{
       <textarea id="description" placeholder="Description"></textarea>
 
       <button onclick="addEvent()">+ Create Event</button>
-
-      <p class="small">Events are stored in Google Sheets and auto-sorted.</p>
 
     </div>
 
@@ -210,17 +208,24 @@ button:hover{
 
 <script>
 
-/* ✅ NEW WORKING API */
 const API =
 "https://script.google.com/macros/s/AKfycbwpewJd11-3eJcaRd1UYMVux3tE-dHdmjudXMgd89gWJgtDwCzDJX4-f-kuyaJJLi_V/exec";
+
+/* FORMAT DATE */
+function formatDate(dateString){
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+}
 
 /* LOAD EVENTS */
 async function loadEvents(){
 
   const res = await fetch(API);
   const data = await res.json();
-
-  console.log("GET DATA:", data);
 
   const container = document.getElementById("events");
   container.innerHTML = "";
@@ -236,7 +241,7 @@ async function loadEvents(){
     container.innerHTML += `
       <div class="event">
         <h3>${ev.name}</h3>
-        <p><b>${ev.date}</b></p>
+        <p><b>${formatDate(ev.date)}</b></p>
         <p>${ev.description}</p>
       </div>
     `;
@@ -256,24 +261,18 @@ async function addEvent(){
     return;
   }
 
-  const payload = {
-    type: "addEvent",
-    name: title,
-    date: date,
-    description: description
-  };
-
-  console.log("SENDING:", payload);
-
   const res = await fetch(API, {
     method: "POST",
     headers: { "Content-Type": "text/plain" },
-    body: JSON.stringify(payload)
+    body: JSON.stringify({
+      type: "addEvent",
+      name: title,
+      date: date,
+      description: description
+    })
   });
 
   const data = await res.json();
-
-  console.log("POST RESPONSE:", data);
 
   if(data.success){
     toast("Event Created ✓");
