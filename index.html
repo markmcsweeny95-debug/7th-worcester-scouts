@@ -75,6 +75,7 @@ nav a:hover {
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
+/* PIN BADGE */
 .pinned-badge {
   display: inline-block;
   background: #ffe082;
@@ -85,6 +86,7 @@ nav a:hover {
   margin-bottom: 14px;
 }
 
+/* COUNTDOWN */
 .countdown {
   font-size: 2rem;
   font-weight: bold;
@@ -92,6 +94,7 @@ nav a:hover {
   margin-top: 15px;
 }
 
+/* BUTTON */
 .button {
   display: inline-block;
   margin-top: 20px;
@@ -116,29 +119,14 @@ footer {
   margin-top: 40px;
 }
 
-.footer-login {
-  margin-top: 10px;
-}
-
 .footer-login a {
   color: white;
   opacity: 0.7;
   text-decoration: none;
-  font-size: 0.95rem;
 }
 
 .footer-login a:hover {
   opacity: 1;
-}
-
-@media (max-width: 700px){
-  .main-header h1{
-    font-size: 2.2rem;
-  }
-
-  nav {
-    flex-direction: row;
-  }
 }
 
 </style>
@@ -147,10 +135,8 @@ footer {
 <body>
 
 <header class="main-header">
-
   <h1>7th Worcester Scout Group</h1>
   <p>Adventure Starts Here</p>
-
 </header>
 
 <!-- NAV -->
@@ -166,32 +152,20 @@ footer {
 
 <div class="container">
 
-  <!-- FEATURED EVENT -->
-  <div class="card">
+  <!-- 🔥 PINNED EVENT (DYNAMIC) -->
+  <div class="card" id="featuredEvent">
 
-    <div class="pinned-badge">
-      Featured Event
-    </div>
+    <div class="pinned-badge">Featured Event</div>
 
-    <h2>50th Anniversary Family Fun Day</h2>
-
-    <p>
-      Family Fun Day at The Scout Zone, Powick
-    </p>
-
-    <div class="countdown" id="countdown"></div>
-
-    <a class="button" href="events/50th-anniversary.html">
-      View Event →
-    </a>
+    <h2>Loading event...</h2>
+    <p>Please wait</p>
 
   </div>
 
-  <!-- UPCOMING EVENTS (UPDATED) -->
+  <!-- UPCOMING -->
   <div class="card">
 
     <h2>Upcoming Events</h2>
-
     <p>See upcoming events and latest activities from 7th Worcester Scouts.</p>
 
     <a class="button" href="events/index.html">
@@ -205,9 +179,7 @@ footer {
     <h2>Scout Discounts</h2>
     <p>Exclusive savings and outdoor retailer discounts available for Scout members and families.</p>
 
-    <a class="button" href="discounts/index.html">
-      See More →
-    </a>
+    <a class="button" href="discounts/index.html">See More →</a>
 
   </div>
 
@@ -216,9 +188,7 @@ footer {
     <h2>Sections</h2>
     <p>Explore Beavers, Cubs and Scouts at 7th Worcester.</p>
 
-    <a class="button" href="sections/index.html">
-      See More →
-    </a>
+    <a class="button" href="sections/index.html">See More →</a>
 
   </div>
 
@@ -227,9 +197,7 @@ footer {
     <h2>Join 7th Worcester Scouts</h2>
     <p>Interested in joining? Learn how to apply and get in touch with our leaders.</p>
 
-    <a class="button" href="joining.html">
-      Join Today →
-    </a>
+    <a class="button" href="joining.html">Join Today →</a>
 
   </div>
 
@@ -247,23 +215,60 @@ footer {
 
 <script>
 
-const target = new Date("2026-07-05T14:00:00").getTime();
+const API =
+"https://script.google.com/macros/s/AKfycbwpewJd11-3eJcaRd1UYMVux3tE-dHdmjudXMgd89gWJgtDwCzDJX4-f-kuyaJJLi_V/exec";
 
-function update(){
-
-  const now = new Date().getTime();
-  const diff = target - now;
-
-  const d = Math.floor(diff / (1000*60*60*24));
-  const h = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
-  const m = Math.floor((diff % (1000*60*60))/(1000*60));
-
-  document.getElementById("countdown").innerText =
-    `${d} Days : ${h} Hours : ${m} Mins`;
+/* FORMAT DATE */
+function formatDate(dateString){
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-GB", {
+    day:"numeric",
+    month:"long",
+    year:"numeric"
+  });
 }
 
-update();
-setInterval(update,1000);
+/* LOAD PINNED EVENT */
+async function loadPinned(){
+
+  const res = await fetch(API);
+  const data = await res.json();
+
+  const events = data.events || [];
+
+  const pinned = events.find(e => e.pinned === true);
+
+  const container = document.getElementById("featuredEvent");
+
+  if(!pinned){
+
+    container.innerHTML = `
+      <div class="pinned-badge">Featured Event</div>
+      <h2>No featured event</h2>
+      <p>Please check back soon for updates.</p>
+    `;
+
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="pinned-badge">Featured Event</div>
+
+    <h2>${pinned.name}</h2>
+
+    <p>${pinned.description}</p>
+
+    <div class="countdown">
+      ${formatDate(pinned.date)}
+    </div>
+
+    <a class="button" href="events/index.html">
+      View All Events →
+    </a>
+  `;
+}
+
+loadPinned();
 
 </script>
 
