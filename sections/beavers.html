@@ -11,7 +11,7 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background: #faf9ff;
+  background: #faf9ff; /* back to normal site background */
   color: #222;
 }
 
@@ -23,9 +23,9 @@ header {
   text-align: center;
 }
 
-/* NAV (UNIVERSAL) */
+/* NAV (DARK BLUE) */
 nav {
-  background: #4a2268;
+  background: #1f4f7a;
   padding: 14px;
   text-align: center;
   position: sticky;
@@ -38,6 +38,10 @@ nav a {
   text-decoration: none;
   margin: 0 14px;
   font-weight: bold;
+}
+
+nav a:hover {
+  opacity: 0.8;
 }
 
 /* CONTAINER */
@@ -58,7 +62,7 @@ nav a {
 
 /* HEADINGS */
 h2 {
-  color: #4aa3d8;
+  color: #1f4f7a;
 }
 
 /* BUTTON */
@@ -73,9 +77,13 @@ h2 {
   font-weight: bold;
 }
 
+.button:hover {
+  background: #4a2268;
+}
+
 /* FOOTER */
 footer {
-  background: #4a2268;
+  background: #1f4f7a;
   color: white;
   text-align: center;
   padding: 24px;
@@ -98,14 +106,15 @@ footer {
   <a href="../events/index.html">Events</a>
   <a href="../sections/index.html">Sections</a>
   <a href="../discounts/index.html">Discounts</a>
-  <a href="../joining.html">Join</a>
+  <a href="../join.html">Join</a>
   <a href="../contact/index.html">Contact</a>
-  <a href="../leader-login.html">Leader Login</a>
+  <a href="../leader.html">Leader Login</a>
 </nav>
 
 <div class="container">
 
   <div class="card">
+
     <h2>Meeting Times</h2>
 
     <p>
@@ -113,9 +122,10 @@ footer {
       6:00 PM – 7:00 PM
     </p>
 
-    <a class="button" href="../joining.html">
+    <a class="button" href="../join.html">
       Find Out How To Join →
     </a>
+
   </div>
 
 </div>
