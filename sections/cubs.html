@@ -15,6 +15,7 @@ body {
   color: #222;
 }
 
+/* HEADER */
 header {
   background: #2e7d32;
   color: white;
@@ -22,28 +23,36 @@ header {
   text-align: center;
 }
 
+/* NAV (UNIVERSAL) */
 nav {
-  background: #1b5e20;
-  padding: 14px;
-  text-align: center;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  background: #3e1d5c;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
 }
 
 nav a {
   color: white;
   text-decoration: none;
-  margin: 0 14px;
   font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 8px;
 }
 
+nav a:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* CONTAINER */
 .container {
   max-width: 900px;
   margin: auto;
   padding: 40px 20px;
 }
 
+/* CARD */
 .card {
   background: white;
   padding: 30px;
@@ -52,10 +61,12 @@ nav a {
   margin-bottom: 25px;
 }
 
+/* HEADINGS */
 h2 {
   color: #2e7d32;
 }
 
+/* PROGRESS BAR */
 .bar {
   height: 24px;
   border-radius: 999px;
@@ -73,6 +84,7 @@ h2 {
   transition: width 0.5s ease;
 }
 
+/* BUTTON */
 .button {
   display: inline-block;
   margin-top: 15px;
@@ -84,6 +96,7 @@ h2 {
   font-weight: bold;
 }
 
+/* FOOTER */
 footer {
   background: #2e7d32;
   color: white;
@@ -98,20 +111,19 @@ footer {
 <body>
 
 <header>
-
   <h1>Cubs</h1>
-
   <p>7th Worcester Scout Group</p>
-
 </header>
 
+<!-- UNIVERSAL NAVBAR -->
 <nav>
   <a href="../index.html">Home</a>
   <a href="../events/index.html">Events</a>
-  <a href="../discounts/index.html">Discounts</a>
   <a href="../sections/index.html">Sections</a>
+  <a href="../discounts/index.html">Discounts</a>
   <a href="../joining.html">Join</a>
   <a href="../contact/index.html">Contact</a>
+  <a href="../admin.html">Leader Login</a>
 </nav>
 
 <div class="container">
@@ -125,10 +137,7 @@ footer {
       6:30 PM – 8:00 PM
     </p>
 
-    <a
-      class="button"
-      href="../joining.html"
-    >
+    <a class="button" href="../joining.html">
       Find Out How To Join →
     </a>
 
@@ -139,9 +148,7 @@ footer {
     <h2>Live Cub Pack Points</h2>
 
     <p>
-      <b>Eagles</b> —
-      <span id="eaglesPoints">Loading...</span>
-      points
+      <b>Eagles</b> — <span id="eaglesPoints">Loading...</span> points
     </p>
 
     <div class="bar">
@@ -149,9 +156,7 @@ footer {
     </div>
 
     <p>
-      <b>Falcons</b> —
-      <span id="falconsPoints">Loading...</span>
-      points
+      <b>Falcons</b> — <span id="falconsPoints">Loading...</span> points
     </p>
 
     <div class="bar">
@@ -176,7 +181,6 @@ async function loadCubs(){
   try {
 
     const res = await fetch(API_URL);
-
     const data = await res.json();
 
     const cubs = data.cubs;
@@ -186,36 +190,23 @@ async function loadCubs(){
 
     cubs.forEach(row => {
 
-      if(row[0] === "Eagles"){
-        eagles = row[1];
-      }
-
-      if(row[0] === "Falcons"){
-        falcons = row[1];
-      }
+      if(row[0] === "Eagles") eagles = row[1];
+      if(row[0] === "Falcons") falcons = row[1];
 
     });
 
-    document.getElementById("eaglesPoints")
-      .innerText = eagles;
+    document.getElementById("eaglesPoints").innerText = eagles;
+    document.getElementById("falconsPoints").innerText = falcons;
 
-    document.getElementById("falconsPoints")
-      .innerText = falcons;
-
-    document.getElementById("eaglesBar")
-      .style.width =
+    document.getElementById("eaglesBar").style.width =
       Math.min((eagles / 150) * 100, 100) + "%";
 
-    document.getElementById("falconsBar")
-      .style.width =
+    document.getElementById("falconsBar").style.width =
       Math.min((falcons / 150) * 100, 100) + "%";
 
   } catch(err){
-
     console.error(err);
-
   }
-
 }
 
 loadCubs();
