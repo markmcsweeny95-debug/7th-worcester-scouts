@@ -4,106 +4,136 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cubs | 7th Worcester Scouts</title>
+<title>Cubs Settings | 7th Worcester Scouts</title>
 
 <style>
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #faf9ff;
-  color: #222;
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f8f3;
+  color:#222;
 }
 
-/* HEADER (CUBS GREEN) */
-header {
-  background: #2e7d32;
-  color: white;
-  padding: 35px 20px;
-  text-align: center;
+/* HEADER */
+header{
+  background:linear-gradient(135deg,#2e7d32,#43a047);
+  color:white;
+  padding:35px 20px;
+  text-align:center;
 }
 
-/* NAV (DARK GREEN ADMIN STYLE) */
-nav {
-  background: #1b5e20;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  padding: 12px;
+/* NAV */
+nav{
+  background:#1b5e20;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  padding:12px;
 }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  padding: 8px 12px;
-  border-radius: 8px;
+nav a{
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+  padding:10px 14px;
+  border-radius:10px;
+  transition:0.2s;
 }
 
-nav a:hover {
-  background: rgba(255,255,255,0.12);
+nav a:hover{
+  background:rgba(255,255,255,0.12);
 }
 
-/* CONTAINER */
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 40px 20px;
+/* LAYOUT */
+.wrapper{
+  max-width:900px;
+  margin:auto;
+  padding:40px 20px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
 }
 
 /* CARD */
-.card {
-  background: white;
-  padding: 30px;
-  border-radius: 18px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  margin-bottom: 25px;
+.card{
+  background:white;
+  border-radius:18px;
+  padding:28px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* TITLE */
+h2{
+  margin-top:0;
+  color:#2e7d32;
 }
 
 /* TEAM ROW */
-.team {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.team:last-child {
-  border-bottom: none;
-}
-
-/* BUTTONS */
-button {
-  background: #2e7d32;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-left: 5px;
-}
-
-button:hover {
-  background: #256428;
+.team{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px;
+  border-radius:14px;
+  background:#f7fdf7;
+  margin-top:12px;
 }
 
 /* SCORE */
-.score {
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #2e7d32;
+.score{
+  font-size:1.4rem;
+  font-weight:bold;
+  color:#2e7d32;
+}
+
+/* BUTTONS (BIG + TOUCH FRIENDLY) */
+button{
+  background:#2e7d32;
+  color:white;
+  border:none;
+  padding:14px 18px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:1rem;
+  margin-left:8px;
+  min-width:52px;
+  transition:0.15s;
+  box-shadow:0 3px 0 #1b5e20;
+}
+
+button:hover{
+  background:#256428;
+}
+
+button:active{
+  transform:translateY(2px);
+  box-shadow:0 1px 0 #1b5e20;
+}
+
+/* + and - colour difference */
+button:nth-of-type(1){
+  background:#2e7d32;
+}
+
+button:nth-of-type(2){
+  background:#c62828;
+  box-shadow:0 3px 0 #8e0000;
+}
+
+button:nth-of-type(2):hover{
+  background:#b71c1c;
 }
 
 /* FOOTER */
-footer {
-  background: #1b5e20;
-  color: white;
-  text-align: center;
-  padding: 24px;
-  margin-top: 40px;
+footer{
+  background:#1b5e20;
+  color:white;
+  text-align:center;
+  padding:24px;
+  margin-top:40px;
 }
 
 </style>
@@ -112,11 +142,10 @@ footer {
 <body>
 
 <header>
-  <h1>Cubs</h1>
+  <h1>Cubs Settings</h1>
   <p>Leader Admin Panel</p>
 </header>
 
-<!-- ADMIN NAV -->
 <nav>
   <a href="leader.html">Dashboard</a>
   <a href="cubs-settings.html">Cubs</a>
@@ -125,7 +154,7 @@ footer {
   <a href="https://markmcsweeny95-debug.github.io/7th-worcester-scouts/index.html">Logout</a>
 </nav>
 
-<div class="container">
+<div class="wrapper">
 
   <div class="card">
     <h2>Cubs Points Editor</h2>
@@ -137,8 +166,8 @@ footer {
       </div>
 
       <div>
-        <button onclick="changePoints('Eagles', 1)">+</button>
-        <button onclick="changePoints('Eagles', -1)">-</button>
+        <button onclick="changePoints('Eagles', 1)">+1</button>
+        <button onclick="changePoints('Eagles', -1)">-1</button>
       </div>
     </div>
 
@@ -149,8 +178,8 @@ footer {
       </div>
 
       <div>
-        <button onclick="changePoints('Falcons', 1)">+</button>
-        <button onclick="changePoints('Falcons', -1)">-</button>
+        <button onclick="changePoints('Falcons', 1)">+1</button>
+        <button onclick="changePoints('Falcons', -1)">-1</button>
       </div>
     </div>
 
@@ -189,7 +218,7 @@ async function changePoints(team, delta) {
     method: "POST",
     headers: { "Content-Type": "text/plain" },
     body: JSON.stringify({
-      type: "updatePoints",
+      type: "changeCubsPoints",
       team: team,
       delta: delta
     })
