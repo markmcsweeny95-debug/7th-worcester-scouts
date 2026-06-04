@@ -9,35 +9,40 @@
 <style>
 
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
+  font-family: Arial, sans-serif;
   background: #faf9ff;
   color: #222;
 }
 
-/* HEADER */
+/* HEADER (CUBS GREEN - MATCH ADMIN STYLE) */
 header {
   background: #2e7d32;
   color: white;
-  padding: 80px 20px;
+  padding: 35px 20px;
   text-align: center;
 }
 
-/* NAV */
+/* NAV (ADMIN STYLE GREEN BAR) */
 nav {
   background: #1b5e20;
-  padding: 14px;
-  text-align: center;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
 }
 
 nav a {
   color: white;
   text-decoration: none;
-  margin: 0 14px;
   font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+nav a:hover {
+  background: rgba(255,255,255,0.12);
 }
 
 /* CONTAINER */
@@ -93,7 +98,7 @@ h2 {
 
 /* FOOTER */
 footer {
-  background: #2e7d32;
+  background: #1b5e20;
   color: white;
   text-align: center;
   padding: 24px;
@@ -187,8 +192,6 @@ async function loadCubs() {
     const res = await fetch(API_URL);
     const data = await res.json();
 
-    console.log("CUBS DATA:", data);
-
     let eagles = 0;
     let falcons = 0;
 
@@ -221,11 +224,10 @@ async function loadCubs() {
 
   } catch (err) {
 
-    console.error(err);
-
     document.getElementById("error").textContent =
       "Failed to load cub points (API/CORS issue)";
 
+    console.error(err);
   }
 
 }
