@@ -15,7 +15,7 @@ body {
   color: #222;
 }
 
-/* HEADER (RESTORED ORIGINAL GREEN) */
+/* HEADER */
 header {
   background: #2e7d32;
   color: white;
@@ -23,7 +23,7 @@ header {
   text-align: center;
 }
 
-/* NAV (kept simple; universal structure applied below) */
+/* NAV */
 nav {
   background: #1b5e20;
   padding: 14px;
@@ -56,12 +56,12 @@ nav a {
   margin-bottom: 25px;
 }
 
-/* HEADINGS (GREEN THEME) */
+/* HEADINGS */
 h2 {
   color: #2e7d32;
 }
 
-/* PROGRESS BAR */
+/* BAR */
 .bar {
   height: 24px;
   border-radius: 999px;
@@ -100,6 +100,12 @@ footer {
   margin-top: 40px;
 }
 
+#error {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
 </style>
 </head>
 
@@ -110,7 +116,6 @@ footer {
   <p>7th Worcester Scout Group</p>
 </header>
 
-<!-- 🌐 UNIVERSAL NAVBAR -->
 <nav>
   <a href="../index.html">Home</a>
   <a href="../events/index.html">Events</a>
@@ -143,7 +148,8 @@ footer {
     <h2>Live Cub Pack Points</h2>
 
     <p>
-      <b>Eagles</b> — <span id="eaglesPoints">Loading...</span> points
+      <b>Eagles</b> —
+      <span id="eaglesPoints">Loading...</span> points
     </p>
 
     <div class="bar">
@@ -151,12 +157,15 @@ footer {
     </div>
 
     <p>
-      <b>Falcons</b> — <span id="falconsPoints">Loading...</span> points
+      <b>Falcons</b> —
+      <span id="falconsPoints">Loading...</span> points
     </p>
 
     <div class="bar">
       <div id="falconsBar" class="fill"></div>
     </div>
+
+    <p id="error"></p>
 
   </div>
 
@@ -169,36 +178,54 @@ footer {
 <script>
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycby3lQ7jcNFMiTq2IPpuSS_RbMnJS2e3xKE5_0X2VDyzElr-nt78N17AVTHIgLbXfjMQSw/exec";
+"https://script.google.com/macros/s/AKfycbwpewJd11-3eJcaRd1UYMVux3tE-dHdmjudXMgd89gWJgtDwCzDJX4-f-kuyaJJLi_V/exec";
 
-async function loadCubs(){
+async function loadCubs() {
 
   try {
 
     const res = await fetch(API_URL);
     const data = await res.json();
 
-    const cubs = data.cubs;
+    console.log("CUBS DATA:", data);
 
     let eagles = 0;
     let falcons = 0;
 
-    cubs.forEach(row => {
-      if(row[0] === "Eagles") eagles = row[1];
-      if(row[0] === "Falcons") falcons = row[1];
-    });
+    if (data.cubs && Array.isArray(data.cubs)) {
 
-    document.getElementById("eaglesPoints").innerText = eagles;
-    document.getElementById("falconsPoints").innerText = falcons;
+      data.cubs.forEach(row => {
+
+        if (row[0] === "Eagles") {
+          eagles = Number(row[1]) || 0;
+        }
+
+        if (row[0] === "Falcons") {
+          falcons = Number(row[1]) || 0;
+        }
+
+      });
+
+    }
+
+    document.getElementById("eaglesPoints").textContent = eagles;
+    document.getElementById("falconsPoints").textContent = falcons;
+
+    const max = Math.max(eagles, falcons, 1);
 
     document.getElementById("eaglesBar").style.width =
-      Math.min((eagles / 150) * 100, 100) + "%";
+      (eagles / max) * 100 + "%";
 
     document.getElementById("falconsBar").style.width =
-      Math.min((falcons / 150) * 100, 100) + "%";
+      (falcons / max) * 100 + "%";
 
-  } catch(err){
+  } catch (err) {
+
     console.error(err);
+
+    document.getElementById("error").textContent =
+      "Failed to load cub points (API/CORS issue)";
+
   }
 
 }
