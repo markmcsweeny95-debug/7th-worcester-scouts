@@ -15,22 +15,52 @@ body {
   color: #222;
 }
 
-/* HEADER */
+/* HEADER (NEW BANNER STYLE) */
 .main-header {
-  background: linear-gradient(135deg, #5b2c83, #7b4bb3);
-  color: white;
-  padding: 70px 20px;
+  position: relative;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  color: white;
+
+  background-image:
+    linear-gradient(135deg, rgba(91,44,131,0.92), rgba(123,75,179,0.85)),
+    url('images/banner.jpg');
+
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
 }
 
+/* LOGO INSIDE BANNER */
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-logo {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.15);
+  padding: 6px;
+}
+
+/* TEXT */
 .main-header h1 {
-  font-size: 2.8rem;
-  margin-bottom: 10px;
+  font-size: 3rem;
+  margin: 0;
 }
 
 .main-header p {
   font-size: 1.2rem;
   opacity: 0.95;
+  margin: 0;
 }
 
 /* NAV */
@@ -135,8 +165,16 @@ footer {
 <body>
 
 <header class="main-header">
-  <h1>7th Worcester Scout Group</h1>
-  <p>Adventure Starts Here</p>
+
+  <div class="header-content">
+
+    <img src="images/logo.png" alt="Scout Logo" class="header-logo">
+
+    <h1>7th Worcester Scout Group</h1>
+    <p>Adventure Starts Here</p>
+
+  </div>
+
 </header>
 
 <!-- NAV -->
@@ -152,7 +190,6 @@ footer {
 
 <div class="container">
 
-  <!-- 🔥 PINNED EVENT (DYNAMIC) -->
   <div class="card" id="featuredEvent">
 
     <div class="pinned-badge">Featured Event</div>
@@ -162,55 +199,38 @@ footer {
 
   </div>
 
-  <!-- UPCOMING -->
   <div class="card">
-
     <h2>Upcoming Events</h2>
     <p>See upcoming events and latest activities from 7th Worcester Scouts.</p>
-
-    <a class="button" href="events/index.html">
-      View Events →
-    </a>
-
+    <a class="button" href="events/index.html">View Events →</a>
   </div>
 
   <div class="card">
-
     <h2>Scout Discounts</h2>
     <p>Exclusive savings and outdoor retailer discounts available for Scout members and families.</p>
-
     <a class="button" href="discounts/index.html">See More →</a>
-
   </div>
 
   <div class="card">
-
     <h2>Sections</h2>
     <p>Explore Beavers, Cubs and Scouts at 7th Worcester.</p>
-
     <a class="button" href="sections/index.html">See More →</a>
-
   </div>
 
   <div class="card">
-
     <h2>Join 7th Worcester Scouts</h2>
     <p>Interested in joining? Learn how to apply and get in touch with our leaders.</p>
-
     <a class="button" href="joining.html">Join Today →</a>
-
   </div>
 
 </div>
 
 <footer>
-
   © 2026 7th Worcester Scout Group
 
   <div class="footer-login">
     <a href="admin.html">Leader Login</a>
   </div>
-
 </footer>
 
 <script>
@@ -218,7 +238,6 @@ footer {
 const API =
 "https://script.google.com/macros/s/AKfycbwpewJd11-3eJcaRd1UYMVux3tE-dHdmjudXMgd89gWJgtDwCzDJX4-f-kuyaJJLi_V/exec";
 
-/* FORMAT DATE */
 function formatDate(dateString){
   const date = new Date(dateString);
   return date.toLocaleDateString("en-GB", {
@@ -228,7 +247,6 @@ function formatDate(dateString){
   });
 }
 
-/* LOAD PINNED EVENT */
 async function loadPinned(){
 
   const res = await fetch(API);
